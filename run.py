@@ -1,6 +1,5 @@
 import os
 from flask import Flask, render_template, redirect, url_for
-import pymongo
 from logic import views
 
 if os.path.exists("env.py"):
