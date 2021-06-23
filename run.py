@@ -6,9 +6,15 @@ import pymongo
 
 app = Flask(__name__)
 
-app.config['MONGO_DBNAME'] = 'hashboard_db'
-app.config['MONGO_URI'] = ''
+#  app.config['MONGO_DBNAME'] = 'hashboard_db'
+#  app.config['MONGO_URI'] = ''
 
-from website import views
+from logic import views
+
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 
+if __name__ == '__main__':
+    app.run()
