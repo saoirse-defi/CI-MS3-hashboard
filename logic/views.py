@@ -6,8 +6,6 @@ from datetime import datetime, date
 import time
 from dateutil import parser
 
-views = Blueprint('views', __name__)
-
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -19,7 +17,7 @@ def login():
     return render_template("login.html")
 
 
-@app.route('/logout')
-@login_required
-def logout():
-    return redirect(url_for('views.login'))
+#@app.route('/logout')
+#@login_required
+#def logout():
+    #return redirect(url_for('views.login'))
