@@ -1,7 +1,7 @@
 import os
-from flask import Flask, render_template, redirect, url_for, flask_login
-from flask.ext.login import LoginManager
-from flask.ext.pymongo import Pymongo
+from flask import Flask, render_template, redirect, url_for
+from flask_login import LoginManager
+import pymongo
 
 
 app = Flask(__name__)

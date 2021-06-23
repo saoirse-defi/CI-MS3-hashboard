@@ -1,5 +1,5 @@
 from flask import Flask, redirect, url_for, Blueprint, render_template
-from flask.ext.login import LoginManager
+from flask_login import LoginManager, login_required
 from run import app
 from . import models
 from datetime import datetime, date
