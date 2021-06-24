@@ -64,6 +64,7 @@ def signup():
             mongo.db.Users.insert_one(signup)
             session['user'] = email.lower()
             flash("Signup Successful!", category='success')
+            redirect(url_for('login'))
     
     return render_template("signup.html", user=current_user)
 
