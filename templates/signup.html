@@ -2,15 +2,15 @@
 
 {% block content %}
 <form method="POST" id="signup-form">
-    <h3 align="center">Sign Up.</h3>
+    <h3 align="center">{{ MONGO_DBNAME }}</h3>
     <div class="form-group">
+        <div class="form-control">
+            <label for="name">Nickname</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Nickname" required/>
+        </div>
         <div class="form-control">
             <label for="email">Email Address</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="Enter email address" required/>
-        </div>
-        <div class="form-control">
-            <label for="nickname">Nickname</label>
-            <input type="text" class="form-control" id="nickname" name="nickname" placeholder="Nickname" required/>
         </div>
         <div class="form-control">
             <label for="eth">ETH Public Address</label>
