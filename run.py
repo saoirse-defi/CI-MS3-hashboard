@@ -6,7 +6,6 @@ if os.path.exists("env.py"):
     import env
 
 from flask import Flask, render_template, flash, redirect, request, session, url_for
-from flask_login import login_user, logout_user, current_user, LoginManager
 from flask_pymongo import PyMongo
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -23,7 +22,6 @@ app.config["SESSION_TYPE"] = 'filesystem'
 app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
-login_manager = LoginManager()
 
 # Decorator Functions
 
