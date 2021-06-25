@@ -2,6 +2,10 @@
 
 {% block content %}
 
-<h1>Hello World TEST!</h1>
+<h2>Session Variables: {{ session['logged_in'] }}</h2>
+
+<h4>{{ session['user']['name']}}'s Profile</h4>
+
+<p>{{ session['user'] }}</p>
 
 {% endblock %}
