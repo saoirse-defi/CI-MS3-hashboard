@@ -88,7 +88,7 @@ def signup():
             flash("Signup Successful!", category='success')
             redirect(url_for('login'))
     
-    return render_template("signup.html", user=current_user)
+    return render_template("signup.html")
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -97,7 +97,7 @@ def login():
         logic.models.Account().login()
         return redirect(url_for('index'))
 
-    return render_template("login.html", user=current_user)
+    return render_template("login.html")
 
 
 @app.route('/logout')
