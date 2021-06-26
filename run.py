@@ -42,7 +42,30 @@ def login_required(f):
 @app.route("/index")
 @login_required
 def index():
-    return render_template("index.html")
+    transactions = mongo.db.Transaction.find({
+        "to": session['user']['eth']
+    })
+
+    transaction_table_headings = ['Favourite', 'Date created', 'Hash', 'To', 'From', 'Value', 'Token Involved', 'Gas Price (GWEI)', 'Gas Spent (ETH)']    
+
+    def shorten(string):
+        return "0x..." + string[38:]
+    
+    def shorten2(string):
+        return "0x..." + string[62:]
+
+    def toInt(x):
+        return int(float(x))
+
+    def threeDecimals(y):
+        return "%.3f" % y
+    return render_template("index.html", 
+                            transactions=transactions, 
+                            transaction_table_headings=transaction_table_headings,
+                            shorten=shorten,
+                            shorten2=shorten2,
+                            toInt=toInt,
+                            threeDecimals=threeDecimals)
 
 
 @app.route('/signup2', methods=['GET', 'POST'])
@@ -51,44 +74,6 @@ def signup2():
         logic.models.Account().signup()
         return redirect(url_for('index'))
     return render_template("signup2.html")
-
-
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-    if request.method == 'POST':
-        name = request.form.get('name')
-        email = request.form.get('email')
-        eth = request.form.get('eth')
-        password = request.form.get('password')
-        _password = request.form.get('password-confirm')
-        existing_user = mongo.db.Users.find_one({
-            "email": email.lower()
-        })
-        if existing_user:
-            flash("Email address is already taken.", category='error')
-        elif len(email) < 4:
-            flash('Email Address is too short', category='error')
-        elif len(name) < 2:
-            flash('Your nickname is too short', category='error')
-        elif len(eth) != 42:
-            flash('The format of your Ethereum public address is incorrect', category='error')
-        elif password != _password:
-            flash('Your passwords dont match', category='error')
-        elif len(password) < 8:
-            flash('Your password is too short', category='error')
-        else:
-            signup = {
-                "name": name,
-                "email": email.lower(),
-                "eth": eth,
-                "password": generate_password_hash(password)
-            }
-            mongo.db.Users.insert_one(signup)
-            session['user'] = email.lower()
-            flash("Signup Successful!", category='success')
-            redirect(url_for('login'))
-    
-    return render_template("signup.html")
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -100,21 +85,15 @@ def login():
     return render_template("login.html")
 
 
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('login'))
-
-
 @app.route('/signout')
+@login_required
 def signout():
     return logic.models.Account().signout()
+
+# App config
 
 
 if __name__ == '__main__':
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
             debug=True)
-
-

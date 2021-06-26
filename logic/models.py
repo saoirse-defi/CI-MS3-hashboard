@@ -1,9 +1,11 @@
 import uuid
+import json
 from flask import Flask, jsonify, session, redirect, request, url_for
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 import pymongo
 from run import mongo
+from . import etherscan_api
 
 
 class User(UserMixin):
@@ -49,6 +51,7 @@ class Account():
             return jsonify({'error': 'Email already in use.'})
 
         if mongo.db.User.insert_one(account):
+            self.add_transactions(account)
             return self.start_session(account)
 
         return jsonify({'error': 'Signup failed'}), 400
@@ -73,3 +76,26 @@ class Account():
             return self.start_session(existing_user)
         
         return jsonify({"error": "Invalid login details"}), 401
+    
+    def add_transactions(self, account):
+        transaction_list = etherscan_api.etherscan_transactions(account['eth'])
+        print(transaction_list)
+        for transaction in transaction_list:
+            if mongo.db.Transaction.find_one({
+                "hash": transaction['hash']
+            }):
+                continue
+            else:
+                mongo.db.Transaction.insert_one({
+                    "_id": uuid.uuid4().hex,
+                    "data": transaction
+                })
+        
+        return jsonify({"transactions": transaction_list}), 200
+
+
+class Transaction():
+
+    def __init__(self, _data):
+        self.id = uuid.uuid4().hex
+        self.data = _data
