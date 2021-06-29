@@ -1,4 +1,5 @@
 ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Code Institute, Milestone 3: Hash-Board
 
 ## Introduction
 
@@ -14,11 +15,13 @@ My goal for my Code Institute Milestone Project 3: Data Centric is to simplify t
 
 #### Current Blockchain Interfaces
 
-This cryptocurrency dashboard project will mainly be interacting with the Ethereum blockchain. Ethereum is the market leader in smart contract technology with the largest developer base.
-Etherscan is the leading blockchain analysis tool which allows you to view transactions, smart contracts, user accounts & on-chain metrics. After using Etherscan for the past 4 years, no improvement has been made to the graphical user interface which I believe is the key to onboarding new users. 
+This cryptocurrency dashboard project will be reading transactions from the Ethereum blockchain. Ethereum is the market leader in smart contract technology with the largest community & developer base.
+Etherscan is the leading blockchain API which allows you to view transactions, smart contracts, user accounts & on-chain metrics. After using Etherscan for the past 4 years, I have seen that very few improvements have been made to the UX. 
+I believe this is the key to onboarding new users and taking smart contract platforms to the next level.
 
 #### Planned Features
 
+* 
 * Metamask Integration
 * Customised pricing data only pulling favorite coins or coins detected from their Metamask
 * News articles related to favorite coins
@@ -32,17 +35,48 @@ Etherscan is the leading blockchain analysis tool which allows you to view trans
 
 ### Project Goals
 
+Leading into this project, my goals were to introduce new people into the cryptocurrency ecosystem by creating a more user-friendly interface.
+This will allow users to view their blockchain transactions with more clarity & reduce some of the anxiety that new user face when starting out in crypto.
+This application doesn't just limit you to viewing your own transactions, the user will be able to search any transaction on the ethereum chain and save it to their dashboard.
+With this feature, users can track Ethereum whales & the movement of funds within important smart contracts. 
+
+### User Goals
+
+The target audience for this application reflects people within the age group of your average cryptocurrency user (16-35).
+
+##### The user's goals are:
+
+* To be provided with blockchain data in a format that is easy to navigate and understand.
+* To use this data in order to track funds moving through the blockchain.
+* The ability to save important transactions and have them displayed in a separate area.
+* The power to remove favourited transactions from their dashboard.
+* Recieve email notifications if an address associated with your account is searched via hash-board.com
+
+### Developer & Business Goals
+
 ### User Stories
 
 ### Design Choices
 
+##### Icons
+
+##### Fonts
+
+##### Colours
+
 ## Key Elements
+
+### User Interaction
+
+## Implementation
 
 ### Modules
 
 #### API Requests
 
-#### Web Scraping
+#### Mongo DB Backend
+
+#### Mongo DB Jobs
 
 ## Performance
 
