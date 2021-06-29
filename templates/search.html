@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block title %}Login{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <form method="POST" id="add-address-form">
+        <h5>Add a new ethereum address to see its transactions:</h5>
+        <div class="form-group">
+            <div class="form-control">
+                <input type="text" id="search-eth"/>
+                <button type="submit">View Transactions</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

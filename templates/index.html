@@ -22,12 +22,6 @@
                     <tbody>
                         {% for data in transactions %}                
                             <tr>
-                                <td>
-                                    <label for="star-icon" class="custom-checkbox">
-                                    <input type="checkbox" id="star-icon"/>
-                                    <i class="glyphicon glyphicon-star-empty"></i>
-                                    <i class="glyphicon glyphicon-star"></i></label>
-                                </td>
                                 <td>{{ data['time']|safe }}</td>
                                 <td data-bs-toggle="tooltip" 
                                     data-bs-placement="bottom" 
@@ -48,6 +42,12 @@
                                 {% endif %}
                                 <td>{{ data['gas_price']|safe }}</td>
                                 <td>{{ data['gas_used']|safe }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-default btn-sm" id="favourite">
+                                        <i class="far fa-star"></i> <!--Empty star-->
+                                        <i class="fas fa-star"></i> <!--Full star-->
+                                    </button>
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
