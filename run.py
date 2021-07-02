@@ -5,7 +5,7 @@ from os import path
 if os.path.exists("env.py"):
     import env
 
-from flask import Flask, render_template, flash, redirect, request, session, url_for
+from flask import Flask, render_template, flash, redirect, request, session, url_for, send_from_directory
 from flask_pymongo import PyMongo
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -42,11 +42,19 @@ def login_required(f):
 @app.route("/index")
 @login_required
 def index():
+
     transactions = mongo.db.Transaction.find({
         "to": session['user']['eth']
     })
 
-    transaction_table_headings = ['Favourite', 'Date created', 'Hash', 'To', 'From', 'Value', 'Token Involved', 'Gas Price (GWEI)', 'Gas Spent (ETH)']    
+    transaction_list = []
+
+    for doc in transactions:
+        transaction_list.append(doc)
+
+    print(transaction_list)
+
+    transaction_table_headings = ['Date created', 'Hash', 'To', 'From', 'Value', 'Token Involved', 'Gas Price (GWEI)', 'Gas Spent (ETH)', 'Favourite']
 
     def shorten(string):
         return "0x..." + string[38:]
@@ -60,7 +68,8 @@ def index():
     def threeDecimals(y):
         return "%.3f" % y
     return render_template("index.html", 
-                            transactions=transactions, 
+                            transactions=transactions,
+                            transaction_list=transaction_list,
                             transaction_table_headings=transaction_table_headings,
                             shorten=shorten,
                             shorten2=shorten2,
@@ -89,6 +98,12 @@ def login():
 @login_required
 def signout():
     return logic.models.Account().signout()
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 # App config
 
