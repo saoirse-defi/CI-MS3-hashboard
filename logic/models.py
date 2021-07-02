@@ -79,19 +79,85 @@ class Account():
     
     def add_transactions(self, account):
         transaction_list = etherscan_api.etherscan_transactions(account['eth'])
-        print(transaction_list)
+        transaction_list_alt = etherscan_api.erc20_transactions(account['eth'])
+        transaction_list_nft = etherscan_api.nft_transactions(account['eth'])
+
         for transaction in transaction_list:
             if mongo.db.Transaction.find_one({
                 "hash": transaction['hash']
             }):
                 continue
             else:
-                mongo.db.Transaction.insert_one({
-                    "_id": uuid.uuid4().hex,
-                    "data": transaction
-                })
+                try:
+                    mongo.db.Transaction.insert_one({
+                        "_id": uuid.uuid4().hex,
+                        "time": transaction['time'],
+                        "hash": transaction['hash'],
+                        "to": transaction['to'],
+                        "from": transaction['from'],
+                        "value": transaction['value'],
+                        "error": transaction['error'],
+                        "gas_price": transaction['gas_price'],
+                        "gas_used": transaction['gas_used'],#
+                        "token_symbol": "ETH",
+                        "contract_address": "",
+                        "token_id": ""
+                    })
+                    print('Document added to database')
+                except:
+                    print('Error connection to database')
         
-        return jsonify({"transactions": transaction_list}), 200
+        for transaction in transaction_list_alt:
+            if mongo.db.Transaction.find_one({
+                "hash": transaction['hash']
+            }):
+                continue
+            else:
+                try:
+                    mongo.db.Transaction.insert_one({
+                        "_id": uuid.uuid4().hex,
+                        "time": transaction['time'],
+                        "hash": transaction['hash'],
+                        "to": transaction['to'],
+                        "from": transaction['from'],
+                        "value": transaction['value'],
+                        "error": transaction['error'],
+                        "gas_price": transaction['gas_price'],
+                        "gas_used": transaction['gas_used'],
+                        "token_symbol": transaction['token_symbol'],
+                        "contract_address": transaction['contract_address'],
+                        "token_id": ""
+                    })
+                    print('Document added to database')
+                except:
+                    print('Error connection to database')
+
+        for transaction in transaction_list_nft:
+            if mongo.db.Transaction.find_one({
+                "hash": transaction['hash']
+            }):
+                continue
+            else:
+                try:
+                    mongo.db.Transaction.insert_one({
+                        "_id": uuid.uuid4().hex,
+                        "time": transaction['time'],
+                        "hash": transaction['hash'],
+                        "to": transaction['to'],
+                        "from": transaction['from'],
+                        "value": transaction['value'],
+                        "error": transaction['error'],
+                        "gas_price": transaction['gas_price'],
+                        "gas_used": transaction['gas_used'],
+                        "token_symbol": transaction['token_symbol'],
+                        "contract_address": transaction['contract_address'],
+                        "token_id": transaction['token_id']
+                    })
+                    print('Document added to database')
+                except:
+                    print('Error connection to database')
+        
+        return True
 
 
 class Transaction():
