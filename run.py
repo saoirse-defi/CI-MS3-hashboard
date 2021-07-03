@@ -42,14 +42,8 @@ def login_required(f):
 @app.route("/index")
 @login_required
 def index():
-    cursor = mongo.db.Transaction.find({"to": session['user']['eth']})
-
-    print(session['user']['eth'])
-
-    for doc in cursor:
-        print('Doc in cursor', doc)
-
-    transactions_list = list(mongo.db.Transaction.find({"from": session['user']['eth']}))
+    
+    transactions_list = list(mongo.db.Transaction.find({"from": session['user']['eth']})) # list of cursor
 
     transaction_table_headings = ['Date created', 'Hash', 'To', 'From', 'Value', 'Token Involved', 'Gas Price (GWEI)', 'Gas Spent (ETH)', 'Favourite']
 
@@ -65,7 +59,6 @@ def index():
     def threeDecimals(y):
         return "%.3f" % y
     return render_template("index.html",
-                            cursor=cursor,
                             transactions_list=transactions_list,
                             transaction_table_headings=transaction_table_headings,
                             shorten=shorten,
