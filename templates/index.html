@@ -9,11 +9,11 @@
 <p>{{ session['user'] }}</p>
 
 <p>
-    {{ transactions }}
+    {{ cursor }}
 </p>
 
 <p>
-    {{ transaction_list }}
+    {{ transactions_list }}
 </p>
 
 <div class="container-fluid md-2 mb-2" id="transaction-table">
@@ -28,7 +28,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for data in transactions %}                
+                        {% for data in transactions_list %}                
                             <tr>
                                 <td>{{ data['time']|safe }}</td>
                                 <td data-bs-toggle="tooltip" 
