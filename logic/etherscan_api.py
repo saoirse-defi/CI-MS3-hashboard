@@ -51,7 +51,7 @@ def erc20_transactions(address):
             'to': transaction['to'],
             'value': str(Web3.fromWei(float(transaction['value']), 'ether')),  # in Gwei
             'gas_price': str(Web3.fromWei(int(transaction['gasPrice']), 'ether') * int('1000000000')),
-            'gas_used': str(round(Web3.fromWei(int(transaction['gasPrice']) * int(transaction['gasUsed']), 'ether')), 6),
+            'gas_used': str(round(Web3.fromWei(int(transaction['gasPrice']) * int(transaction['gasUsed']), 'ether'), 6)),
             'token_name': transaction['tokenName'],
             'token_symbol': transaction['tokenSymbol'],
             'contract_address': transaction['contractAddress']
