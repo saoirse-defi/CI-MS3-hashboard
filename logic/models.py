@@ -41,7 +41,7 @@ class Account():
             "_id": uuid.uuid4().hex,
             "name": request.form.get('name'),
             "email": request.form.get('email'),
-            "eth": request.form.get('eth'),
+            "eth": request.form.get('eth').lower(),
             "password": request.form.get('password')
         }
 
@@ -98,7 +98,7 @@ class Account():
                         "value": transaction['value'],
                         "error": transaction['error'],
                         "gas_price": transaction['gas_price'],
-                        "gas_used": transaction['gas_used'],#
+                        "gas_used": transaction['gas_used'],
                         "token_symbol": "ETH",
                         "contract_address": "",
                         "token_id": ""
