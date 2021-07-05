@@ -1,7 +1,10 @@
 # Imports
 import os
 import uuid
+import asyncio
+import httpx
 from os import path
+from web3 import Web3
 if os.path.exists("env.py"):
     import env
 
@@ -66,6 +69,22 @@ def index():
                             toInt=toInt,
                             threeDecimals=threeDecimals)
 
+
+@app.route('/search', methods=['GET', 'POST'])
+async def search():
+    errors = {}
+    if request.method == 'POST':
+        search_eth = str(request.form.get('search-eth')).lower()
+
+        async with httpx.AsyncClient() as client:
+            search_result = await asyncio.gather(
+                client.get(f'https://api.etherscan.io/api?module=account&action=txlist&address={search_eth}&startblock=0&endblock=99999999&sort=asc&apikey=PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
+            )
+        
+        print(search_result)
+
+
+    return render_template("search.html", errors=errors, form=request.form)
 
 @app.route('/signup2', methods=['GET', 'POST'])
 def signup2():
