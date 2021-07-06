@@ -80,17 +80,13 @@ class Account():
         
         return jsonify({"error": "Invalid login details"}), 401
     
-    def fav(self, user, data):
-        if mongo.db.Transaction.find_one({  # check to see if transaction exists in db
-            "hash": data['hash']
-        }):
-            mongo.db.Account.update({  # update session's user account
-                "eth": account['eth']
-            }), {"$push": {
-                "fav": mongo.db.Transaction.find_one({  # add existing transaction to fav list
-                    "hash": data['hash']
-                })
-            }}
+    def fav(self, data):
+        check_for_transaction = mongo.db.Transaction.find_one({"hash": data['hash']}) # add existing transaction to fav list
+        check_for_user = mongo.db.Account.find_one({"email": session['user']['email']})
+        if check_for_transaction:
+            check_for_user.update({  # update session's user account
+                "eth": session['user']['eth']
+            }, {"$push": check_for_transaction})
         else:
             mongo.db.Transaction.insert_one({  # else add transaction to db
                 "_id": uuid.uuid4().hex,
@@ -106,13 +102,13 @@ class Account():
                 "contract_address": "",
                 "token_id": ""
             })
-            mongo.db.Account.update({  # update session's user account
-                "eth": account['eth']
-            }), {"$push": {
+            check_for_user({  # update session's user account
+                "eth": session['user']['eth']
+            }, {"$push": {
                 "fav": mongo.db.Transaction.find_one({  # add existing transaction to fav list
                     "hash": data['hash']
                 })
-            }}
+            }})
 
     
     def add_eth_transactions(self, account):
