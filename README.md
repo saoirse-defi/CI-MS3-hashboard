@@ -91,3 +91,7 @@ The target audience for this application reflects people within the age group of
 ## Wireframes
 
 ## Dependancies
+
+#### Requirements.txt
+
+#### Web3
