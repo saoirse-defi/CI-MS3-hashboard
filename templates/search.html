@@ -45,7 +45,7 @@
                         <td>{{ data['gas_price']|safe }}</td>
                         <td>{{ data['gas_used']|safe }}</td>
                         <td>
-                            <button type="button" class="btn btn-default btn-sm" id="favourite-button">
+                            <button type="button" class="btn btn-default btn-sm" id="favourite-button" onclick="window.location.href='{{ url_for('_save_transaction', data='data') }}';">
                                 <i class="far fa-star"></i> <!--Empty star-->
                                 <i class="fas fa-star"></i> <!--Full star-->
                             </button>
