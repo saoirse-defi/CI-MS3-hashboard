@@ -42,6 +42,7 @@ class Account():
             "name": request.form.get('name'),
             "email": request.form.get('email'),
             "eth": request.form.get('eth').lower(),
+            "fav": [],  # list or dict to save transactions
             "password": request.form.get('password')
         }
 
@@ -51,7 +52,9 @@ class Account():
             return jsonify({'error': 'Email already in use.'})
 
         if mongo.db.User.insert_one(account):
-            self.add_transactions(account)
+            self.add_eth_transactions(account)
+            self.add_alt_transactions(account)
+            self.add_nft_transactions(account)
             return self.start_session(account)
 
         return jsonify({'error': 'Signup failed'}), 400
@@ -77,10 +80,43 @@ class Account():
         
         return jsonify({"error": "Invalid login details"}), 401
     
-    def add_transactions(self, account):
+    def fav(self, user, data):
+        if mongo.db.Transaction.find_one({  # check to see if transaction exists in db
+            "hash": data['hash']
+        }):
+            mongo.db.Account.update({  # update session's user account
+                "eth": account['eth']
+            }), {"$push": {
+                "fav": mongo.db.Transaction.find_one({  # add existing transaction to fav list
+                    "hash": data['hash']
+                })
+            }}
+        else:
+            mongo.db.Transaction.insert_one({  # else add transaction to db
+                "_id": uuid.uuid4().hex,
+                "time": data['time'],
+                "hash": data['hash'],
+                "to": data['to'],
+                "from": data['from'],
+                "value": data['value'],
+                "error": data['error'],
+                "gas_price": data['gas_price'],
+                "gas_used": data['gas_used'],
+                "token_symbol": "ETH",
+                "contract_address": "",
+                "token_id": ""
+            })
+            mongo.db.Account.update({  # update session's user account
+                "eth": account['eth']
+            }), {"$push": {
+                "fav": mongo.db.Transaction.find_one({  # add existing transaction to fav list
+                    "hash": data['hash']
+                })
+            }}
+
+    
+    def add_eth_transactions(self, account):
         transaction_list = etherscan_api.etherscan_transactions(account['eth'])
-        transaction_list_alt = etherscan_api.erc20_transactions(account['eth'])
-        transaction_list_nft = etherscan_api.nft_transactions(account['eth'])
 
         for transaction in transaction_list:
             if mongo.db.Transaction.find_one({
@@ -107,6 +143,11 @@ class Account():
                 except:
                     print('Error connection to database')
         
+        return True
+
+    def add_alt_transactions(self, account):
+        transaction_list_alt = etherscan_api.erc20_transactions(account['eth'])
+
         for transaction in transaction_list_alt:
             if mongo.db.Transaction.find_one({
                 "hash": transaction['hash']
@@ -131,6 +172,11 @@ class Account():
                     print('Document added to database')
                 except:
                     print('Error connection to database')
+        
+        return True
+
+    def add_nft_transactions(self, account):
+        transaction_list_nft = etherscan_api.nft_transactions(account['eth'])
 
         for transaction in transaction_list_nft:
             if mongo.db.Transaction.find_one({
@@ -160,8 +206,9 @@ class Account():
         return True
 
 
-class Transaction():
 
-    def __init__(self, _data):
-        self.id = uuid.uuid4().hex
-        self.data = _data
+#  class Transaction():
+
+    #  def __init__(self, _data):
+        #  self.id = uuid.uuid4().hex
+        #  self.data = _data
