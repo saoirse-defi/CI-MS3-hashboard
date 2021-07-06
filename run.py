@@ -2,7 +2,9 @@
 import os
 import uuid
 import asyncio
+import json
 import httpx
+import time
 from os import path
 from web3 import Web3
 if os.path.exists("env.py"):
@@ -26,6 +28,8 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 
+transaction_table_headings = ['Date created', 'Hash', 'To', 'From', 'Value', 'Token Involved', 'Gas Price (GWEI)', 'Gas Spent (ETH)', 'Favourite']
+
 # Decorator Functions
 
 
@@ -47,8 +51,6 @@ def login_required(f):
 def index():
     
     transactions_list = list(mongo.db.Transaction.find({"from": session['user']['eth']})) # list of cursor
-
-    transaction_table_headings = ['Date created', 'Hash', 'To', 'From', 'Value', 'Token Involved', 'Gas Price (GWEI)', 'Gas Spent (ETH)', 'Favourite']
 
     def shorten(string):
         return "0x..." + string[38:]
@@ -73,18 +75,56 @@ def index():
 @app.route('/search', methods=['GET', 'POST'])
 async def search():
     errors = {}
+
+    def shorten(string):
+        return "0x..." + string[38:]
+    
+    def shorten2(string):
+        return "0x..." + string[62:]
+
+    def toInt(x):
+        return int(float(x))
+
+    def threeDecimals(y):
+        return "%.3f" % y
+
     if request.method == 'POST':
         search_eth = str(request.form.get('search-eth')).lower()
+        print(search_eth)
 
         async with httpx.AsyncClient() as client:
-            search_result = await asyncio.gather(
-                client.get(f'https://api.etherscan.io/api?module=account&action=txlist&address={search_eth}&startblock=0&endblock=99999999&sort=asc&apikey=PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
-            )
+            search_result = await client.get(f'https://api.etherscan.io/api?module=account&action=txlist&address={search_eth}&startblock=0&endblock=99999999&sort=asc&apikey=PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
         
-        print(search_result)
+        search_result_text = search_result.text
+        search_json = json.loads(search_result_text)
+        transactions = search_json['result']
 
+        print(transactions)
 
-    return render_template("search.html", errors=errors, form=request.form)
+        transaction_list = []
+
+        for transaction in transactions:
+            data = {
+                'time': time.strftime("%Y-%m-%d %H:%M", time.localtime(int(transaction['timeStamp']))),
+                'hash': transaction['hash'],
+                'from': transaction['from'],
+                'to': transaction['to'],
+                'value': str(Web3.fromWei(float(transaction['value']), 'ether')),  # in Gwei
+                'error': transaction['isError'],
+                'gas_price': str(Web3.fromWei(int(transaction['gasPrice']), 'ether') * int('1000000000')),
+                'gas_used': str(round(Web3.fromWei(int(transaction['gasPrice']) * int(transaction['gasUsed']), 'ether'), 6)),
+                'starred': False
+            }
+            transaction_list.append(data)
+
+    return render_template("search.html", 
+                            errors=errors, 
+                            shorten=shorten,
+                            shorten2=shorten2,
+                            toInt=toInt,
+                            threeDecimals=threeDecimals,
+                            transaction_list=transaction_list,
+                            transaction_table_headings=transaction_table_headings)
 
 @app.route('/signup2', methods=['GET', 'POST'])
 def signup2():
