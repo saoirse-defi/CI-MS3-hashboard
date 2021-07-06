@@ -114,13 +114,39 @@ async def search():
                 'hash': transaction['hash'],
                 'from': transaction['from'],
                 'to': transaction['to'],
+                'value': str(Web3.fromWei(float(transaction['value']), 'ether')),
                 'gas_price': str(Web3.fromWei(int(transaction['gasPrice']), 'ether') * int('1000000000')),
                 'gas_used': str(round(Web3.fromWei(int(transaction['gasPrice']) * int(transaction['gasUsed']), 'ether'), 6)),
-                'token_name': transaction['tokenName'] or 'Ethereum',  # not working
-                'token_symbol': transaction['tokenSymbol'] or 'ETH',
-                'contract_address': transaction['contractAddress'],
-                'token_id': int(transaction['tokenID'] or "")
+                'token_name': 'Ethereum',  # not working
+                'token_symbol': 'ETH',
+                'contract_address': '',
+                'token_id': ''
             }
+
+            try:
+                if transaction['tokenName']:
+                    data['token_name'] = transaction['tokenName']
+            except KeyError:
+                print("Exception")
+
+            try:
+                if transaction['tokenSymbol']:
+                    data['token_symbol'] = transaction['tokenSymbol']
+            except KeyError:
+                print("Exception")
+            
+            try:
+                if transaction['contractAddress']:
+                    data['contract_address'] = transaction['contractAddress']
+            except KeyError:
+                print("Exception")
+
+            try:
+                if transaction['tokenID']:
+                    data['token_id'] = transaction['tokenID']
+            except KeyError:
+                print("Exception")
+
             transaction_list.append(data)
         
         transaction_list.sort(reverse=True, key=itemgetter('time'))  # sort combined list by time/date
@@ -139,7 +165,7 @@ async def search():
 
 @app.route('/_save_transaction')  # background process in order to save transaction to Account fav list
 def _save_transaction(data):
-    logic.models.Account().fav(session['eth'], data)
+    logic.models.Account().fav(data)
     return redirect(url_for('search'))
 
 
