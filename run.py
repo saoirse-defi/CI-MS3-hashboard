@@ -62,12 +62,86 @@ def threeDecimals(y):
 # Routes
 
 @app.route("/")
-@app.route("/index")
+@app.route("/index", methods=['GET', 'POST'])
 @login_required
-def index():
-    transactions_list = list(mongo.db.Transaction.find({"from": session['user']['eth']})) # list of cursor query
+async def index():
+    transactions_list = []
+
+    if request.method == 'POST':
+        search_address = str(request.form.get('search-address')).lower()
+
+        async with httpx.AsyncClient() as client:
+            eth_res, alt_res, nft_res = await asyncio.gather(
+                client.get(f'https://api.etherscan.io/api?module=account&action=txlist&address={search_address}&startblock=0&endblock=99999999&sort=asc&apikey=PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA'),
+                client.get(f'https://api.etherscan.io/api?module=account&action=tokentx&address={search_address}&startblock=0&endblock=999999999&sort=asc&apikey=PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA'),
+                client.get(f'https://api.etherscan.io/api?module=account&action=tokennfttx&address={search_address}&startblock=0&endblock=999999999&sort=asc&apikey=PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
+            )
+
+            # search_result = await client.get(f'https://api.etherscan.io/api?module=account&action=txlist&address={search_eth}&startblock=0&endblock=99999999&sort=asc&apikey=PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
+        
+        eth_result_text = eth_res.text  # process repsonses into python list
+        eth_json = json.loads(eth_result_text)
+        list_eth = eth_json['result']
+
+        alt_result_text = alt_res.text  # process repsonses into python list
+        alt_json = json.loads(alt_result_text)
+        list_alt = alt_json['result']
+
+        nft_result_text = nft_res.text  # process repsonses into python list
+        nft_json = json.loads(nft_result_text)
+        list_nft = nft_json['result']
+
+        combined_transaction_list = list_eth + list_alt + list_nft  # combining lists
+
+        for transaction in combined_transaction_list:  # formatting data
+            data = {
+                'user_id': session['user']['_id'],
+                'time': time.strftime("%Y-%m-%d %H:%M", time.localtime(int(transaction['timeStamp']))),
+                'hash': transaction['hash'],
+                'from': transaction['from'],
+                'to': transaction['to'],
+                'value': str(Web3.fromWei(float(transaction['value']), 'ether')),
+                'gas_price': str(Web3.fromWei(int(transaction['gasPrice']), 'ether') * int('1000000000')),
+                'gas_used': str(round(Web3.fromWei(int(transaction['gasPrice']) * int(transaction['gasUsed']), 'ether'), 6)),
+                'token_name': 'Ethereum',  # not working
+                'token_symbol': 'ETH',
+                'contract_address': '',
+                'token_id': ''
+            }
+
+            try:
+                if transaction['tokenName']:
+                    data['token_name'] = transaction['tokenName']
+            except KeyError:
+                print("Exception")
+
+            try:
+                if transaction['tokenSymbol']:
+                    data['token_symbol'] = transaction['tokenSymbol']
+            except KeyError:
+                print("Exception")
+            
+            try:
+                if transaction['contractAddress']:
+                    data['contract_address'] = transaction['contractAddress']
+            except KeyError:
+                print("Exception")
+
+            try:
+                if transaction['tokenID']:
+                    data['token_id'] = transaction['tokenID']
+            except KeyError:
+                print("Exception")
+            
+            transactions_list.append(data)
+            print(transactions_list)
+
+    logic.models.Account.add_transactions(transactions_list, session['user']['_id'])
+
+    #transactions_list = list(mongo.db.Transaction.find({"from": session['user']['eth']})) # list of cursor query
 
     return render_template("index.html",
+                            search_address=search_address,
                             transactions_list=transactions_list,
                             transaction_table_headings=transaction_table_headings,
                             shorten=shorten,
@@ -80,8 +154,13 @@ def index():
 async def search():
     errors = {}
     transaction_list = []
+    search_eth = ""
 
     if request.method == 'POST':
+        #if request.args.get('fav-button') is not None:
+         #   data = json.loads(request.form.get('fav-button'))
+          #  print(data)
+
         search_eth = str(request.form.get('search-eth')).lower()
         print(search_eth)
 
@@ -152,6 +231,11 @@ async def search():
         transaction_list.sort(reverse=True, key=itemgetter('time'))  # sort combined list by time/date
 
         print(transaction_list)
+    
+    #if request.method == 'POST':
+     #   if request.args.get('fav-button') is not None:
+      #      data = request.form.get('fav-button')
+       #     print(data)
 
     return render_template("search.html", 
                             errors=errors, 
@@ -159,14 +243,15 @@ async def search():
                             shorten2=shorten2,
                             toInt=toInt,
                             threeDecimals=threeDecimals,
+                            search_eth=search_eth,
                             transaction_list=transaction_list,  # get this error only sometimes UnboundLocalError: local variable 'transaction_list' referenced before assignment Traceback (most recent call last)
                             transaction_table_headings=transaction_table_headings)
 
 
-@app.route('/_save_transaction')  # background process in order to save transaction to Account fav list
-def _save_transaction(data):
-    logic.models.Account().fav(data)
-    return redirect(url_for('search'))
+#@app.route('/_save_transaction')  # background process in order to save transaction to Account fav list
+#def _save_transaction(data):
+#    logic.models.Account().fav(data)
+#    return redirect(url_for('search'))
 
 
 @app.route('/signup2', methods=['GET', 'POST'])
