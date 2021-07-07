@@ -8,48 +8,16 @@
 
 <p>{{ session['user'] }}</p>
 
-<div class="container-fluid md-2 mb-2" id="transaction-table">
-            <div class="table-responsive">
-                <table class="table table-bordered table-success table-striped table-hover caption-top" data-toggle="table" data-patination="true" data-page-length='10' data-search="true" id="ethTable">
-                    <caption>Ethereum Transactions</caption>
-                    <thead>
-                        <tr class="bg-dark text-white">
-                            {% for header in transaction_table_headings %}
-                            <th>{{ header }}</th>
-                            {% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for data in transactions_list %}                
-                            <tr>
-                                <td>{{ data['time']|safe }}</td>
-                                <td data-bs-toggle="tooltip" 
-                                    data-bs-placement="bottom" 
-                                    title={{ data['hash'|safe] }}>{{ shorten2(data['hash']) }}</td>
-                                <td data-bs-toggle="tooltip" 
-                                    data-bs-placement="bottom" 
-                                    title={{ data['to'|safe] }}>{{ shorten(data['to']|safe) }}</td>
-                                <td data-bs-toggle="tooltip" 
-                                    data-bs-placement="bottom" 
-                                    title={{ data['from'|safe] }}>{{ shorten(data['from']|safe) }}</td>
-                                <td data-bs-toggle="tooltip" 
-                                    data-bs-placement="bottom" 
-                                    title={{ data['value'|safe] }}>{{ threeDecimals(toInt(data['value'])) }}</td>
-                                <td>{{ data['token_symbol']}}</td>
-                                <td>{{ toInt(data['gas_price']|safe) }}</td>
-                                <td>{{ data['gas_used']|safe }}</td>
-                                <td>
-                                    <button type="button" class="btn btn-default btn-sm" id="favourite-button">
-                                        <i class="far fa-star"></i> <!--Empty star-->
-                                        <i class="fas fa-star"></i> <!--Full star-->
-                                    </button>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+<div class="container-fluid">
+    <form method="POST" id="add-transactions">
+        <h5>Enter an Ethereum public address in order to view transactions:</h5>
+        <div class="form-group">
+            <div class="form-control">
+                <input type="text" id="search-address" name="search-address"/>
+                <button type="submit">View Transactions</button>
             </div>
         </div>
-    </div>
+    </form>
+</div>
 
 {% endblock %}
