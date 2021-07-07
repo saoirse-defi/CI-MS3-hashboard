@@ -1,5 +1,5 @@
 ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
-# Code Institute, Milestone 3: Hash-Board
+# Code Institute, Milestone 3: hash-board
 
 ## Introduction
 
@@ -54,6 +54,12 @@ The target audience for this application reflects people within the age group of
 
 ### Developer & Business Goals
 
+##### Tier Structure
+
+Limit the user to a set number of API calls and favourite transactions. This will incentivise active users to upgrade to the premium tier.
+
+Premium tier users will have unlimited access when adding favourite transactions.
+
 ### User Stories
 
 ### Design Choices
@@ -73,6 +79,8 @@ The target audience for this application reflects people within the age group of
 ### Modules
 
 #### API Requests
+
+#### Asyncronous Requests
 
 #### Mongo DB Backend
 
