@@ -8,32 +8,6 @@ from run import mongo
 from . import etherscan_api
 
 
-class User(UserMixin):
-
-    def signup(self):
-        user = {
-            "name": "",
-            "email": "",
-            "eth": "",
-            "password": "",
-            "password_confirm": ""
-        }
-        
-        return jsonify(user), 200
-    
-    def is_active(self):
-        return True
-   
-    def start_session(self, user):
-        session['logged_in'] = True
-        session['user'] = user
-        return jsonify(user), 200
-    
-    def signout(self):
-        session.clear()
-        return redirect('/')
-
-
 class Account():
 
     def signup(self):
@@ -41,8 +15,8 @@ class Account():
             "_id": uuid.uuid4().hex,
             "name": request.form.get('name'),
             "email": request.form.get('email'),
-            "eth": request.form.get('eth').lower(),
-            "fav": [],  # list or dict to save transactions
+            #"eth": request.form.get('eth').lower(),
+            #"fav": [],  # list or dict to save transactions
             "password": request.form.get('password')
         }
 
@@ -51,11 +25,11 @@ class Account():
         if(mongo.db.User.find_one({'email': account['email']})):
             return jsonify({'error': 'Email already in use.'})
 
-        if mongo.db.User.insert_one(account):
-            self.add_eth_transactions(account)
-            self.add_alt_transactions(account)
-            self.add_nft_transactions(account)
-            return self.start_session(account)
+        #if mongo.db.User.insert_one(account):
+         #   self.add_eth_transactions(account)
+          #  self.add_alt_transactions(account)
+           # self.add_nft_transactions(account)
+            #return self.start_session(account)
 
         return jsonify({'error': 'Signup failed'}), 400
     
@@ -80,36 +54,45 @@ class Account():
         
         return jsonify({"error": "Invalid login details"}), 401
     
-    def fav(self, data):
-        check_for_transaction = mongo.db.Transaction.find_one({"hash": data['hash']}) # add existing transaction to fav list
-        check_for_user = mongo.db.Account.find_one({"email": session['user']['email']})
-        if check_for_transaction:
-            check_for_user.update({  # update session's user account
-                "eth": session['user']['eth']
-            }, {"$push": check_for_transaction})
-        else:
-            mongo.db.Transaction.insert_one({  # else add transaction to db
-                "_id": uuid.uuid4().hex,
-                "time": data['time'],
-                "hash": data['hash'],
-                "to": data['to'],
-                "from": data['from'],
-                "value": data['value'],
-                "error": data['error'],
-                "gas_price": data['gas_price'],
-                "gas_used": data['gas_used'],
-                "token_symbol": "ETH",
-                "contract_address": "",
-                "token_id": ""
+    def add_transactions(self, list, user_id):
+        for item in list:
+            mongo.db.Transaction.insert_one({
+                        "_id": uuid.uuid4().hex,
+                        "user_id": user_id,
+                        "time": item['time'],
+                        "hash": item['hash'],
+                        "to": item['to'],
+                        "from": item['from'],
+                        "value": item['value'],
+                        "error": item['error'],
+                        "gas_price": item['gas_price'],
+                        "gas_used": item['gas_used'],
+                        "token_symbol": "ETH",
+                        "contract_address": "",
+                        "token_id": ""
             })
-            check_for_user({  # update session's user account
-                "eth": session['user']['eth']
-            }, {"$push": {
-                "fav": mongo.db.Transaction.find_one({  # add existing transaction to fav list
-                    "hash": data['hash']
-                })
-            }})
 
+    #def fav(self, data):
+     #   transaction_exists = mongo.db.Transaction.find_one({"hash": data['hash']}) # find transaction in db
+      #  if transaction_exists: 
+       #     mongo.db.Account.update({"email": session['user']['email']}, {"$push": {"fav": transaction_exists}})  # update session's user account
+        #else:
+         #   mongo.db.Transaction.insert_one({  # else add transaction to db
+          #      "_id": uuid.uuid4().hex,
+           #     "time": data['time'],
+            #    "hash": data['hash'],
+             #   "to": data['to'],
+              #  "from": data['from'],
+               # "value": data['value'],
+                #"error": data['error'],
+        #        "gas_price": data['gas_price'],
+         #       "gas_used": data['gas_used'],
+          #      "token_symbol": "ETH",
+           #     "contract_address": "",
+            #    "token_id": ""
+            #})
+            # check_new_transaction = mongo.db.Transaction.find_one({"hash": data['hash']})  # check db once again after addition, async maybe needed
+            # mongo.db.Account.update({"email": session['user']['email']}, {"$push": {"fav": check_new_transaction}})  # update current user with new transaction
     
     def add_eth_transactions(self, account):
         transaction_list = etherscan_api.etherscan_transactions(account['eth'])
