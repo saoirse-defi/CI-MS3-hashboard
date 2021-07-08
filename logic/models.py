@@ -25,11 +25,11 @@ class Account():
         if(mongo.db.User.find_one({'email': account['email']})):
             return jsonify({'error': 'Email already in use.'})
 
-        #if mongo.db.User.insert_one(account):
+        if mongo.db.User.insert_one(account):
          #   self.add_eth_transactions(account)
           #  self.add_alt_transactions(account)
            # self.add_nft_transactions(account)
-            #return self.start_session(account)
+            return self.start_session(account)
 
         return jsonify({'error': 'Signup failed'}), 400
     
@@ -54,23 +54,25 @@ class Account():
         
         return jsonify({"error": "Invalid login details"}), 401
     
-    def add_transactions(self, list, user_id):
-        for item in list:
-            mongo.db.Transaction.insert_one({
-                        "_id": uuid.uuid4().hex,
-                        "user_id": user_id,
-                        "time": item['time'],
-                        "hash": item['hash'],
-                        "to": item['to'],
-                        "from": item['from'],
-                        "value": item['value'],
-                        "error": item['error'],
-                        "gas_price": item['gas_price'],
-                        "gas_used": item['gas_used'],
-                        "token_symbol": "ETH",
-                        "contract_address": "",
-                        "token_id": ""
-            })
+    def add_transactions(self, data):
+        mongo.db.Transaction.insert_one({
+                    "_id": uuid.uuid4().hex,
+                    "user_id": session['user']['_id'],
+                    "time": data['time'],
+                    "hash": data['hash'],
+                    "to": data['to'],
+                    "from": data['from'],
+                    "value": data['value'],
+                    "gas_price": data['gas_price'],
+                    "gas_used": data['gas_used'],
+                    "token_symbol": data['token_symbol'],
+                    "contract_address": data['contract_address'],
+                    "token_id": data['token_id'],
+                    "note": "",
+                    "isFav": False
+        })
+
+        return True
 
     #def fav(self, data):
      #   transaction_exists = mongo.db.Transaction.find_one({"hash": data['hash']}) # find transaction in db
