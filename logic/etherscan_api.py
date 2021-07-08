@@ -23,10 +23,12 @@ def etherscan_transactions(address):
             'from': transaction['from'],
             'to': transaction['to'],
             'value': str(Web3.fromWei(float(transaction['value']), 'ether')),  # in Gwei
-            'error': transaction['isError'],
             'gas_price': str(Web3.fromWei(int(transaction['gasPrice']), 'ether') * int('1000000000')),
             'gas_used': str(round(Web3.fromWei(int(transaction['gasPrice']) * int(transaction['gasUsed']), 'ether'), 6)),
-            'starred': False
+            'token_name': "Ethereum",
+            'token_symbol': "ETH",
+            'contract_address': "",
+            'token_id': ""
         }
         transaction_list.append(data)
     
@@ -54,7 +56,8 @@ def erc20_transactions(address):
             'gas_used': str(round(Web3.fromWei(int(transaction['gasPrice']) * int(transaction['gasUsed']), 'ether'), 6)),
             'token_name': transaction['tokenName'],
             'token_symbol': transaction['tokenSymbol'],
-            'contract_address': transaction['contractAddress']
+            'contract_address': transaction['contractAddress'],
+            'token_id': ""
         }
 
         erc20_transaction_list.append(data)
@@ -78,6 +81,7 @@ def nft_transactions(address):
             'hash': transaction['hash'],
             'from': transaction['from'],
             'to': transaction['to'],
+            'value': "NFT",
             'gas_price': str(Web3.fromWei(int(transaction['gasPrice']), 'ether') * int('1000000000')),
             'gas_used': str(round(Web3.fromWei(int(transaction['gasPrice']) * int(transaction['gasUsed']), 'ether'), 6)),
             'token_name': transaction['tokenName'],
