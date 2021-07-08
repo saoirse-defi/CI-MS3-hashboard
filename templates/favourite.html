@@ -1,0 +1,20 @@
+{% extends 'base.html' %} {% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <form method="POST" action="{{ url_for('favourite', t_id=transaction['_id'])}}">
+        <span>Transaction Hash: {{transaction.hash}}</span><br>
+        <span>To address: {{transaction.to}}</span><br>
+        <span>From address: {{transaction.from}}</span><br>
+
+        <label for="note">Add description to save transaction:</label><br>
+        <textarea id="note" name="note" required></textarea><br>
+        
+        <!--Cancel button-->
+        <a href="{{url_for('index')}}">Cancel</a>
+        <button type="submit">Save</button>
+    </form>
+</div>
+
+{% endblock %}
