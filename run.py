@@ -34,6 +34,7 @@ transaction_table_headings = ['Date created', 'Hash', 'To', 'From', 'Value', 'To
 
 # Decorator Functions
 
+
 def login_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
@@ -46,14 +47,18 @@ def login_required(f):
 
 # Formatting functions
 
+
 def shorten(string):  # formatting functions
     return "0x..." + string[38:]
-    
+
+
 def shorten2(string):
     return "0x..." + string[62:]
 
+
 def toInt(x):
     return int(float(x))
+
 
 def threeDecimals(y):
     return "%.3f" % y
@@ -64,85 +69,18 @@ def threeDecimals(y):
 @app.route("/")
 @app.route("/index", methods=['GET', 'POST'])
 @login_required
-async def index():
-    transactions_list = []
+def index():
+    transactions_list = list(mongo.db.Transaction.find({"user_id": session['user']['_id']})) # list of cursor query
+    transactions_list.sort(reverse=True, key=itemgetter('time'))  # sort combined list by time/date
 
-    if request.method == 'POST':
-        search_address = str(request.form.get('search-address')).lower()
+    fav_list = list(mongo.db.Transaction.find({"user_id": session['user']['_id'], "isFav": True}))
+    fav_list.sort(reverse=True, key=itemgetter('time'))
 
-        async with httpx.AsyncClient() as client:
-            eth_res, alt_res, nft_res = await asyncio.gather(
-                client.get(f'https://api.etherscan.io/api?module=account&action=txlist&address={search_address}&startblock=0&endblock=99999999&sort=asc&apikey=PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA'),
-                client.get(f'https://api.etherscan.io/api?module=account&action=tokentx&address={search_address}&startblock=0&endblock=999999999&sort=asc&apikey=PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA'),
-                client.get(f'https://api.etherscan.io/api?module=account&action=tokennfttx&address={search_address}&startblock=0&endblock=999999999&sort=asc&apikey=PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
-            )
-
-            # search_result = await client.get(f'https://api.etherscan.io/api?module=account&action=txlist&address={search_eth}&startblock=0&endblock=99999999&sort=asc&apikey=PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
-        
-        eth_result_text = eth_res.text  # process repsonses into python list
-        eth_json = json.loads(eth_result_text)
-        list_eth = eth_json['result']
-
-        alt_result_text = alt_res.text  # process repsonses into python list
-        alt_json = json.loads(alt_result_text)
-        list_alt = alt_json['result']
-
-        nft_result_text = nft_res.text  # process repsonses into python list
-        nft_json = json.loads(nft_result_text)
-        list_nft = nft_json['result']
-
-        combined_transaction_list = list_eth + list_alt + list_nft  # combining lists
-
-        for transaction in combined_transaction_list:  # formatting data
-            data = {
-                'user_id': session['user']['_id'],
-                'time': time.strftime("%Y-%m-%d %H:%M", time.localtime(int(transaction['timeStamp']))),
-                'hash': transaction['hash'],
-                'from': transaction['from'],
-                'to': transaction['to'],
-                'value': str(Web3.fromWei(float(transaction['value']), 'ether')),
-                'gas_price': str(Web3.fromWei(int(transaction['gasPrice']), 'ether') * int('1000000000')),
-                'gas_used': str(round(Web3.fromWei(int(transaction['gasPrice']) * int(transaction['gasUsed']), 'ether'), 6)),
-                'token_name': 'Ethereum',  # not working
-                'token_symbol': 'ETH',
-                'contract_address': '',
-                'token_id': ''
-            }
-
-            try:
-                if transaction['tokenName']:
-                    data['token_name'] = transaction['tokenName']
-            except KeyError:
-                print("Exception")
-
-            try:
-                if transaction['tokenSymbol']:
-                    data['token_symbol'] = transaction['tokenSymbol']
-            except KeyError:
-                print("Exception")
-            
-            try:
-                if transaction['contractAddress']:
-                    data['contract_address'] = transaction['contractAddress']
-            except KeyError:
-                print("Exception")
-
-            try:
-                if transaction['tokenID']:
-                    data['token_id'] = transaction['tokenID']
-            except KeyError:
-                print("Exception")
-            
-            transactions_list.append(data)
-            print(transactions_list)
-
-    logic.models.Account.add_transactions(transactions_list, session['user']['_id'])
-
-    #transactions_list = list(mongo.db.Transaction.find({"from": session['user']['eth']})) # list of cursor query
+    print(mongo.db.Transaction.find_one({'hash': '0xa461b27f1159532a28f6ebae83ecc1d861dbda46398ccf43d691ba4a4d12b0cf'}))
 
     return render_template("index.html",
-                            search_address=search_address,
                             transactions_list=transactions_list,
+                            fav_list=fav_list,
                             transaction_table_headings=transaction_table_headings,
                             shorten=shorten,
                             shorten2=shorten2,
@@ -150,7 +88,44 @@ async def index():
                             threeDecimals=threeDecimals)
 
 
+# Add transaction to favourites
+@app.route('/favourite/<t_id>', methods=['GET', 'POST'])
+@login_required
+def favourite(t_id):
+    transaction = mongo.db.Transaction.find_one({'_id': t_id})
+
+    if request.method == 'POST':
+        note = request.form.get('note')
+        mongo.db.Transaction.update({"_id": t_id}, {"$set": {"note": note, "isFav": True}})
+        flash("Note added successfully", category='success')
+        return redirect(url_for('index'))
+    
+    return render_template('favourite.html',
+                            transaction=transaction)
+
+
+# Delete transaction from favourites
+@app.route('/delete_fav/<t_id>', methods=['GET', 'POST'])
+@login_required
+def delete_fav(t_id):
+    mongo.db.Transaction.update({"_id": t_id}, {"$set": {"note": "", "isFav": False}})
+    flash("Favourite removed", category='success')
+
+    return redirect(url_for('index'))
+
+
+# Clear all transactions except favourites
+@app.route('/clear', methods=['GET', 'POST'])
+@login_required
+def clear():
+    mongo.db.Transaction.remove({"user_id": session['user']['_id'], 'isFav': False})
+
+    return redirect(url_for('index'))
+
+
+# Search, bulk transaction added to db
 @app.route('/search', methods=['GET', 'POST'])
+@login_required
 async def search():
     errors = {}
     transaction_list = []
@@ -227,15 +202,15 @@ async def search():
                 print("Exception")
 
             transaction_list.append(data)
+            logic.models.Account().add_transactions(data)
+        
+        flash("Transactions added to database", category='success')
         
         transaction_list.sort(reverse=True, key=itemgetter('time'))  # sort combined list by time/date
 
         print(transaction_list)
-    
-    #if request.method == 'POST':
-     #   if request.args.get('fav-button') is not None:
-      #      data = request.form.get('fav-button')
-       #     print(data)
+
+        return redirect(url_for('index'))
 
     return render_template("search.html", 
                             errors=errors, 
@@ -254,12 +229,12 @@ async def search():
 #    return redirect(url_for('search'))
 
 
-@app.route('/signup2', methods=['GET', 'POST'])
-def signup2():
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
     if request.method == 'POST':
         logic.models.Account().signup()
         return redirect(url_for('index'))
-    return render_template("signup2.html")
+    return render_template("signup.html")
 
 
 @app.route('/login', methods=['GET', 'POST'])
