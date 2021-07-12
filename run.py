@@ -65,10 +65,9 @@ def threeDecimals(y):
 
 
 # Routes
-
+@login_required
 @app.route("/")
 @app.route("/index", methods=['GET', 'POST'])
-@login_required
 def index():
     transactions_list = list(mongo.db.Transaction.find({"user_id": session['user']['_id']})) # list of cursor query
     transactions_list.sort(reverse=True, key=itemgetter('time'))  # sort combined list by time/date
@@ -89,8 +88,8 @@ def index():
 
 
 # Add transaction to favourites
-@app.route('/favourite/<t_id>', methods=['GET', 'POST'])
 @login_required
+@app.route('/favourite/<t_id>', methods=['GET', 'POST'])
 def favourite(t_id):
     transaction = mongo.db.Transaction.find_one({'_id': t_id})
 
@@ -105,8 +104,8 @@ def favourite(t_id):
 
 
 # Delete transaction from favourites
-@app.route('/delete_fav/<t_id>', methods=['GET', 'POST'])
 @login_required
+@app.route('/delete_fav/<t_id>', methods=['GET', 'POST'])
 def delete_fav(t_id):
     mongo.db.Transaction.update({"_id": t_id}, {"$set": {"note": "", "isFav": False}})
     flash("Favourite removed", category='success')
@@ -115,8 +114,8 @@ def delete_fav(t_id):
 
 
 # Clear all transactions except favourites
-@app.route('/clear', methods=['GET', 'POST'])
 @login_required
+@app.route('/clear', methods=['GET', 'POST'])
 def clear():
     mongo.db.Transaction.remove({"user_id": session['user']['_id'], 'isFav': False})
 
@@ -124,8 +123,8 @@ def clear():
 
 
 # Search, bulk transaction added to db
-@app.route('/search', methods=['GET', 'POST'])
 @login_required
+@app.route('/search', methods=['GET', 'POST'])
 async def search():
     errors = {}
     transaction_list = []
@@ -169,7 +168,7 @@ async def search():
                 'from': transaction['from'],
                 'to': transaction['to'],
                 'value': str(Web3.fromWei(float(transaction['value']), 'ether')),
-                'gas_price': str(Web3.fromWei(int(transaction['gasPrice']), 'ether') * int('1000000000')),
+                'gas_price': str(int(Web3.fromWei(int(transaction['gasPrice']), 'ether') * int('1000000000'))),
                 'gas_used': str(round(Web3.fromWei(int(transaction['gasPrice']) * int(transaction['gasUsed']), 'ether'), 6)),
                 'token_name': 'Ethereum',  # not working
                 'token_symbol': 'ETH',
@@ -246,8 +245,8 @@ def login():
     return render_template("login.html")
 
 
-@app.route('/signout')
 @login_required
+@app.route('/signout')
 def signout():
     return logic.models.Account().signout()
 
