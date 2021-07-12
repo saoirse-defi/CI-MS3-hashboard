@@ -97,7 +97,7 @@
                         <td>{{ data['gas_price']|safe }}</td>
                         <td>{{ data['gas_used']|safe }}</td>
                         <td>
-                            <a href="{{ url_for('favourite', t_id=data._id) }}">Favourite</a>
+                            <a href="{{ url_for('favourite', t_id=data._id) }}"><i class="material-icons">save</i></a>
                         </td>
                     </tr>
                 {% endfor %}
