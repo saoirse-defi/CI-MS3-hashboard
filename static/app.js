@@ -18,3 +18,7 @@ $(document).ready(function(){
     $('.dataTables_length').addClass('bs-select');
     $('td').tooltip(); //bootstrap tooltip 
 })
+
+$(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
