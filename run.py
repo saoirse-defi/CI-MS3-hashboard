@@ -69,6 +69,9 @@ def threeDecimals(y):
 @app.route("/")
 @app.route("/index", methods=['GET', 'POST'])
 def index():
+    if session is None:
+        redirect(url_for('login'))
+        
     transactions_list = list(mongo.db.Transaction.find({"user_id": session['user']['_id']})) # list of cursor query
     transactions_list.sort(reverse=True, key=itemgetter('time'))  # sort combined list by time/date
 
