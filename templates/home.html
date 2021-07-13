@@ -14,16 +14,16 @@
                 <div class="col s6"><h5>{{data['gas_price']}} GWEI</h5></div>
             </div>
             <div class="row">
-                <div class="col s3"><h5>Hash</h5></div>
-                <div class="col s3"><h5>Reciever</h5></div>
-                <div class="col s3"><h5>Sender</h5></div>
+                <div class="col s4"><h5>Hash</h5></div>
+                <div class="col s4"><h5>Reciever</h5></div>
+                <div class="col s4"><h5>Sender</h5></div>
             </div>
             <div class="row">
-                <div class="col s3"><a href="https://etherscan.io/tx/{{data['hash']}}" target="_blank">{{ shorten2(data['hash']) }}</a></div>
-                <div class="col s3"><a href="https://etherscan.io/address/{{data['to']}}" target="_blank">{{ shorten(data['to']|safe) }}</a></div>
-                <div class="col s3"><a href="https://etherscan.io/address/{{data['from']}}" target="_blank">{{ shorten(data['from']|safe) }}</a></div>
+                <div class="col s4"><a href="https://etherscan.io/tx/{{data['hash']}}" target="_blank"><h5>{{ shorten2(data['hash']|safe) }}</h5></a></div>
+                <div class="col s4"><a href="https://etherscan.io/address/{{data['to']}}" target="_blank"><h5>{{ shorten(data['to']|safe) }}</h5></a></div>
+                <div class="col s4"><a href="https://etherscan.io/address/{{data['from']}}" target="_blank"><h5>{{ shorten(data['from']|safe) }}</h5></a></div>
             </div>
-            <div class="row"><span>Note: {{data['note']}}</span></div>
+            <div class="row"><p>Note: {{data['note']}}</p></div>
             <div class="row">
                 {% if data['isFav'] %}
                 <a href="{{ url_for('delete_fav', t_id=data.id) }}">
