@@ -163,7 +163,7 @@ async def search():
 
         for transaction in combined_transaction_list:  # formatting data
             data = {
-                'time': time.strftime("%Y-%m-%d %H:%M", time.localtime(int(transaction['timeStamp']))),
+                'time': time.strftime("%d-%m-%Y", time.localtime(int(transaction['timeStamp']))),
                 'hash': transaction['hash'],
                 'from': transaction['from'],
                 'to': transaction['to'],
@@ -233,7 +233,9 @@ def home():
     fav_list = list(mongo.db.Transaction.find({"user_id": session['user']['_id'], "isFav": True}))
     return render_template('home.html',
                             transactions_list=transactions_list,
-                            fav_list=fav_list)
+                            fav_list=fav_list,
+                            shorten2=shorten2,
+                            shorten=shorten)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
