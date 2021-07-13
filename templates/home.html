@@ -4,18 +4,28 @@
 
 <div class="carousel carousel-slider center" data-indicators="true">
     {% for data in fav_list %}
-    <div class="carousel-item" href="#">
+    <div class="container carousel-item" href="#">
         <div class="container transaction-container">
-            <div class="row"><h1>{{data['value']}} {{data['token_symbol']}}</h1></div>
-            <div class="row">
+            <div class="row time-gas">
                 <div class="col s6"><h5>{{data['time']}}</h5></div>
                 <div class="col s6"><h5>{{data['gas_price']}} GWEI</h5></div>
             </div>
-            <div class="row">Hash:<br><a href="https://etherscan.io/tx/{{data['hash']}}" target="_blank">{{ data['hash'] }}</a></div>
-            <div class="row">Receiver:<br><a href="https://etherscan.io/address/{{data['to']}}" target="_blank">{{ data['to']|safe }}</a></div>
-            <div class="row">Sender:<br><a href="https://etherscan.io/address/{{data['from']}}" target="_blank">{{ data['from']|safe }}</a></div>
-            <div class="row">Note:<br><span>{{data['note']}}</span></div>
-            <div class="row"><a href="{{ url_for('favourite', t_id=data._id) }}"><i class="material-icons">favorite</i></a></div>
+            <div class="row"><h1 class="value-header">{{data['value']}}</h1><h2 class="token-header">{{data['token_symbol']}}</h2></div>
+            <div class="row"><h5>Hash: <a href="https://etherscan.io/tx/{{data['hash']}}" target="_blank">{{ shorten2(data['hash']) }}</a></h5></div>
+            <div class="row"><h5>Reciever: <a href="https://etherscan.io/address/{{data['to']}}" target="_blank">{{ shorten(data['to']|safe) }}</a></h5></div>
+            <div class="row"><h5>Sender: <a href="https://etherscan.io/address/{{data['from']}}" target="_blank">{{ shorten(data['from']|safe) }}</a></h5></div>
+            <div class="row"><span>Note: {{data['note']}}</span></div>
+            <div class="row">
+                {% if data['isFav'] %}
+                <a href="{{ url_for('delete_fav', t_id=data.id) }}">
+                    <i class="material-icons">delete</i>
+                </a>
+                {% else %}
+                <a href="{{ url_for('favourite', t_id=data._id) }}">
+                    <i class="material-icons">favorite</i>
+                </a>
+                {% endif %}
+            </div>
         </div>
     </div>
     {% endfor %}
