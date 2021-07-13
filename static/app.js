@@ -1,4 +1,9 @@
 $(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
+
+  
+$(document).ready(function(){
     $('#ethTable').DataTable({
         "columns": [
             {"data": "date"},
@@ -19,6 +24,7 @@ $(document).ready(function(){
     $('td').tooltip(); //bootstrap tooltip 
 })
 
-$(document).ready(function(){
-    $('.sidenav').sidenav();
-  });
+
+$('.carousel-slider').carousel({
+    fullWidth: true
+})
