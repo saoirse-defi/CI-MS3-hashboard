@@ -2,10 +2,12 @@
 
 {% block content %}
 
+</div>
+
 <div class="container-fluid md-2 mb-2" id="transaction-table">
     <div class="table-responsive">
         <table class="table table-bordered table-success table-striped table-hover caption-top" data-toggle="table" data-patination="true" data-page-length='10' data-search="true" id="ethTable">
-            <caption>Favourites</caption>
+            <caption><h5>Favourites</h5></caption>
             <thead>
                 <tr class="bg-dark text-white">
                     {% for header in transaction_table_headings %}
@@ -51,11 +53,11 @@
 </div>
 </div>
 
+
 <div class="container-fluid md-2 mb-2" id="transaction-table">
-    <a href="{{ url_for('clear') }}">Reset Search</a>
     <div class="table-responsive">
         <table class="table table-bordered table-success table-striped table-hover caption-top" data-toggle="table" data-patination="true" data-page-length='10' data-search="true" id="ethTable">
-            <caption>All Transactions</caption>
+            <caption><h5>All Transactions</h5></caption>
             <thead>
                 <tr class="bg-dark text-white">
                     {% for header in transaction_table_headings %}
@@ -100,6 +102,7 @@
     </div>
 </div>
 </div>
+
 
 <h2>Session Variables: {{ session['logged_in'] }}</h2>
 
