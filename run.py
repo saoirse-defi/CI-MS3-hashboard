@@ -167,7 +167,7 @@ async def search():
                 'hash': transaction['hash'],
                 'from': transaction['from'],
                 'to': transaction['to'],
-                'value': str(Web3.fromWei(float(transaction['value']), 'ether')),
+                'value': str(round(Web3.fromWei(float(transaction['value']), 'ether'), 5)),
                 'gas_price': str(int(Web3.fromWei(int(transaction['gasPrice']), 'ether') * int('1000000000'))),
                 'gas_used': str(round(Web3.fromWei(int(transaction['gasPrice']) * int(transaction['gasUsed']), 'ether'), 6)),
                 'token_name': 'Ethereum',  # not working
@@ -226,6 +226,14 @@ async def search():
 #def _save_transaction(data):
 #    logic.models.Account().fav(data)
 #    return redirect(url_for('search'))
+
+@app.route('/home', methods=['GET', 'POST'])
+def home():
+    transactions_list = list(mongo.db.Transaction.find({"user_id": session['user']['_id']}))
+    fav_list = list(mongo.db.Transaction.find({"user_id": session['user']['_id'], "isFav": True}))
+    return render_template('home.html',
+                            transactions_list=transactions_list,
+                            fav_list=fav_list)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
