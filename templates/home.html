@@ -6,14 +6,23 @@
     {% for data in fav_list %}
     <div class="container carousel-item" href="#">
         <div class="container transaction-container">
+            <div class="row">
+                <h1 class="value-header">{{data['value']}}</h1><h2 class="token-header">{{data['token_symbol']}}</h2>
+            </div>
             <div class="row time-gas">
                 <div class="col s6"><h5>{{data['time']}}</h5></div>
                 <div class="col s6"><h5>{{data['gas_price']}} GWEI</h5></div>
             </div>
-            <div class="row"><h1 class="value-header">{{data['value']}}</h1><h2 class="token-header">{{data['token_symbol']}}</h2></div>
-            <div class="row"><h5>Hash: <a href="https://etherscan.io/tx/{{data['hash']}}" target="_blank">{{ shorten2(data['hash']) }}</a></h5></div>
-            <div class="row"><h5>Reciever: <a href="https://etherscan.io/address/{{data['to']}}" target="_blank">{{ shorten(data['to']|safe) }}</a></h5></div>
-            <div class="row"><h5>Sender: <a href="https://etherscan.io/address/{{data['from']}}" target="_blank">{{ shorten(data['from']|safe) }}</a></h5></div>
+            <div class="row">
+                <div class="col s3"><h5>Hash</h5></div>
+                <div class="col s3"><h5>Reciever</h5></div>
+                <div class="col s3"><h5>Sender</h5></div>
+            </div>
+            <div class="row">
+                <div class="col s3"><a href="https://etherscan.io/tx/{{data['hash']}}" target="_blank">{{ shorten2(data['hash']) }}</a></div>
+                <div class="col s3"><a href="https://etherscan.io/address/{{data['to']}}" target="_blank">{{ shorten(data['to']|safe) }}</a></div>
+                <div class="col s3"><a href="https://etherscan.io/address/{{data['from']}}" target="_blank">{{ shorten(data['from']|safe) }}</a></div>
+            </div>
             <div class="row"><span>Note: {{data['note']}}</span></div>
             <div class="row">
                 {% if data['isFav'] %}
