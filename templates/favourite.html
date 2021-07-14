@@ -10,15 +10,15 @@
         <div class="row time-gas">
             <h5>{{transaction['time']}}</h5>
         </div>
-        <div class="row" id="fav-address-header-row">
+        <div class="row" class="fav-address-header-row">
+            <div class="col s4"><h5>Sender</h5></div>
             <div class="col s4"><h5>Hash</h5></div>
             <div class="col s4"><h5>Reciever</h5></div>
-            <div class="col s4"><h5>Sender</h5></div>
         </div>
-        <div class="row" id="fav-address-row">
+        <div class="row" class="fav-address-row">
+            <div class="col s4"><a href="https://etherscan.io/address/{{transaction['from']}}" target="_blank"><h5>{{ shorten(transaction['from']|safe) }}</h5></a></div>
             <div class="col s4"><a href="https://etherscan.io/tx/{{transaction['hash']}}" target="_blank"><h5>{{ shorten2(transaction['hash']|safe) }}</h5></a></div>
             <div class="col s4"><a href="https://etherscan.io/address/{{transaction['to']}}" target="_blank"><h5>{{ shorten(transaction['to']|safe) }}</h5></a></div>
-            <div class="col s4"><a href="https://etherscan.io/address/{{transaction['from']}}" target="_blank"><h5>{{ shorten(transaction['from']|safe) }}</h5></a></div>
         </div>
         <div class="row">
             <label for="note">Add description to save transaction:</label><br>
