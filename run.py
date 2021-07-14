@@ -30,7 +30,9 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 
-transaction_table_headings = ['Date created', 'Hash', 'To', 'From', 'Value', 'Token Involved', 'Gas Price (GWEI)', 'Gas Spent (ETH)']
+transaction_table_headings = ['Date created', 'Hash', 'To', 'From', 'Value', 'Token Involved', 'Gas Price (GWEI)', 'Gas Spent (ETH)', 'Favourite']
+
+fav_table_headings = ['Date created', 'Hash', 'To', 'From', 'Value', 'Token Involved', 'Gas Price (GWEI)', 'Notes', 'Edit', 'Delete']
 
 # Decorator Functions
 
@@ -69,21 +71,22 @@ def threeDecimals(y):
 @app.route("/")
 @app.route("/index", methods=['GET', 'POST'])
 def index():
-    if session['user'] is None:
-        redirect(url_for('login'))
-
     transactions_list = list(mongo.db.Transaction.find({"user_id": session['user']['_id']})) # list of cursor query
     transactions_list.sort(reverse=True, key=itemgetter('time'))  # sort combined list by time/date
 
     fav_list = list(mongo.db.Transaction.find({"user_id": session['user']['_id'], "isFav": True}))
     fav_list.sort(reverse=True, key=itemgetter('time'))
 
-    print(mongo.db.Transaction.find_one({'hash': '0xa461b27f1159532a28f6ebae83ecc1d861dbda46398ccf43d691ba4a4d12b0cf'}))
+    for data in fav_list:  # transaction can only be in transaction list or fav list
+        for _data in transactions_list:
+            if data == _data:
+                transactions_list.remove(_data)
 
     return render_template("index.html",
                             transactions_list=transactions_list,
                             fav_list=fav_list,
                             transaction_table_headings=transaction_table_headings,
+                            fav_table_headings=fav_table_headings,
                             shorten=shorten,
                             shorten2=shorten2,
                             toInt=toInt,
@@ -103,7 +106,9 @@ def favourite(t_id):
         return redirect(url_for('index'))
     
     return render_template('favourite.html',
-                            transaction=transaction)
+                            transaction=transaction,
+                            shorten=shorten,
+                            shorten2=shorten2)
 
 
 # Delete transaction from favourites
@@ -134,10 +139,6 @@ async def search():
     search_eth = ""
 
     if request.method == 'POST':
-        #if request.args.get('fav-button') is not None:
-         #   data = json.loads(request.form.get('fav-button'))
-          #  print(data)
-
         search_eth = str(request.form.get('search-eth')).lower()
         print(search_eth)
 
@@ -147,8 +148,6 @@ async def search():
                 client.get(f'https://api.etherscan.io/api?module=account&action=tokentx&address={search_eth}&startblock=0&endblock=999999999&sort=asc&apikey=PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA'),
                 client.get(f'https://api.etherscan.io/api?module=account&action=tokennfttx&address={search_eth}&startblock=0&endblock=999999999&sort=asc&apikey=PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
             )
-
-            # search_result = await client.get(f'https://api.etherscan.io/api?module=account&action=txlist&address={search_eth}&startblock=0&endblock=99999999&sort=asc&apikey=PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
         
         eth_result_text = eth_res.text  # process repsonses into python list
         eth_json = json.loads(eth_result_text)
