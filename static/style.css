@@ -12,3 +12,22 @@
     padding: 0%;
     margin: 0%;
 }
+
+.progress{
+    display: none;
+    justify-content: center;
+}
+
+#fav-address-header-row{
+    margin: 0%;
+    padding: 0%;
+}
+
+#fav-address-row{
+    margin: 0%;
+    padding: 0%;
+}
+
+#note{
+    width: 80%;
+}
