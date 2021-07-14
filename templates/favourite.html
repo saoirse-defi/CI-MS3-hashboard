@@ -2,18 +2,32 @@
 
 {% block content %}
 
-<div class="container-fluid">
+<div class="container-fluid center">
     <form method="POST" action="{{ url_for('favourite', t_id=transaction['_id'])}}">
-        <span>Transaction Hash: {{transaction.hash}}</span><br>
-        <span>To address: {{transaction.to}}</span><br>
-        <span>From address: {{transaction.from}}</span><br>
-
-        <label for="note">Add description to save transaction:</label><br>
-        <textarea id="note" name="note" required></textarea><br>
-        
+        <div class="row">
+            <h1 class="value-header">{{transaction['value']}}</h1><h2 class="token-header">{{transaction['token_symbol']}}</h2>
+        </div>
+        <div class="row time-gas">
+            <h5>{{transaction['time']}}</h5>
+        </div>
+        <div class="row" id="fav-address-header-row">
+            <div class="col s4"><h5>Hash</h5></div>
+            <div class="col s4"><h5>Reciever</h5></div>
+            <div class="col s4"><h5>Sender</h5></div>
+        </div>
+        <div class="row" id="fav-address-row">
+            <div class="col s4"><a href="https://etherscan.io/tx/{{transaction['hash']}}" target="_blank"><h5>{{ shorten2(transaction['hash']|safe) }}</h5></a></div>
+            <div class="col s4"><a href="https://etherscan.io/address/{{transaction['to']}}" target="_blank"><h5>{{ shorten(transaction['to']|safe) }}</h5></a></div>
+            <div class="col s4"><a href="https://etherscan.io/address/{{transaction['from']}}" target="_blank"><h5>{{ shorten(transaction['from']|safe) }}</h5></a></div>
+        </div>
+        <div class="row">
+            <label for="note">Add description to save transaction:</label><br>
+            <textarea id="note" name="note" required></textarea><br>
+        </div>
+        <!--Submit button-->
+        <button class="waves-effect waves-light btn-small" type="submit">Save</button>
         <!--Cancel button-->
-        <a href="{{url_for('index')}}">Cancel</a>
-        <button type="submit">Save</button>
+        <a class="waves-effect waves-light btn-small" href="{{url_for('index')}}">Cancel</a>
     </form>
 </div>
 
