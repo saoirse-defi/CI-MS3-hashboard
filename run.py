@@ -101,8 +101,10 @@ def favourite(t_id):
 
     if request.method == 'POST':
         note = request.form.get('note')
-        mongo.db.Transaction.update({"_id": t_id}, {"$set": {"note": note, "isFav": True}})
-        flash("Note added successfully", category='success')
+        if session['user']['id']:
+            mongo.db.Transaction.update({"_id": t_id}, {"$set": {"note": note, "isFav": True}})
+        else:
+            redirect(url_for('404'))
         return redirect(url_for('index'))
     
     return render_template('favourite.html',
@@ -202,6 +204,7 @@ async def search():
             except KeyError:
                 print("Exception")
 
+
             transaction_list.append(data)
             logic.models.Account().add_transactions(data)
         
@@ -223,11 +226,6 @@ async def search():
                             transaction_list=transaction_list,  # get this error only sometimes UnboundLocalError: local variable 'transaction_list' referenced before assignment Traceback (most recent call last)
                             transaction_table_headings=transaction_table_headings)
 
-
-#@app.route('/_save_transaction')  # background process in order to save transaction to Account fav list
-#def _save_transaction(data):
-#    logic.models.Account().fav(data)
-#    return redirect(url_for('search'))
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
