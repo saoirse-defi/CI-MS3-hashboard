@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block title %}Home{% endblock %}
+{% extends 'base.html' %} {% block title %}Favourite{% endblock %}
 
 {% block content %}
 
@@ -22,7 +22,7 @@
         </div>
         <div class="row">
             <label for="note">Add description to save transaction:</label><br>
-            <textarea id="note" name="note" required></textarea><br>
+            <textarea id="note" name="note" required>{{transaction['note']}}</textarea><br>
         </div>
         <!--Submit button-->
         <button class="waves-effect waves-light btn-small" type="submit">Save</button>
