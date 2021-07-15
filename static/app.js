@@ -27,6 +27,10 @@ $(document).ready(function(){
     $('td').tooltip(); //bootstrap tooltip 
 })
 
+$(document).ready(() => {
+    $('.modal').modal();
+})
+
 
 $('.carousel-slider').carousel({
     fullWidth: true
