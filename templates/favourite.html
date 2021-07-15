@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container-fluid center">
-    <form method="POST" action="{{ url_for('favourite', t_id=transaction['_id'])}}">
+    <form method="POST" action="{{ url_for('favourite', transaction_id=transaction['_id'])}}">
         <div class="row">
             <h1 class="value-header">{{transaction['value']}}</h1><h2 class="token-header">{{transaction['token_symbol']}}</h2>
         </div>
