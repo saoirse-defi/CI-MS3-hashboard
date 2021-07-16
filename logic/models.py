@@ -1,6 +1,6 @@
 import uuid
 from flask import jsonify, session, redirect, request, url_for
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from run import mongo
 
 
@@ -29,7 +29,7 @@ class Account():
         session['logged_in'] = True
         session['user'] = account
 
-        return jsonify(account), 200
+        return redirect(url_for('index'))
 
     def signout(self):
         session.clear()
@@ -41,11 +41,17 @@ class Account():
         })
 
         if existing_user:
-            return self.start_session(existing_user)
+            if check_password_hash(existing_user['password'], request.form.get('password')):
+                print('password true')
+                return self.start_session(existing_user)
+            else:
+                print('password did not match')  # need to add a warning message
+                return redirect(url_for('login'))
 
-        return jsonify({"error": "Invalid login details"}), 401
+        return jsonify({"error": "Email address not found"}), 401
 
     def add_transactions(self, data):
+        
         mongo.db.Transaction.insert_one({
                     "_id": uuid.uuid4().hex,
                     "user_id": session['user']['_id'],
