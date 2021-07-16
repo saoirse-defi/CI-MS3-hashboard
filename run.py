@@ -4,7 +4,7 @@ if os.path.exists("env.py"):
     import env
 from os import path
 from operator import itemgetter
-from flask import Flask, render_template, redirect, request, session, url_for, send_from_directory
+from flask import Flask, render_template, redirect, request, session, url_for, send_from_directory, abort
 from flask_pymongo import PyMongo
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -43,6 +43,24 @@ fav_table_headings = ['Date created',
                       'Notes',
                       'Edit',
                       'Delete']
+
+
+# Error Handling Functions
+@app.errorhandler(403)
+def forbidden(e):
+    print(f"Error: {e}")
+    return render_template('403.html')
+
+@app.errorhandler(404)
+def not_found(e):
+    print(f"Error: {e}")
+    return render_template('404.html')
+
+
+@app.errorhandler(500)
+def server_error(e):
+    print(f"Error: {e}")
+    return render_template('500.html')
 
 # Decorator Functions
 
