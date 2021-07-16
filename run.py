@@ -133,16 +133,16 @@ def index():
 @login_required
 @app.route('/favourite/<transaction_id>', methods=['GET', 'POST'])
 def favourite(transaction_id):
-    transaction = mongo.db.Transaction.find_one({'_id': transaction_id})
+    transaction = mongo.db.Transaction.find_one({'_id': transaction_id},
+                                                {'user_id': session['user']['id']})
 
     if request.method == 'POST':
         note = request.form.get('note')
         # allow edit if the session user == transaction user_id
-        if session['user']['_id']:
+        if session['user']['_id'] == transaction['user_id']:
             mongo.db.Transaction.update(
                 {"_id": transaction_id}, {"$set": {"note": note, "isFav": True}})
-        else:
-        # else redirect to error page
+        else:  # else redirect to error page
             redirect(url_for('404'))
         return redirect(url_for('index'))
     
@@ -157,7 +157,9 @@ def favourite(transaction_id):
 @app.route('/delete_fav/<transaction_id>', methods=['GET', 'POST'])
 def delete_fav(transaction_id):
     mongo.db.Transaction.update(
-        {"_id": transaction_id}, {"$set": {"note": "", "isFav": False}})
+        {"_id": transaction_id},
+        {"user_id": session['user']['id']},
+        {"$set": {"note": "", "isFav": False}})
 
     return redirect(url_for('index'))
 
@@ -221,8 +223,7 @@ def signup():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        logic.models.Account().login()
-        return redirect(url_for('index'))
+        return logic.models.Account().login()
 
     return render_template("login.html")
 
