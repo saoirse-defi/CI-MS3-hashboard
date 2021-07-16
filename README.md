@@ -78,6 +78,8 @@ Premium tier users will have unlimited access when adding favourite transactions
 
 ### User Interaction
 
+##### Error Handling
+
 ## Implementation
 
 ### Modules
@@ -99,6 +101,8 @@ Premium tier users will have unlimited access when adding favourite transactions
 ## Deployment
 
 ## Credit
+
+##### Lottie Player Animations
 
 ## Wireframes
 
