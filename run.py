@@ -100,17 +100,23 @@ def threeDecimals(y):
 @app.route("/index", methods=['GET', 'POST'])
 def index():
     # list of cursor query
-    transactions_list = list(
-        mongo.db.Transaction.find(
-            {"user_id": session['user']['_id']}))
-    # sort combined list by time/date
-    transactions_list.sort(reverse=True, key=itemgetter('time'))
-
+    try:
+        transactions_list = list(
+            mongo.db.Transaction.find(
+                {"user_id": session['user']['_id']}))
+            # sort combined list by time/date
+        transactions_list.sort(reverse=True, key=itemgetter('time'))
+    except Exception as e:
+        return forbidden(e)
+    
     # list of favourite transactions
-    fav_list = list(
-        mongo.db.Transaction.find(
-            {"user_id": session['user']['_id'], "isFav": True}))
-    fav_list.sort(reverse=True, key=itemgetter('time'))
+    try:
+        fav_list = list(
+            mongo.db.Transaction.find(
+                {"user_id": session['user']['_id'], "isFav": True}))
+        fav_list.sort(reverse=True, key=itemgetter('time'))
+    except Exception as e:
+        return forbidden(e)
 
     # transaction can only be in transaction list or fav list
     for data in fav_list:
@@ -133,18 +139,19 @@ def index():
 @login_required
 @app.route('/favourite/<transaction_id>', methods=['GET', 'POST'])
 def favourite(transaction_id):
-    transaction = mongo.db.Transaction.find_one({'_id': transaction_id},
-                                                {'user_id': session['user']['id']})
+    transaction = mongo.db.Transaction.find_one({'_id': transaction_id})
 
     if request.method == 'POST':
         note = request.form.get('note')
         # allow edit if the session user == transaction user_id
-        if session['user']['_id'] == transaction['user_id']:
-            mongo.db.Transaction.update(
-                {"_id": transaction_id}, {"$set": {"note": note, "isFav": True}})
-        else:  # else redirect to error page
-            redirect(url_for('404'))
-        return redirect(url_for('index'))
+        try:
+            if session['user']['_id'] == transaction['user_id']:
+                mongo.db.Transaction.update(
+                    {"_id": transaction_id}, {"$set": {"note": note, "isFav": True}})
+                return redirect(url_for('index'))
+        except Exception as e:
+            print("Exception: ", e)
+            return forbidden(e)
     
     return render_template('favourite.html',
                            transaction=transaction,
@@ -156,12 +163,15 @@ def favourite(transaction_id):
 @login_required
 @app.route('/delete_fav/<transaction_id>', methods=['GET', 'POST'])
 def delete_fav(transaction_id):
-    mongo.db.Transaction.update(
-        {"_id": transaction_id},
-        {"user_id": session['user']['id']},
-        {"$set": {"note": "", "isFav": False}})
-
-    return redirect(url_for('index'))
+    transaction = mongo.db.Transaction.find_one({"_id": transaction_id})
+    try:
+        if transaction['user_id'] == session['user']['_id']:
+            mongo.db.Transaction.update(
+                {"_id": transaction_id},
+                {"$set": {"note": "", "isFav": False}})
+            return redirect(url_for('index'))
+    except Exception as e:
+        return forbidden(e)
 
 
 # Clear all transactions except favourites
