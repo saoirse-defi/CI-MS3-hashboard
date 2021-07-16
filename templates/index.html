@@ -16,24 +16,16 @@
                 {% for data in fav_list %}                
                     <tr>
                         <td>{{ data['time']|safe }}</td>
-                        <td data-bs-toggle="tooltip" 
-                            data-bs-placement="bottom" 
-                            title={{ data['hash'|safe] }}>
-                            <a href="https://etherscan.io/tx/{{data['hash']}}" target="_blank">{{ shorten2(data['hash']) }}</a>
+                        <td  title={{ data['hash'|safe] }}>
+                            <a class="" href="https://etherscan.io/tx/{{data['hash']}}" target="_blank">{{ shorten2(data['hash']) }}</a>
                         </td>
-                        <td data-bs-toggle="tooltip" 
-                            data-bs-placement="bottom" 
-                            title={{ data['to'|safe] }}>
+                        <td title={{ data['to'|safe] }}>
                             <a href="https://etherscan.io/address/{{data['to']}}" target="_blank">{{ shorten(data['to']|safe) }}</a>
                         </td>
-                        <td data-bs-toggle="tooltip" 
-                            data-bs-placement="bottom" 
-                            title={{ data['from'|safe] }}>
+                        <td title={{ data['from'|safe] }}>
                             <a href="https://etherscan.io/address/{{data['from']}}" target="_blank">{{ shorten(data['from']|safe) }}</a>
                         </td>
-                        <td data-bs-toggle="tooltip" 
-                            data-bs-placement="bottom" 
-                            title={{ data['value'|safe] }}>{{ data['value'] }}</td>
+                        <td title={{ data['value'|safe] }}>{{ data['value'] }}</td>
                         <td>
                             <a href="https://etherscan.io/address/{{data['contract_address']}}" target="_blank">{{ data['token_symbol']}}</a>
                         </td>
@@ -47,14 +39,16 @@
                             <a class="waves-effect waves-light modal-trigger" data-id="{{ data._id }}" data-target="delete{{ data._id }}"><i class="material-icons">delete_outline</i></a>
 
                             <!-- Delete Confirmation Modal Structure -->
-                            <div id="delete{{ data._id}}" class="modal" >
-                                <div class="modal-content">
-                                <h4>Are you sure you would like to cancel?</h4>
-                                <p>This action cannot be reversed.</p>
-                                </div>
-                                <div class="modal-footer">
-                                <a href="{{ url_for('delete_fav', transaction_id=data._id) }}" class="modal-close waves-effect waves-green btn-flat">Delete</a>
-                                <a href="#" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+                            <div id="delete{{data._id}}" class="modal" >
+                                <div class="container responsive center">
+                                    <div class="modal-content">
+                                        <h4>Are you sure you would like to cancel?</h4>
+                                        <p>This action cannot be reversed.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="{{ url_for('delete_fav', transaction_id=data._id) }}" class="modal-close waves-effect waves-green btn-flat">Delete</a>
+                                        <a href="#" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+                                    </div>
                                 </div>
                             </div>
                         </td>
@@ -96,24 +90,16 @@
                 {% for data in transactions_list %}                
                     <tr>
                         <td>{{ data['time']|safe }}</td>
-                        <td data-bs-toggle="tooltip" 
-                            data-bs-placement="bottom" 
-                            title={{ data['hash'|safe] }}>
+                        <td title={{ data['hash'|safe] }}>
                             <a href="https://etherscan.io/tx/{{data['hash']}}" target="_blank">{{ shorten2(data['hash']) }}</a>
                         </td>
-                        <td data-bs-toggle="tooltip" 
-                            data-bs-placement="bottom" 
-                            title={{ data['to'|safe] }}>
+                        <td title={{ data['to'|safe] }}>
                             <a href="https://etherscan.io/address/{{data['to']}}" target="_blank">{{ shorten(data['to']|safe) }}</a>
                         </td>
-                        <td data-bs-toggle="tooltip" 
-                            data-bs-placement="bottom" 
-                            title={{ data['from'|safe] }}>
+                        <td title={{ data['from'|safe] }}>
                             <a href="https://etherscan.io/address/{{data['from']}}" target="_blank">{{ shorten(data['from']|safe) }}</a>
                         </td>
-                        <td data-bs-toggle="tooltip" 
-                            data-bs-placement="bottom" 
-                            title={{ data['value'|safe] }}>{{ data['value'] }}</td>
+                        <td title={{ data['value'|safe] }}>{{ data['value'] }}</td>
                         <td>
                             <a href="https://etherscan.io/address/{{data['contract_address']}}" target="_blank">{{ data['token_symbol']}}</a>
                         </td>
