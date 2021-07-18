@@ -70,6 +70,14 @@ body{
     display: none;
 }
 
+#search-container-desktop{
+    display: block;
+}
+
+#search-container-mobile{
+    display: none;
+}
+
 @media only screen and (max-width: 768px){
     #favourites-container-desktop{
         display: none;
@@ -78,14 +86,16 @@ body{
     #favourites-container-mobile{
         display: block;
     }
+
+    #search-container-desktop{
+        display: none;
+    }
+    
+    #search-container-mobile{
+        display: block;
+    }
 }
 
 @media only screen and (max-width: 400px){
-    #fav-address-header-row{
-        font-size: 5px;
-    }
-    
-    #fav-address-row{
-
-    }
+  
 }
