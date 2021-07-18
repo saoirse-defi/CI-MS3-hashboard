@@ -2,13 +2,11 @@
 import os
 if os.path.exists("env.py"):
     import env
-from os import path
+# from os import path
 from operator import itemgetter
 from flask import Flask, render_template, redirect, request, session, url_for, send_from_directory, abort
 from flask_pymongo import PyMongo
 from functools import wraps
-from werkzeug.security import generate_password_hash, check_password_hash
-from bson.objectid import ObjectId
 import logic.models
 import logic.async_eth
 
@@ -50,6 +48,7 @@ fav_table_headings = ['Date created',
 def forbidden(e):
     print(f"Error: {e}")
     return render_template('403.html')
+
 
 @app.errorhandler(404)
 def not_found(e):
@@ -104,11 +103,11 @@ def index():
         transactions_list = list(
             mongo.db.Transaction.find(
                 {"user_id": session['user']['_id']}))
-            # sort combined list by time/date
+        # sort combined list by time/date
         transactions_list.sort(reverse=True, key=itemgetter('time'))
     except Exception as e:
         return forbidden(e)
-    
+
     # list of favourite transactions
     try:
         fav_list = list(
@@ -147,12 +146,13 @@ def favourite(transaction_id):
         try:
             if session['user']['_id'] == transaction['user_id']:
                 mongo.db.Transaction.update(
-                    {"_id": transaction_id}, {"$set": {"note": note, "isFav": True}})
+                    {"_id": transaction_id}, {
+                        "$set": {"note": note, "isFav": True}})
                 return redirect(url_for('index'))
         except Exception as e:
             print("Exception: ", e)
             return forbidden(e)
-    
+
     return render_template('favourite.html',
                            transaction=transaction,
                            shorten=shorten,
@@ -196,13 +196,13 @@ async def search():
         transaction_list = await logic.async_eth.get_transactions(search_eth)
         return redirect(url_for('index'))
 
-    return render_template("search.html", 
+    return render_template("search.html",
                            shorten=shorten,
                            shorten2=shorten2,
                            toInt=toInt,
                            threeDecimals=threeDecimals,
                            search_eth=search_eth,
-                           transaction_list=transaction_list,  
+                           transaction_list=transaction_list,
                            transaction_table_headings=transaction_table_headings)
 
 
@@ -246,8 +246,9 @@ def signout():
 
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    return send_from_directory(
+        os.path.join(app.root_path, 'static'),
+            'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 # App config
 
