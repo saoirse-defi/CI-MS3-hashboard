@@ -7,6 +7,9 @@ from run import mongo
 class Account():
 
     def signup(self):
+        '''Takes form parameters, adds account to db.
+            Starts session, takes user to dashboard.'''
+
         account = {
             "_id": uuid.uuid4().hex,
             "name": request.form.get('name'),
@@ -25,6 +28,9 @@ class Account():
         return jsonify({'error': 'Signup failed'}), 400
 
     def start_session(self, account):
+        '''Uses current account.
+            Starts session.'''
+
         del account['password']
         session['logged_in'] = True
         session['user'] = account
@@ -32,26 +38,30 @@ class Account():
         return redirect(url_for('index'))
 
     def signout(self):
+        '''Clears session for current user.'''
+
         session.clear()
         return redirect(url_for('login'))
 
     def login(self):
+        '''Checks for existing user.
+            Logs user in and call function to also start session.'''
+
         existing_user = mongo.db.User.find_one({
             "email": request.form.get('email')
         })
 
-        if existing_user:
-            if check_password_hash(existing_user['password'], request.form.get('password')):
-                print('password true')
-                return self.start_session(existing_user)
-            else:
-                print('password did not match')  # need to add a warning message
-                return redirect(url_for('login'))
+        if existing_user and check_password_hash(
+                                            existing_user['password'],
+                                            request.form.get('password')):
+            return self.start_session(existing_user)
 
-        return jsonify({"error": "Email address not found"}), 401
+        # need a way to display to user
+        return jsonify({"error": "User crendiential not found"}), 401 
 
     def add_transactions(self, data):
-        
+        '''Inserts transaction into db.'''
+
         mongo.db.Transaction.insert_one({
                     "_id": uuid.uuid4().hex,
                     "user_id": session['user']['_id'],
