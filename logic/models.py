@@ -57,7 +57,7 @@ class Account():
             return self.start_session(existing_user)
 
         # need a way to display to user
-        return jsonify({"error": "User crendiential not found"}), 401 
+        return jsonify({"error": "User crendiential not found"}), 401  # remove http from models
 
     def add_transactions(self, data):
         '''Inserts transaction into db.'''
