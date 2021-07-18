@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.sidenav');
     var instances = M.Sidenav.init(elems, {
-        draggable: true
+        draggable: false
     });
   });
 
 $(document).ready(() => {
     $('.modal').modal();
+    $('.sidenav').sidenav();
 })
 
 
