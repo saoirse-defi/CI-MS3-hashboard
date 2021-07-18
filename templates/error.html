@@ -1,0 +1,12 @@
+{% extends 'base.html' %} {% block title %}Error{% endblock %}
+
+{% block content %}
+
+<div class="container responsive">
+    <h1>Error</h1>
+    <p>{{e}}</p>
+    <a class="waves-effect waves-green btn-small" href="{{url_for('index')}}">Back to home</a>
+</div>
+
+
+{% endblock %}
