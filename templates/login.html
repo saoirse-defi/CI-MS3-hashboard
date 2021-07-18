@@ -1,6 +1,10 @@
 {% extends "base.html" %} {% block title %}Login{% endblock %}
 
 {% block content %}
+<div class="alert">
+    <span class="alert-text">Invalid user credentials.</span>
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+</div>
 <form method="POST" id="login-form">
     <h3 align="center">Log In.</h3>
     <div class="form-group">
@@ -11,6 +15,6 @@
         <label for="password">Password</label>
         <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required/>
     </div>
-    <button type="submit" class="btn btn-primary" id="btn-login">Log In</button>
+    <button type="submit" class="waves-effect waves-light btn-small" id="btn-login">Log In</button>
 </form>
 {% endblock %}
