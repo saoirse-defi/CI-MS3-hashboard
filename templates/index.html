@@ -1,8 +1,8 @@
 {% extends 'base.html' %} {% block title %}Home{% endblock %}
 
 {% block content %}
-
-    <div class="container-fluid" id="favourites-container">
+    <!--Start of desktop favourites-->
+    <div class="container-fluid" id="favourites-container-desktop">
         <table class="responsive-table highlight centered" id="favourites-table">
             <caption><h5>Favourites</h5></caption>
             <thead>
@@ -40,16 +40,14 @@
 
                             <!-- Delete Confirmation Modal Structure -->
                             <div id="delete{{data._id}}" class="modal" >
-                                <div class="container responsive center">
                                     <div class="modal-content">
                                         <h4>Are you sure you would like to cancel?</h4>
                                         <p>This action cannot be reversed.</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="{{ url_for('delete_fav', transaction_id=data._id) }}" class="modal-close waves-effect waves-green btn-flat">Delete</a>
-                                        <a href="#" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+                                        <a href="{{ url_for('delete_fav', transaction_id=data._id) }}" class="modal-close waves-effect waves-green btn-small">Delete</a>
+                                        <a href="#" class="modal-close waves-effect waves-green btn-small">Cancel</a>
                                     </div>
-                                </div>
                             </div>
                         </td>
                     </tr>
@@ -57,6 +55,46 @@
             </tbody>
         </table>
     </div>
+    <!--End of desktop favourites-->
+
+    <!--Start of mobile favourites-->
+    <div class="carousel carousel-slider center" id="favourites-container-mobile" data-indicators="true">
+        {% for data in fav_list %}
+        <div class="container carousel-item" href="#">
+            <div class="container transaction-container">
+                <div class="row">
+                    <h1 class="value-header">{{data['value']}}</h1><h2 class="token-header">{{data['token_symbol']}}</h2>
+                </div>
+                <div class="row time-gas">
+                    <h5>{{data['time']}}</h5>
+                </div>
+                <div class="row fav-address-header-row">
+                    <div class="col s4"><h5>Sender</h5></div>
+                    <div class="col s4"><h5>Hash</h5></div>
+                    <div class="col s4"><h5>Reciever</h5></div>
+                </div>
+                <div class="row fav-address-row">
+                    <div class="col s4"><a href="https://etherscan.io/address/{{data['from']}}" target="_blank"><h5>{{ shorten(data['from']|safe) }}</h5></a></div>
+                    <div class="col s4"><a href="https://etherscan.io/tx/{{data['hash']}}" target="_blank"><h5>{{ shorten2(data['hash']|safe) }}</h5></a></div>
+                    <div class="col s4"><a href="https://etherscan.io/address/{{data['to']}}" target="_blank"><h5>{{ shorten(data['to']|safe) }}</h5></a></div>
+                </div>
+                <div class="row"><p>Note: {{data['note']}}</p></div>
+                <div class="row">
+                    {% if data['isFav'] %}
+                    <a href="{{ url_for('delete_fav', transaction_id=data.id) }}">
+                        <i class="material-icons">delete_outline</i>
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('favourite', t_id=data._id) }}">
+                        <i class="material-icons">favorite</i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <!--End of mobile favourites-->
 
     <div class="container-fluid" id="search-container">
         <table class="responsive-table highlight centered" id="search-table">
@@ -69,13 +107,13 @@
                 <!-- Reset Confirmation Modal Structure -->
                 <div id="reset-confirmation" class="modal" >
                     <div class="modal-content">
-                    <h4>Are you sure you would like to reset your transactions?</h4>
-                    <p>Don't worry, your favourites will remain visible.</p>
-                    <p>This action cannot be reversed.</p>
+                        <h4 id="reset-h4">Reset your transactions?</h4>
+                        <p>Don't worry, your favourites will remain visible.</p>
+                        <p>This action cannot be reversed.</p>
                     </div>
                     <div class="modal-footer">
-                    <a href="{{ url_for('clear')}}" class="modal-close waves-effect waves-green btn-flat">Reset</a>
-                    <a href="#" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+                        <a href="{{ url_for('clear')}}" class="modal-close waves-effect waves-green btn-small">Reset</a>
+                        <a href="#" class="modal-close waves-effect waves-green btn-small">Cancel</a>
                     </div>
                 </div>
             </caption>
