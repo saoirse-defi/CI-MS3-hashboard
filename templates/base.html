@@ -4,34 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Blockchain Dashboard{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap">
     <link rel="stylesheet" href="../static/style.css"/>
 </head>
 <body>
     {% if session %}
-    <nav class="burgundy">
+    <nav class="teal lighten-2">
         <div class="container">
-            <a href="#" class="brand-logo center">#HASHBOARD</a>
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger button-collapse"></a>
-            <ul class="right hide-on-med-and-down">
+            <a href="#" class="brand-logo">#HASHBOARD</a>
+            <ul class="right hide-on-small-and-down">
+                <!-- Reset confirmation trigger -->
                 <li><a class="waves-effect waves-light modal-trigger btn-small" data-target="signout-confirmation">Log Out</a></li>
 
                 <!-- Reset Confirmation Modal Structure -->
                 <div id="signout-confirmation" class="modal" >
                     <div class="modal-content">
-                    <h4>Are you sure you would like to log out?</h4>
-                    <p>Saved transactions will remain until you log back in.</p>
+                        <h4>Are you sure you would like to log out?</h4>
+                        <p class="center">Saved transactions will remain until you log back in.</p>
                     </div>
                     <div class="modal-footer">
-                    <a href="{{ url_for('signout')}}" class="modal-close waves-effect waves-green btn-flat">Log Out</a>
-                    <a href="#" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+                        <a href="{{ url_for('signout')}}" class="modal-close waves-effect waves-green btn-small">Log Out</a>
+                        <a href="#" class="modal-close waves-effect waves-green btn-small">Cancel</a>
                     </div>
                 </div>
             </ul>
         </div>
     </nav>
-    <ul id="mobile-navbar" class="sidenav">
+
+    <!--
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger button-collapse"><i class="material-icons">menu</i></a>
+
+        <ul id="mobile-navbar" class="sidenav">
         <li>
             <div class="user-view">
                 <a href="#"></a>
@@ -55,18 +62,24 @@
             <a href="/signout">Log Out</a>
         </li>
     </ul>
+    -->
+    
     {% else %}
-    <nav class="burgundy">
+    <nav class="teal lighten-2">
         <div class="container">
-            <a href="#" class="brand-logo center">#HASHBOARD</a>
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger button-collapse"></a>
+            <a href="#" class="brand-logo">#HASHBOARD</a>
+
             <ul class="right hide-on-med-and-down">
                 <li><a class="waves-effect waves-light btn-small" href="/login">Log In</a></li>
                 <li><a class="waves-effect waves-light btn-small" href="/signup">Sign Up</a></li>
             </ul>
         </div>
     </nav>
-    <ul id="mobile-navbar" class="sidenav">
+
+    <!--
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger button-collapse"></a>
+
+        <ul id="mobile-navbar" class="sidenav">
         <li>
             <div class="user-view">
                 <a href="#"></a>
@@ -87,6 +100,8 @@
             <a href="/signout">Signout</a>
         </li>
     </ul>
+    -->
+    
     {% endif %}
     
     <div class="container">
