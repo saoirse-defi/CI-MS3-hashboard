@@ -8,7 +8,7 @@ from flask import Flask, render_template, redirect, request, session, url_for, s
 from flask_pymongo import PyMongo
 from functools import wraps
 import logic.models
-import logic.async_eth
+import logic.eth
 
 # Application setup
 
@@ -44,27 +44,31 @@ fav_table_headings = ['Date created',
 
 
 # Error Handling Functions
-@app.errorhandler(403)
-def forbidden(e):
-    print(f"Error: {e}")
-    return render_template('403.html')
+#@app.errorhandler(403)
+#def forbidden(e):
+ #   print(f"Error: {e}")
+  #  return render_template('403.html')
 
 
-@app.errorhandler(404)
-def not_found(e):
-    print(f"Error: {e}")
-    return render_template('404.html')
+#@app.errorhandler(404)
+#def not_found(e):
+ #   print(f"Error: {e}")
+  #  return render_template('404.html')
 
 
-@app.errorhandler(500)
-def server_error(e):
-    print(f"Error: {e}")
-    return render_template('500.html')
+#@app.errorhandler(500)
+#def server_error(e):
+ #   print(f"Error: {e}")
+  #  return render_template('500.html')
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    return render_template("error.html", e=e), 500
 
 # Decorator Functions
 
 
-def login_required(f):
+def login_required(f): # use rohit's link to new login required
     @wraps(f)
     def wrap(*args, **kwargs):
         if 'logged_in' in session:
@@ -105,8 +109,8 @@ def index():
                 {"user_id": session['user']['_id']}))
         # sort combined list by time/date
         transactions_list.sort(reverse=True, key=itemgetter('time'))
-    except Exception as e:
-        return forbidden(e)
+    except Exception:
+        return redirect(url_for('forbidden'))
 
     # list of favourite transactions
     try:
@@ -114,8 +118,8 @@ def index():
             mongo.db.Transaction.find(
                 {"user_id": session['user']['_id'], "isFav": True}))
         fav_list.sort(reverse=True, key=itemgetter('time'))
-    except Exception as e:
-        return forbidden(e)
+    except Exception:
+        return redirect(url_for('forbidden'))
 
     # transaction can only be in transaction list or fav list
     for data in fav_list:
@@ -161,8 +165,8 @@ def favourite(transaction_id):
 
 # Delete transaction from favourites
 @login_required
-@app.route('/delete_fav/<transaction_id>', methods=['GET', 'POST'])
-def delete_fav(transaction_id):
+@app.route('/delete_favourite/<transaction_id>', methods=['GET', 'POST']) #use full word for functions
+def delete_favourite(transaction_id):
     transaction = mongo.db.Transaction.find_one({"_id": transaction_id})
     try:
         if transaction['user_id'] == session['user']['_id']:
@@ -187,13 +191,13 @@ def clear():
 # Search, bulk transaction added to db
 @login_required
 @app.route('/search', methods=['GET', 'POST'])
-async def search():
+def search():
     search_eth = ""
     transaction_list = []
 
     if request.method == 'POST':
         search_eth = str(request.form.get('search-eth')).lower()
-        transaction_list = await logic.async_eth.get_transactions(search_eth)
+        transaction_list = logic.eth.get_transactions(search_eth)
         return redirect(url_for('index'))
 
     return render_template("search.html",
