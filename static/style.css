@@ -1,3 +1,11 @@
+body{
+    font-family: 'Varela Round', sans-serif;
+}
+
+.brand-logo{
+    
+}
+
 .value-header{
     margin: 0px;
     padding: 0px;
@@ -34,4 +42,50 @@
 
 .modal{
     color: black;
+    padding: 10px;
+    width: 700px;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 15px;
+    box-shadow: 0 20px 50px rgba(0, 128, 128, 0.7);
+}
+
+.modal-content{
+
+}
+
+.modal-footer{
+    
+}
+
+#reset-h4{
+    
+}
+
+#favourites-container-desktop{
+    display: block;
+}
+
+#favourites-container-mobile{
+    display: none;
+}
+
+@media only screen and (max-width: 768px){
+    #favourites-container-desktop{
+        display: none;
+    }
+
+    #favourites-container-mobile{
+        display: block;
+    }
+}
+
+@media only screen and (max-width: 400px){
+    #fav-address-header-row{
+        font-size: 5px;
+    }
+    
+    #fav-address-row{
+
+    }
 }
