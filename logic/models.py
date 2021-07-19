@@ -61,7 +61,6 @@ class Account():
             flash("Log in successful.", category="success")
             return self.start_session(existing_user)
         else:
-            # need a way to display to user
             flash("The password provided is incorrect.", category="error")
             return redirect(url_for('login'))
 

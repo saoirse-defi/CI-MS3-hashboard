@@ -7,6 +7,9 @@ import requests
 
 
 def get_transactions(address):
+    ''' Queries Etherscan API with ethereum address.
+        Returns transaction list. '''
+
     transaction_list = []
     eth_res = ""
     erc_res = ""

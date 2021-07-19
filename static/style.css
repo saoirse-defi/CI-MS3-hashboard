@@ -105,6 +105,10 @@ body{
 }
 
 @media only screen and (max-width: 400px){
+    .brand-logo{
+        font-size: small;
+    }
+
     .value-header{
         font-size: xx-large;
     }
