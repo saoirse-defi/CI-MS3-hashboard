@@ -2,6 +2,10 @@ body{
     font-family: 'Varela Round', sans-serif;
 }
 
+.close-button{
+    
+}
+
 .brand-logo{
     
 }
@@ -38,6 +42,7 @@ body{
 
 #note{
     width: 80%;
+    height: 133px;
 }
 
 .modal{
@@ -107,14 +112,14 @@ body{
     }
 
     .time-gas h5{
-        font-size: medium;
+        font-size: x-small;
     }
 
-    .fav-address-header-row h5{
-        font-size: small;
+    #fav-address-header-row{
+        font-size: x-small;
     }
 
-    .fav-address-row a{
-        font-size: smaller;
+    #fav-address-row{
+        font-size: x-small;
     }
 }
