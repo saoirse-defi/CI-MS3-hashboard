@@ -1,5 +1,5 @@
 import uuid
-from flask import jsonify, session, redirect, request, url_for, flash, render_template
+from flask import session, redirect, request, url_for, flash, render_template
 from werkzeug.security import generate_password_hash, check_password_hash
 from run import mongo
 
@@ -61,10 +61,9 @@ class Account():
             flash("Log in successful.", category="success")
             return self.start_session(existing_user)
         else:
-        # need a way to display to user
+            # need a way to display to user
             flash("The password provided is incorrect.", category="error")
             return redirect(url_for('login'))
-            #return jsonify({"error": "User crendiential not found"}), 401  # remove http from models
 
     def add_transactions(self, data):
         '''Inserts transaction into db.'''
