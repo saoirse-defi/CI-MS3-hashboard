@@ -1,5 +1,5 @@
 import uuid
-from flask import jsonify, session, redirect, request, url_for
+from flask import jsonify, session, redirect, request, url_for, flash, render_template
 from werkzeug.security import generate_password_hash, check_password_hash
 from run import mongo
 
@@ -20,12 +20,15 @@ class Account():
         account['password'] = generate_password_hash(account['password'])
 
         if(mongo.db.User.find_one({'email': account['email']})):
-            return jsonify({'error': 'Email already in use.'})
+            flash("Email address already in use!", "error")
+            return render_template('signup.html')
 
         if mongo.db.User.insert_one(account):
-            return self.start_session(account)
+            self.start_session(account)
+            return redirect(url_for('index'))
 
-        return jsonify({'error': 'Signup failed'}), 400
+        flash("Signup failed!", "error")
+        return render_template('signup.html')
 
     def start_session(self, account):
         '''Uses current account.
@@ -39,7 +42,6 @@ class Account():
 
     def signout(self):
         '''Clears session for current user.'''
-
         session.clear()
         return redirect(url_for('login'))
 
@@ -51,13 +53,16 @@ class Account():
             "email": request.form.get('email')
         })
 
-        if existing_user and check_password_hash(
-                                            existing_user['password'],
-                                            request.form.get('password')):
+        if check_password_hash(
+                            existing_user['password'],
+                            request.form.get('password')):
+            flash("Log in successful.")
             return self.start_session(existing_user)
-
+        else:
         # need a way to display to user
-        return jsonify({"error": "User crendiential not found"}), 401  # remove http from models
+            flash("The password provided is incorrect.")
+            return redirect(url_for('login'))
+            #return jsonify({"error": "User crendiential not found"}), 401  # remove http from models
 
     def add_transactions(self, data):
         '''Inserts transaction into db.'''
