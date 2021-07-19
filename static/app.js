@@ -14,3 +14,11 @@ $(document).ready(() => {
 $('.carousel-slider').carousel({
     fullWidth: true
 })
+
+setTimeout(function() {
+    $(".alert-success").fadeOut().empty();
+  }, 5000);
+
+  setTimeout(function() {
+    $(".alert-danger").fadeOut().empty();
+  }, 5000);
