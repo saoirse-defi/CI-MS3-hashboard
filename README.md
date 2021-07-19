@@ -91,6 +91,17 @@ Premium tier users will have unlimited access to search and adding favourite tra
 
 ### User Stories Testing
 
+
+1. This application satisfies the needs of the user by:
+    * Having a clean UI, based on the princibles of material design.
+    * Ensuring that all text on the website is leigible at a quick glance.
+    * Being designed in an efficent manner, compressing data wherever possible.
+
+2. Advertiser needs are satisfied by this project as:
+    * The site's content is advertiser-friendly and non-controvertial.
+    * The web application is designed to maintain users attention by providing value.
+    * The application is efficiently designed.
+
 ### Design Choices
 
 ##### Responsive Front-End Framework
@@ -101,7 +112,32 @@ It appears to provide more feedback to the user when they are navigating through
 
 ##### Icons
 
+All icons for this application have been sourced from [Google Fonts](https://fonts.google.com/icons) collected from the Material Icons library. As the designer of the web application, the selection of the icons must be done in line with other successful applications. 
+
+###### Favourite Icon
+
+![Favourite Icon](readme-imgs/favourite_screenshot.JPG)
+
+After searching a public Ethereum address, it's transactions will then be added to your hashboard. The next step is for the user to prioritise certain transactions which they deem important. The heart icon has been used for nearly a decade now in order to represent important items within a list.
+
+###### Edit Icon
+
+![Edit Icon](readme-imgs/edit_screenshot.JPG)
+
+Once the user has added their priority transactions to their favourite's list, a text note may have been added. The edit icon is what allows the user to change the note stored in relation to their transaction. I have chosen the pen icon from Material Icons as it has been used by previous developers when interacting with text-based components. 
+
+###### Delete Icon
+
+![Delete Icon](readme-imgs/delete_screenshot.JPG)
+
+Finally, once the user has no more need to prioritise a specific transaction, there needs to be a way in order for the user to be able to clean up their favourite's list. There could only be one realistic choice for this icon as it has been used so predominantly in software design. I decided to use the rubbish bin icon due to it's intuitive nature.
+
+
 ##### Fonts
+
+###### Varela Round
+
+![Varela Font Example](readme-imgs/font_varela.JPG)
 
 ##### Colours
 
