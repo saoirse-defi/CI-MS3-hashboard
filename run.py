@@ -4,7 +4,7 @@ if os.path.exists("env.py"):
     import env
 # from os import path
 from operator import itemgetter
-from flask import Flask, render_template, redirect, request, session, url_for, send_from_directory, abort
+from flask import Flask, render_template, redirect, request, session, url_for, send_from_directory, abort, flash
 from flask_pymongo import PyMongo
 from functools import wraps
 import logic.models
@@ -31,16 +31,16 @@ transaction_table_headings = ['Date created',
                               'Gas Spent (ETH)',
                               'Favourite']
 
-fav_table_headings = ['Date created',
-                      'Hash',
-                      'To',
-                      'From',
-                      'Value',
-                      'Token Involved',
-                      'Gas Price (GWEI)',
-                      'Notes',
-                      'Edit',
-                      'Delete']
+favourites_table_headings = ['Date created',
+                             'Hash',
+                             'To',
+                             'From',
+                             'Value',
+                             'Token Involved',
+                             'Gas Price (GWEI)',
+                             'Notes',
+                             'Edit',
+                             'Delete']
 
 
 # Error Handling Functions
@@ -65,40 +65,21 @@ fav_table_headings = ['Date created',
 def handle_exception(e):
     return render_template("error.html", e=e), 500
 
-# Decorator Functions
-
-
-def login_required(f): # use rohit's link to new login required
-    @wraps(f)
-    def wrap(*args, **kwargs):
-        if 'logged_in' in session:
-            return f(*args, **kwargs)
-        else:
-            return redirect(url_for('login'))
-
-    return wrap
 
 # Formatting functions
 
 
 def shorten(string):
+    ''' Converts Ethereum address into truncated string. '''
     return "0x..." + string[38:]
 
 
 def shorten2(string):
+    ''' Converts Ethereum transaction hash into truncated string. '''
     return "0x..." + string[62:]
 
 
-def toInt(x):
-    return int(float(x))
-
-
-def threeDecimals(y):
-    return "%.3f" % y
-
-
 # Routes
-@login_required
 @app.route("/")
 @app.route("/index", methods=['GET', 'POST'])
 def index():
@@ -110,36 +91,33 @@ def index():
         # sort combined list by time/date
         transactions_list.sort(reverse=True, key=itemgetter('time'))
     except Exception:
-        return redirect(url_for('forbidden'))
+        return render_template('403.html')
 
     # list of favourite transactions
     try:
-        fav_list = list(
+        favourites_list = list(
             mongo.db.Transaction.find(
                 {"user_id": session['user']['_id'], "isFav": True}))
-        fav_list.sort(reverse=True, key=itemgetter('time'))
+        favourites_list.sort(reverse=True, key=itemgetter('time'))
     except Exception:
-        return redirect(url_for('forbidden'))
+        return render_template('403.html')
 
-    # transaction can only be in transaction list or fav list
-    for data in fav_list:
+    # transaction can only be in either transaction list or fav list, not both
+    for data in favourites_list:
         for _data in transactions_list:
             if data == _data:
                 transactions_list.remove(_data)
 
     return render_template("index.html",
                            transactions_list=transactions_list,
-                           fav_list=fav_list,
+                           favourites_list=favourites_list,
                            transaction_table_headings=transaction_table_headings,
-                           fav_table_headings=fav_table_headings,
+                           favourites_table_headings=favourites_table_headings,
                            shorten=shorten,
-                           shorten2=shorten2,
-                           toInt=toInt,
-                           threeDecimals=threeDecimals)
+                           shorten2=shorten2)
 
 
 # Add transaction to favourites
-@login_required
 @app.route('/favourite/<transaction_id>', methods=['GET', 'POST'])
 def favourite(transaction_id):
     transaction = mongo.db.Transaction.find_one({'_id': transaction_id})
@@ -153,9 +131,9 @@ def favourite(transaction_id):
                     {"_id": transaction_id}, {
                         "$set": {"note": note, "isFav": True}})
                 return redirect(url_for('index'))
-        except Exception as e:
-            print("Exception: ", e)
-            return forbidden(e)
+        except Exception:
+            flash("You do not have access favourite this transaction.", category="error")
+            return render_template('403.html')
 
     return render_template('favourite.html',
                            transaction=transaction,
@@ -164,7 +142,6 @@ def favourite(transaction_id):
 
 
 # Delete transaction from favourites
-@login_required
 @app.route('/delete_favourite/<transaction_id>', methods=['GET', 'POST']) #use full word for functions
 def delete_favourite(transaction_id):
     transaction = mongo.db.Transaction.find_one({"_id": transaction_id})
@@ -174,22 +151,21 @@ def delete_favourite(transaction_id):
                 {"_id": transaction_id},
                 {"$set": {"note": "", "isFav": False}})
             return redirect(url_for('index'))
-    except Exception as e:
-        return forbidden(e)
+    except Exception:
+        flash("You do not have access to delete this transaction.", category="error")
+        return render_template('403.html')
 
 
 # Clear all transactions except favourites
-@login_required
 @app.route('/clear', methods=['GET', 'POST'])
 def clear():
     mongo.db.Transaction.remove(
         {"user_id": session['user']['_id'], 'isFav': False})
-
+    flash("You have cleared your searched transactions successfully!", category="success")
     return redirect(url_for('index'))
 
 
 # Search, bulk transaction added to db
-@login_required
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     search_eth = ""
@@ -197,14 +173,17 @@ def search():
 
     if request.method == 'POST':
         search_eth = str(request.form.get('search-eth')).lower()
-        transaction_list = logic.eth.get_transactions(search_eth)
-        return redirect(url_for('index'))
+        if len(search_eth) == 42:
+            transaction_list = logic.eth.get_transactions(search_eth)
+            flash(f"Transactions for {search_eth} have been added successfully", category="success")
+            return redirect(url_for('index'))
+        else:
+            flash("The format of your search is incorrect!", category="error")
+            return render_template('search.html')
 
     return render_template("search.html",
                            shorten=shorten,
                            shorten2=shorten2,
-                           toInt=toInt,
-                           threeDecimals=threeDecimals,
                            search_eth=search_eth,
                            transaction_list=transaction_list,
                            transaction_table_headings=transaction_table_headings)
@@ -230,22 +209,30 @@ def home():
 def signup():
     if request.method == 'POST':
         logic.models.Account().signup()
-        return redirect(url_for('index'))
     return render_template("signup.html")
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    existing_user = mongo.db.User.find_one({
+            "email": request.form.get('email')
+    })
+
     if request.method == 'POST':
-        return logic.models.Account().login()
+        if existing_user:
+            return logic.models.Account().login()
+        else:
+            flash("User not found!")
 
     return render_template("login.html")
 
 
-@login_required
 @app.route('/signout')
 def signout():
-    return logic.models.Account().signout()
+    if session['user']['_id']:
+        return logic.models.Account().signout()
+    else:
+        return render_template('403.html')
 
 
 @app.route('/favicon.ico')
