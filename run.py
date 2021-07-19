@@ -4,9 +4,9 @@ if os.path.exists("env.py"):
     import env
 # from os import path
 from operator import itemgetter
-from flask import Flask, render_template, redirect, request, session, url_for, send_from_directory, abort, flash
+from flask import (Flask, render_template, request,
+                   redirect, session, url_for, send_from_directory, flash)
 from flask_pymongo import PyMongo
-from functools import wraps
 import logic.models
 import logic.eth
 
@@ -42,24 +42,6 @@ favourites_table_headings = ['Date created',
                              'Edit',
                              'Delete']
 
-
-# Error Handling Functions
-#@app.errorhandler(403)
-#def forbidden(e):
- #   print(f"Error: {e}")
-  #  return render_template('403.html')
-
-
-#@app.errorhandler(404)
-#def not_found(e):
- #   print(f"Error: {e}")
-  #  return render_template('404.html')
-
-
-#@app.errorhandler(500)
-#def server_error(e):
- #   print(f"Error: {e}")
-  #  return render_template('500.html')
 
 @app.errorhandler(Exception)
 def handle_exception(e):
@@ -146,7 +128,7 @@ def favourite(transaction_id):
                 mongo.db.Transaction.update(
                     {"_id": transaction_id}, {
                         "$set": {"note": note, "isFav": True}})
-                flash(f"{transaction['hash']} has been added to your priority list", category=success)
+                flash(f"{transaction['hash']} has been added to your priority list", category="success")
                 return redirect(url_for('hashboard'))
         except Exception:
             flash("Unauthorised Access", category="error")
@@ -159,7 +141,7 @@ def favourite(transaction_id):
 
 
 # Delete transaction from favourites
-@app.route('/delete_favourite/<transaction_id>', methods=['GET', 'POST']) #use full word for functions
+@app.route('/delete_favourite/<transaction_id>', methods=['GET', 'POST'])
 def delete_favourite(transaction_id):
     transaction = mongo.db.Transaction.find_one({"_id": transaction_id})
     try:
@@ -249,7 +231,7 @@ def signout():
 def favicon():
     return send_from_directory(
         os.path.join(app.root_path, 'static'),
-            'favicon.ico', mimetype='image/vnd.microsoft.icon')
+        'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 # App config
 
