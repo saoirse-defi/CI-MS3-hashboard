@@ -20,14 +20,15 @@ class Account():
         account['password'] = generate_password_hash(account['password'])
 
         if(mongo.db.User.find_one({'email': account['email']})):
-            flash("Email address already in use!", "error")
+            flash("Email address already in use!", category="error")
             return render_template('signup.html')
 
         if mongo.db.User.insert_one(account):
             self.start_session(account)
+            flash("Account created successfully", category="success")
             return redirect(url_for('index'))
 
-        flash("Signup failed!", "error")
+        flash("Signup failed!", category="error")
         return render_template('signup.html')
 
     def start_session(self, account):
@@ -43,6 +44,7 @@ class Account():
     def signout(self):
         '''Clears session for current user.'''
         session.clear()
+        flash("Logged out successfully.", category="success")
         return redirect(url_for('login'))
 
     def login(self):
@@ -56,11 +58,11 @@ class Account():
         if check_password_hash(
                             existing_user['password'],
                             request.form.get('password')):
-            flash("Log in successful.")
+            flash("Log in successful.", category="success")
             return self.start_session(existing_user)
         else:
         # need a way to display to user
-            flash("The password provided is incorrect.")
+            flash("The password provided is incorrect.", category="error")
             return redirect(url_for('login'))
             #return jsonify({"error": "User crendiential not found"}), 401  # remove http from models
 
