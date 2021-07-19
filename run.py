@@ -43,14 +43,13 @@ favourites_table_headings = ['Date created',
                              'Delete']
 
 
+# Exception handling function
 @app.errorhandler(Exception)
 def handle_exception(e):
     return render_template("error.html", e=e), 500
 
 
 # Formatting functions
-
-
 def shorten(string):
     ''' Converts Ethereum address into truncated string. '''
     return "0x..." + string[38:]
@@ -97,7 +96,7 @@ def hashboard():
             mongo.db.Transaction.find(
                 {"user_id": session['user']['_id'], "isFav": True}))
         favourites_list.sort(reverse=True, key=itemgetter('time'))
-    except Exception:
+    except Exception as e:
         raise Exception(e)
 
     # transaction can only be in either transaction list or fav list, not both
