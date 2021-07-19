@@ -26,14 +26,14 @@ body{
     justify-content: center;
 }
 
-#fav-address-header-row{
-    margin: 0%;
-    padding: 0%;
+
+
+.fav-address-header-row{
+    margin-bottom: 0;
 }
 
-#fav-address-row{
-    margin: 0%;
-    padding: 0%;
+.fav-address-row{
+
 }
 
 #note{
@@ -41,6 +41,7 @@ body{
 }
 
 .modal{
+    background-color: #868686;
     color: black;
     padding: 10px;
     width: 700px;
@@ -51,11 +52,15 @@ body{
 }
 
 .modal-content{
-
+    background-color: #868686;
 }
 
 .modal-footer{
-    
+    background-color: #868686;
+}
+
+.modal-footer a{
+    color: black;
 }
 
 #reset-h4{
@@ -97,5 +102,19 @@ body{
 }
 
 @media only screen and (max-width: 400px){
-  
+    .value-header{
+        font: small;
+    }
+
+    .time-gas h5{
+        font-size: medium;
+    }
+
+    .fav-address-header-row h5{
+        font-size: small;
+    }
+
+    .fav-address-row a{
+        font-size: smaller;
+    }
 }
