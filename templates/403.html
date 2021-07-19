@@ -2,6 +2,8 @@
 
 {% block content %}
 
+
+{% if session['user'] %}
 <div class="container responsive">
     <div class="row">
         <div class="col s6">
@@ -10,10 +12,23 @@
         <div class="col s6">
             <h2>Access Denied</h2>
             <span>Unfortunately you are not able to view this page with your current credentials.</span><br><br>
-            <span>Please log in to view transactions.</span><br><br>
+            <a class="waves-effect waves-green btn-small" href="{{url_for('index')}}">Back to login</a>
         </div>
     </div>
 </div>
-
+{% else %}
+<div class="container responsive">
+    <div class="row">
+        <div class="col s6">
+            <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_5zs3qrld.json" mode="bounce" background="transparent"  speed="1"  style="width: 100%; height: 100%;"  loop  autoplay></lottie-player>
+        </div>
+        <div class="col s6">
+            <h2>Access Denied</h2>
+            <span>Unfortunately you are not able to view this page with your current credentials.</span><br><br>
+            <a class="waves-effect waves-green btn-small" href="{{url_for('login')}}">Back to login</a>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 {% endblock %}
