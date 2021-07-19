@@ -15,9 +15,9 @@ body{
     padding: 0px;
 }
 
-.token-header{
-    margin: 0%;
-    padding: 0px 0px 0px 0px;
+.value{
+    margin: 0px;
+    padding: 0px;
 }
 
 .time-gas{
@@ -36,8 +36,8 @@ body{
     margin-bottom: 0;
 }
 
-.fav-address-row{
-
+.search-address-header-row{
+    margin-bottom: 0;
 }
 
 #note{
@@ -68,10 +68,6 @@ body{
     color: black;
 }
 
-#reset-h4{
-    
-}
-
 #favourites-container-desktop{
     display: block;
 }
@@ -88,13 +84,14 @@ body{
     display: none;
 }
 
-@media only screen and (max-width: 768px){
+@media only screen and (max-width: 1000px){
     #favourites-container-desktop{
         display: none;
     }
 
     #favourites-container-mobile{
         display: block;
+        height: 400px;
     }
 
     #search-container-desktop{
@@ -103,23 +100,23 @@ body{
     
     #search-container-mobile{
         display: block;
+        height: 400px;
     }
 }
 
 @media only screen and (max-width: 400px){
     .value-header{
-        font: small;
+        font-size: xx-large;
     }
-
     .time-gas h5{
-        font-size: x-small;
+        font-size: xx-small;
     }
 
     #fav-address-header-row{
-        font-size: x-small;
+        font-size: xx-small;
     }
 
     #fav-address-row{
-        font-size: x-small;
+        font-size: xx-small;
     }
 }
