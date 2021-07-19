@@ -212,7 +212,11 @@ Within this application there are 2 levels of error handling:
 
 In order to communicate information to the user, an alert system was needed. Flask has a built-in messaging library known as flash, which we can use to send important information to the frontend. Along with passing data, we can also categorise these messages into pre-defined groups such as "error" & "info". This allows us to change the styling of the HTML element displaying the alert depending on the category of the message.
 
+###### Example of a successful flash message
+
 ![Example of successful flash message](readme-imgs/success_flash.JPG)
+
+###### Example of an error flash message
 
 ![Example of an error flash message](readme-imgs/error_flash.JPG)
 
@@ -361,25 +365,46 @@ Further reading and troubleshooting on cloning a repository can be found here [G
 
 ## Wireframes
 
+###### Log In Page, Desktop
+
+![Wireframe](readme-imgs/Login.html.png)
+
+###### Log In Page, Mobile/Tablet
+
+![Wireframe](readme-imgs/Login.html(Mobile_Tablet).png)
+
+###### Sign Up Page, Desktop
+
+![Wireframe](readme-imgs/Signup.html(Desktop).png)
+
+###### Sign Up Page, Mobile/Tablet
+
+![Wireframe](readme-imgs/Signup.html(Mobile_Tablet).png)
+
+###### Hashboard page, Desktop
+
+![Wireframe](readme-imgs/Home.html(desktop).png)
+
+###### Hashboard page, Mobile/Tablet
+
+![Wireframe](readme-imgs/Home.html(mobile_tablet).png)
+
+###### Search Page, Desktop
+
+![Wireframe](readme-imgs/Search.html(desktop).png)
+
+###### Search Page, Mobile/Tablet
+
+![Wireframe](readme-imgs/Search.html(mobile_tablet).png)
+
+###### Edit Page, Desktop
+
 ![Wireframe](readme-imgs/Edit.html(Desktop).png)
 
-![Wireframe](readme-imgs/)
+###### Edit page, Mobile/Tablet
 
-![Wireframe](readme-imgs/)
+![Wireframe](readme-imgs/Edit.html(Mobile/Tablet).png)
 
-![Wireframe](readme-imgs/)
-
-![Wireframe](readme-imgs/)
-
-![Wireframe](readme-imgs/)
-
-![Wireframe](readme-imgs/)
-
-![Wireframe](readme-imgs/)
-
-![Wireframe](readme-imgs/)
-
-![Wireframe](readme-imgs/)
 
 ## Dependancies
 
