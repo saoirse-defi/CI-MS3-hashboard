@@ -81,8 +81,24 @@ def shorten2(string):
 
 # Routes
 @app.route("/")
-@app.route("/index", methods=['GET', 'POST'])
-def index():
+@app.route("/index")
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    existing_user = mongo.db.User.find_one({
+            "email": request.form.get('email')
+    })
+
+    if request.method == 'POST':
+        if existing_user:
+            return logic.models.Account().login()
+        else:
+            flash("Email address not found!", category="error")
+
+    return render_template("login.html")
+
+
+@app.route("/hashboard", methods=['GET', 'POST'])
+def hashboard():
     # list of cursor query
     try:
         transactions_list = list(
@@ -108,7 +124,7 @@ def index():
             if data == _data:
                 transactions_list.remove(_data)
 
-    return render_template("index.html",
+    return render_template("hashboard.html",
                            transactions_list=transactions_list,
                            favourites_list=favourites_list,
                            transaction_table_headings=transaction_table_headings,
@@ -131,7 +147,7 @@ def favourite(transaction_id):
                     {"_id": transaction_id}, {
                         "$set": {"note": note, "isFav": True}})
                 flash(f"{transaction['hash']} has been added to your priority list", category=success)
-                return redirect(url_for('index'))
+                return redirect(url_for('hashboard'))
         except Exception:
             flash("Unauthorised Access", category="error")
             return render_template('403.html')
@@ -152,7 +168,7 @@ def delete_favourite(transaction_id):
                 {"_id": transaction_id},
                 {"$set": {"note": "", "isFav": False}})
             flash("Transaction removed from priority list.", category="success")
-            return redirect(url_for('index'))
+            return redirect(url_for('hashboard'))
     except Exception:
         flash("Unauthorised Access", category="error")
         return render_template('403.html')
@@ -164,7 +180,7 @@ def clear():
     mongo.db.Transaction.delete_many(
         {"user_id": session['user']['_id'], 'isFav': False})
     flash("Transactions cleared!", category="success")
-    return redirect(url_for('index'))
+    return redirect(url_for('hashboard'))
 
 
 # Search, bulk transaction added to db
@@ -178,7 +194,7 @@ def search():
         if len(search_eth) == 42:
             transaction_list = logic.eth.get_transactions(search_eth)
             flash(f"{search_eth}: Transactions added", category="success")
-            return redirect(url_for('index'))
+            return redirect(url_for('hashboard'))
         else:
             flash("Incorrect address format", category="error")
             return render_template('search.html')
@@ -219,21 +235,6 @@ def signup():
             flash("Password needs to be 8 digits or more", category="error")
         
     return render_template("signup.html")
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    existing_user = mongo.db.User.find_one({
-            "email": request.form.get('email')
-    })
-
-    if request.method == 'POST':
-        if existing_user:
-            return logic.models.Account().login()
-        else:
-            flash("Email address not found!", category="error")
-
-    return render_template("login.html")
 
 
 @app.route('/signout')

@@ -26,7 +26,7 @@ class Account():
         if mongo.db.User.insert_one(account):
             self.start_session(account)
             flash("Account created successfully", category="success")
-            return redirect(url_for('index'))
+            return redirect(url_for('hashboard'))
 
         flash("Signup failed!", category="error")
         return render_template('signup.html')
@@ -39,7 +39,7 @@ class Account():
         session['logged_in'] = True
         session['user'] = account
 
-        return redirect(url_for('index'))
+        return redirect(url_for('hashboard'))
 
     def signout(self):
         '''Clears session for current user.'''
