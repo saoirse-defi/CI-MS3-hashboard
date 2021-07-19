@@ -58,6 +58,7 @@ The target audience for this application reflects people within the age group of
 
 ### Developer & Business Goals
 
+This section will outline goals set out by application creator both in relation to how they would like to develop as a software engineer & their financial goals as regards to the website.
 
 ##### Developer Goals
 
@@ -200,7 +201,12 @@ Within this application there are 2 levels of error handling:
     * Normal processes have occurred such as transactions being added or removed.
     * An incorrect password provided upon login.
     * An email address has already been used upon signup.
-    * 
+    * If the length of the Ethereum public address provided is incorrect.
+
+2. Exceptions are displayed to the user when:
+    * If the database query fails.
+    * A user tries to access certain parts of the application without proper credentials.
+    * The API response is incorrect or times out.
 
 #### Flash Messages
 
@@ -213,18 +219,30 @@ In order to communicate information to the user, an alert system was needed. Fla
 
 #### API Exceptions
 
+During the development of this application, I decided to create a generic exception handler instead of creating specific exception handler for each type of exception. 
+This way all possible Python subclasses of exception are covered. The user can then read the description of the exception in order to evaluate what went wrong.
+
+![Example of Exception landing page](readme-imgs/exception.JPG)
+
 #### Lottie Player Animations
 
+Lottie provides lightweight animation hosting which provides significantly smaller footprint than conventional animations. 
 
 ### User Interaction
 
 #### Blockchain Search
 
+The blockchain search tools is the key component to the entire Hashboard application. Here, the users can add transactions related to any address within the public Ethereum ecosystem. 
+During the Ethereum API decision-making process, there was 1 clear winner [Etherscan](https://etherscan.io/apis).
+Etherscan is the leading blockchain explorer and has been around since Ethereum's inception.
+
 #### Priority Transactions
+
+Once transactions have been added from a specific Ethereum address we can then start to provide additional value which Etherscan itself doesn't provide. Users have the ability to prioritise specific transactions and additionally they can save important information which is related to that transaction.
 
 #### Notes
 
-
+Once the user has favourited a priority transaction, the user is given a text area where they can input information such as a description of the transaction or detailing the name belonging to the Ethereum public address. This feature could be used in order to do forensic accounting on the blockchain.
 
 ## Implementation
 
@@ -232,7 +250,12 @@ This section will outline the technologies & processes used in the design & impl
 
 #### Materialize Framework
 
+For this project, the frontend framework I decided to use was Materialize. In my previous 2 milestone projects, I chose Bootstrap for the frontend, but I can now safely say that I much prefer the look of Materialize.
+As it is based on the principles of material design, all elements just seem that little bit sharper and current.
+
 #### MongoDB
+
+For the backend on this application, MongoDB was chosen to implement a noSQL database.
 
 #### Etherscan API
 
@@ -260,7 +283,56 @@ This section will outline the technologies & processes used in the design & impl
 
 ## Bugs Discovered
 
+#### Index.html user Exception
+
 ## Deployment
+
+### Heroku
+
+### Github Pages Deployment Procedure
+
+This project was developed using Gitpod, committed to git and pushed to Github using the built-in function with Gitpod.
+
+To deploy this page from Github pages from its Github repository, the following steps were taken.
+
+1. Log into Github.
+2. From the list of repositories on the screen, select saoirse-defi/milestone1-bad-arts-1.0.
+3. From the menu items near the top of the page, select Settings.
+4. Scroll down to the Github Pages section.
+5. Under source click the drop-down menu labelled None and select Master Branch.
+6. On selecting Master Branch, the page is automatically refreshed, the website is now deployed.
+   
+At the moment of submitting this milestone project, the default branch is version1.2 which is the latest version.
+
+#### How to run this project locally:
+
+To clone this project into Gitpod you will need:
+1. A Github account
+2. Use the Chrome browser
+
+Then follow these steps:
+1. Install the Gitpod browser extensions for Chrome
+2. After installation, restart the browser
+3. Log into Gitpod with your Gitpod account
+4. Navigate to the Github project repository
+5. Click the green 'Gitpod' button in the top right corner of the repository
+6. This will trigger a new Gitpod workspace to be created from the code in Github where you can work locally
+
+
+To work on the code within a local IDE such as VScode:
+1. Follow this link to the Github repository
+2. Under the repository name, click 'clone' or 'download'
+3. In the clone with the https section, copy the clone URL for the repository
+4. In your local IDE, open the terminal
+5. Change the current working directory to the location where you want the cloned directory to be made.
+6. Type 'git clone', and then paste the URL copied in step 3
+
+git clone https://www.Github.com/USERNAME/REPOSITORY
+
+7. Press enter. Your local clone will be created.
+
+Further reading and troubleshooting on cloning a repository can be found here [Github](https://docs.Github.com/en/free-pro-team@latest/Github/creating-cloning-and-archiving-repositories/cloning-a-repository).
+
 
 ## Credit
 
@@ -286,23 +358,28 @@ This section will outline the technologies & processes used in the design & impl
 
 [Displaying Information to the user efficiently](https://www.youtube.com/watch?v=Ox9MW9Z8srE&list=PLOPo1bGrV4htxbQCS3CPZ59O1kpPdE7PK)
 
-[]()
-
-[]()
-
-[]()
-
-[]()
-
-[]()
-
-[]()
-
-
-
-
 
 ## Wireframes
+
+![Wireframe](readme-imgs/Edit.html(Desktop).png)
+
+![Wireframe](readme-imgs/)
+
+![Wireframe](readme-imgs/)
+
+![Wireframe](readme-imgs/)
+
+![Wireframe](readme-imgs/)
+
+![Wireframe](readme-imgs/)
+
+![Wireframe](readme-imgs/)
+
+![Wireframe](readme-imgs/)
+
+![Wireframe](readme-imgs/)
+
+![Wireframe](readme-imgs/)
 
 ## Dependancies
 
