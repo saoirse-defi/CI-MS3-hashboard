@@ -157,15 +157,29 @@ This is the specific colour chosen within the Materialize framework for the navb
 
 The colour of the buttons throughout the site is unchanged as it is the primary button colour for the Materialize framework. During the design process, I noticed that this shade of blue complemented the teal hue of the navbar.
 
+
+## Key Elements
+
+This section will outline the key elements within this application giving descriptions on the purpose of each element.
+
 ##### Modals
 
-Modals have been used several times throughout the application in order to confirm if a user would like to proceed with an irreversible process.
+Modals have been used several times throughout the application in order to confirm if a user would like to proceed with an irreversible process. This is considered best-practice in web development as the user could easily push a button by mistake and trigger a process which cannot be undone.
+
+As the majority of the web application is simply styled in order to create that sleek minimal look, modal design is where I have allowed for some more adventurous styling. As you can see in the example above, once a modal is activated, a shadow effect is applied across the screen behind the modal. A secondary teal shadow has been added to the border of the modal to give it a 3D-like appearance.
 
 ###### Log Out Modal Example
 
 ![Log Out Modal](readme-imgs/modal_example2.JPG)
 
-As the majority of the web application is simply styled in order to create that sleek minimal look, modal design is where I have allowed for some more adventurous styling. As you can see in the example above, once a modal is activated, a shadow effect is applied across the screen behind the modal. A secondary teal shadow has been added to the border of the modal to give it a 3D-like appearance.
+###### Sign Out Modal Example
+
+![Sign Out Modal](readme-imgs/signout_example.JPG)
+
+###### Reset Modal Example
+
+![Reset Modal](readme-imgs/reset_modal.JPG)
+
 
 ##### Data Tables(Desktop View)
 
@@ -178,11 +192,31 @@ From the beginning of the design of the application, I knew that a separate view
 In order to counteract this, a gallery style view was created for mobile/tablet users. Each transaction is represented by a slide within a larger gallery. Users swipe from left to right in order to access different transactions. I believe this is a design which many mobile users are familiar with due to the rise of social media applications such as Instagram.
 
 
-## Key Elements
+#### Error Handling
+
+##### Flash Messages
+
+In order to communicate information to the user, an alert system was needed. Flask has a built-in messaging library known as flash, which we can use to send important information to the frontend. Along with passing data, we can also categorise these messages into pre-defined groups such as "error" & "info". This allows us to change the styling of the HTML element displaying the alert depending on the category of the message.
+
+[Example of successful flash message](readme-imgs/success_flash.JPG)
+
+[Example of an error flash message](readme-imgs/error_flash.JPG)
+
+
+##### API Exceptions
+
+##### Lottie Player Animations
+
 
 ### User Interaction
 
-##### Error Handling
+##### Blockchain Search
+
+##### Priority Transactions
+
+##### Notes
+
+
 
 ## Implementation
 
@@ -193,6 +227,10 @@ This section will outline the technologies & processes used in the design & impl
 #### MongoDB
 
 #### Etherscan API
+
+#### Python
+
+#### Jinja
 
 #### Flask
 
@@ -218,7 +256,43 @@ This section will outline the technologies & processes used in the design & impl
 
 ## Credit
 
-##### Lottie Player Animations
+[Materialize Framework Documentation](https://materializecss.com/)
+
+[HTML Element fade-out](https://stackoverflow.com/questions/1911290/make-div-text-disappear-after-5-seconds-using-jquery#1911308)
+
+[Etherscan API](https://etherscan.io/apis)
+
+[Flask Documentation](https://flask.palletsprojects.com/en/1.1.x/)
+
+[Ethereum Documentation](https://ethereum.org/en/)
+
+[Mongo DB Documentation](https://docs.mongodb.com/)
+
+[Python Docstrings](https://www.geeksforgeeks.org/python-docstrings/)
+
+[Pylint Error Help](https://learn.adafruit.com/improve-your-code-with-pylint/pylint-errors)
+
+[Heroku Documentation](https://devcenter.heroku.com/categories/python-support)
+
+[Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet)
+
+[Displaying Information to the user efficiently](https://www.youtube.com/watch?v=Ox9MW9Z8srE&list=PLOPo1bGrV4htxbQCS3CPZ59O1kpPdE7PK)
+
+[]()
+
+[]()
+
+[]()
+
+[]()
+
+[]()
+
+[]()
+
+
+
+
 
 ## Wireframes
 
