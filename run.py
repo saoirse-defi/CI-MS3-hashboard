@@ -130,9 +130,10 @@ def favourite(transaction_id):
                 mongo.db.Transaction.update(
                     {"_id": transaction_id}, {
                         "$set": {"note": note, "isFav": True}})
+                flash(f"{transaction['hash']} has been added to your priority list", category=success)
                 return redirect(url_for('index'))
         except Exception:
-            flash("You do not have access favourite this transaction.", category="error")
+            flash("Unauthorised Access", category="error")
             return render_template('403.html')
 
     return render_template('favourite.html',
@@ -150,18 +151,19 @@ def delete_favourite(transaction_id):
             mongo.db.Transaction.update(
                 {"_id": transaction_id},
                 {"$set": {"note": "", "isFav": False}})
+            flash("Transaction removed from priority list.", category="success")
             return redirect(url_for('index'))
     except Exception:
-        flash("You do not have access to delete this transaction.", category="error")
+        flash("Unauthorised Access", category="error")
         return render_template('403.html')
 
 
 # Clear all transactions except favourites
 @app.route('/clear', methods=['GET', 'POST'])
 def clear():
-    mongo.db.Transaction.remove(
+    mongo.db.Transaction.delete_many(
         {"user_id": session['user']['_id'], 'isFav': False})
-    flash("You have cleared your searched transactions successfully!", category="success")
+    flash("Transactions cleared!", category="success")
     return redirect(url_for('index'))
 
 
@@ -175,10 +177,10 @@ def search():
         search_eth = str(request.form.get('search-eth')).lower()
         if len(search_eth) == 42:
             transaction_list = logic.eth.get_transactions(search_eth)
-            flash(f"Transactions for {search_eth} have been added successfully", category="success")
+            flash(f"{search_eth}: Transactions added", category="success")
             return redirect(url_for('index'))
         else:
-            flash("The format of your search is incorrect!", category="error")
+            flash("Incorrect address format", category="error")
             return render_template('search.html')
 
     return render_template("search.html",
@@ -208,7 +210,14 @@ def home():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        logic.models.Account().signup()
+        if len(request.form.get('password')) > 7:
+            if(request.form.get('password') == request.form.get('password-confirm')):
+                return logic.models.Account().signup()
+            else:
+                flash("Passwords do not match.", category="error")
+        else:
+            flash("Password needs to be 8 digits or more", category="error")
+        
     return render_template("signup.html")
 
 
@@ -222,7 +231,7 @@ def login():
         if existing_user:
             return logic.models.Account().login()
         else:
-            flash("User not found!")
+            flash("Email address not found!", category="error")
 
     return render_template("login.html")
 
