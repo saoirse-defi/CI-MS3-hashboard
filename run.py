@@ -4,7 +4,7 @@ if os.path.exists("env.py"):
     import env
 # from os import path
 from operator import itemgetter
-from flask import (Flask, render_template, request,
+from flask import (Flask, render_template, request, abort,
                    redirect, session, url_for, send_from_directory, flash)
 from flask_pymongo import PyMongo
 import logic.models
@@ -88,8 +88,8 @@ def hashboard():
                 {"user_id": session['user']['_id']}))
         # sort combined list by time/date
         transactions_list.sort(reverse=True, key=itemgetter('time'))
-    except Exception:
-        return render_template('403.html')
+    except Exception as e:
+        raise Exception(e)
 
     # list of favourite transactions
     try:
@@ -98,7 +98,7 @@ def hashboard():
                 {"user_id": session['user']['_id'], "isFav": True}))
         favourites_list.sort(reverse=True, key=itemgetter('time'))
     except Exception:
-        return render_template('403.html')
+        raise Exception(e)
 
     # transaction can only be in either transaction list or fav list, not both
     for data in favourites_list:
@@ -130,9 +130,8 @@ def favourite(transaction_id):
                         "$set": {"note": note, "isFav": True}})
                 flash(f"{transaction['hash']} has been added to your priority list", category="success")
                 return redirect(url_for('hashboard'))
-        except Exception:
-            flash("Unauthorised Access", category="error")
-            return render_template('403.html')
+        except Exception as e:
+            raise Exception(f"There has been an exception: {e}")
 
     return render_template('favourite.html',
                            transaction=transaction,
@@ -151,9 +150,8 @@ def delete_favourite(transaction_id):
                 {"$set": {"note": "", "isFav": False}})
             flash("Transaction removed from priority list.", category="success")
             return redirect(url_for('hashboard'))
-    except Exception:
-        flash("Unauthorised Access", category="error")
-        return render_template('403.html')
+    except Exception as e:
+        raise Exception(f"There has been an exception: {e}")
 
 
 # Clear all transactions except favourites
@@ -215,16 +213,17 @@ def signup():
                 flash("Passwords do not match.", category="error")
         else:
             flash("Password needs to be 8 digits or more", category="error")
-        
+
     return render_template("signup.html")
 
 
 @app.route('/signout')
 def signout():
-    if session['user']['_id']:
-        return logic.models.Account().signout()
-    else:
-        return render_template('403.html')
+    try:
+        if session['user']['_id']:
+            return logic.models.Account().signout()
+    except Exception as e:
+        raise Exception(e)
 
 
 @app.route('/favicon.ico')
