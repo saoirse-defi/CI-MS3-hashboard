@@ -13,6 +13,8 @@ Public blockchains granted software developers to the ability to compete with mu
 Even though cryptocurrencies have been around for more than a decade, adoption rates are still relatively low. I believe this is due to the perceived complexity of the technology.
 My goal for my Code Institute Milestone Project 3: Data Centric is to simplify the experience for the user by allowing them to view their blockchain data in a more intuitive graphical interface.
 
+#### The Ethereum Network
+
 #### Current Blockchain Interfaces
 
 This cryptocurrency dashboard project will be reading transactions from the Ethereum blockchain. Ethereum is the market leader in smart contract technology with the largest community & developer base.
@@ -135,15 +137,46 @@ Finally, once the user has no more need to prioritise a specific transaction, th
 
 ##### Fonts
 
+There has only been one font chosen for this project due to the nature of the application. I wanted to keep the application as minimal as possible. Only having one font, reduces complexity in the eye of the user leading to a more streamlined experience.
+
 ###### Varela Round
 
 ![Varela Font Example](readme-imgs/font_varela.JPG)
 
+The font chosen was taken from [Google Fonts](https://fonts.google.com/). I chose this font as it was extremely legibile & simple while still remaining fun and playful.
+
 ##### Colours
+
+The colour palate was chosen to emulate the design choices of the Ethereum foundation. Since it's inception, Ethereum's colour theme has always been different hues of blue. 
+
+###### Teal lighten-2
+
+This is the specific colour chosen within the Materialize framework for the navbar as it lends itself nicely to the Ethereum colour scheme.
+
+###### Materialize Button
+
+The colour of the buttons throughout the site is unchanged as it is the primary button colour for the Materialize framework. During the design process, I noticed that this shade of blue complemented the teal hue of the navbar.
 
 ##### Modals
 
-##### Data Tables
+Modals have been used several times throughout the application in order to confirm if a user would like to proceed with an irreversible process.
+
+###### Log Out Modal Example
+
+![Log Out Modal](readme-imgs/modal_example2.JPG)
+
+As the majority of the web application is simply styled in order to create that sleek minimal look, modal design is where I have allowed for some more adventurous styling. As you can see in the example above, once a modal is activated, a shadow effect is applied across the screen behind the modal. A secondary teal shadow has been added to the border of the modal to give it a 3D-like appearance.
+
+##### Data Tables(Desktop View)
+
+For the desktop view, a data table was used to represent the Ethereum transaction data. Data tables allow more information to be displayed to the user without causing confusion. In order to aid this property, as much of the non-critical data has been removed.
+
+##### Gallery Slider(Mobile/Tablet View)
+
+From the beginning of the design of the application, I knew that a separate view would be needed to display transaction information to mobile/tablet users. The data table wouldn't be able to sufficiently show all data fields to the user in a satisfying manner.
+
+In order to counteract this, a gallery style view was created for mobile/tablet users. Each transaction is represented by a slide within a larger gallery. Users swipe from left to right in order to access different transactions. I believe this is a design which many mobile users are familiar with due to the rise of social media applications such as Instagram.
+
 
 ## Key Elements
 
@@ -152,6 +185,18 @@ Finally, once the user has no more need to prioritise a specific transaction, th
 ##### Error Handling
 
 ## Implementation
+
+This section will outline the technologies & processes used in the design & implementation of this application.
+
+#### Materialize Framework
+
+#### MongoDB
+
+#### Etherscan API
+
+#### Flask
+
+
 
 ### Modules
 
