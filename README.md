@@ -1,5 +1,5 @@
 ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
-# Code Institute, Milestone 3: hash-board
+# Code Institute, Milestone 3: HASHBOARD
 
 ## Introduction
 
@@ -106,115 +106,123 @@ Premium tier users will have unlimited access to search and adding favourite tra
 
 ### Design Choices
 
-##### Responsive Front-End Framework
+#### Responsive Front-End Framework
 
 For this project, I decided to use the Materialize framework which is build on the principles of material design.
 After completing the project using this new framework, I can safely say that I prefer it more then Bootstrap which I have used on my previous 2 milestone projects.
 It appears to provide more feedback to the user when they are navigating throughout the web application while remaining responsive on most devices.
 
-##### Icons
+#### Icons
 
 All icons for this application have been sourced from [Google Fonts](https://fonts.google.com/icons) collected from the Material Icons library. As the designer of the web application, the selection of the icons must be done in line with other successful applications. 
 
-###### Favourite Icon
+##### Favourite Icon
 
 ![Favourite Icon](readme-imgs/favourite_screenshot.JPG)
 
 After searching a public Ethereum address, it's transactions will then be added to your hashboard. The next step is for the user to prioritise certain transactions which they deem important. The heart icon has been used for nearly a decade now in order to represent important items within a list.
 
-###### Edit Icon
+##### Edit Icon
 
 ![Edit Icon](readme-imgs/edit_screenshot.JPG)
 
 Once the user has added their priority transactions to their favourite's list, a text note may have been added. The edit icon is what allows the user to change the note stored in relation to their transaction. I have chosen the pen icon from Material Icons as it has been used by previous developers when interacting with text-based components. 
 
-###### Delete Icon
+##### Delete Icon
 
 ![Delete Icon](readme-imgs/delete_screenshot.JPG)
 
 Finally, once the user has no more need to prioritise a specific transaction, there needs to be a way in order for the user to be able to clean up their favourite's list. There could only be one realistic choice for this icon as it has been used so predominantly in software design. I decided to use the rubbish bin icon due to it's intuitive nature.
 
 
-##### Fonts
+#### Fonts
 
 There has only been one font chosen for this project due to the nature of the application. I wanted to keep the application as minimal as possible. Only having one font, reduces complexity in the eye of the user leading to a more streamlined experience.
 
-###### Varela Round
+##### Varela Round
 
 ![Varela Font Example](readme-imgs/font_varela.JPG)
 
 The font chosen was taken from [Google Fonts](https://fonts.google.com/). I chose this font as it was extremely legibile & simple while still remaining fun and playful.
 
-##### Colours
+#### Colours
 
 The colour palate was chosen to emulate the design choices of the Ethereum foundation. Since it's inception, Ethereum's colour theme has always been different hues of blue. 
 
-###### Teal lighten-2
+##### Teal lighten-2
 
 This is the specific colour chosen within the Materialize framework for the navbar as it lends itself nicely to the Ethereum colour scheme.
 
-###### Materialize Button
+##### Materialize Button
 
 The colour of the buttons throughout the site is unchanged as it is the primary button colour for the Materialize framework. During the design process, I noticed that this shade of blue complemented the teal hue of the navbar.
 
 
-## Key Elements
+## Key Frontend Design Elements
 
 This section will outline the key elements within this application giving descriptions on the purpose of each element.
 
-##### Modals
+#### Modals
 
 Modals have been used several times throughout the application in order to confirm if a user would like to proceed with an irreversible process. This is considered best-practice in web development as the user could easily push a button by mistake and trigger a process which cannot be undone.
 
 As the majority of the web application is simply styled in order to create that sleek minimal look, modal design is where I have allowed for some more adventurous styling. As you can see in the example above, once a modal is activated, a shadow effect is applied across the screen behind the modal. A secondary teal shadow has been added to the border of the modal to give it a 3D-like appearance.
 
-###### Log Out Modal Example
+##### Log Out Modal Example
 
 ![Log Out Modal](readme-imgs/modal_example2.JPG)
 
-###### Sign Out Modal Example
+##### Sign Out Modal Example
 
 ![Sign Out Modal](readme-imgs/signout_example.JPG)
 
-###### Reset Modal Example
+##### Reset Modal Example
 
 ![Reset Modal](readme-imgs/reset_modal.JPG)
 
 
-##### Data Tables(Desktop View)
+#### Data Tables(Desktop View)
 
 For the desktop view, a data table was used to represent the Ethereum transaction data. Data tables allow more information to be displayed to the user without causing confusion. In order to aid this property, as much of the non-critical data has been removed.
 
-##### Gallery Slider(Mobile/Tablet View)
+#### Gallery Slider(Mobile/Tablet View)
 
 From the beginning of the design of the application, I knew that a separate view would be needed to display transaction information to mobile/tablet users. The data table wouldn't be able to sufficiently show all data fields to the user in a satisfying manner.
 
 In order to counteract this, a gallery style view was created for mobile/tablet users. Each transaction is represented by a slide within a larger gallery. Users swipe from left to right in order to access different transactions. I believe this is a design which many mobile users are familiar with due to the rise of social media applications such as Instagram.
 
 
-#### Error Handling
+### Error Handling
 
-##### Flash Messages
+Within this application there are 2 levels of error handling:
+
+1. Flash Messages notifies the user when:
+    * Normal processes have occurred such as transactions being added or removed.
+    * An incorrect password provided upon login.
+    * An email address has already been used upon signup.
+    * 
+
+#### Flash Messages
 
 In order to communicate information to the user, an alert system was needed. Flask has a built-in messaging library known as flash, which we can use to send important information to the frontend. Along with passing data, we can also categorise these messages into pre-defined groups such as "error" & "info". This allows us to change the styling of the HTML element displaying the alert depending on the category of the message.
 
-[Example of successful flash message](readme-imgs/success_flash.JPG)
+![Example of successful flash message](readme-imgs/success_flash.JPG)
 
-[Example of an error flash message](readme-imgs/error_flash.JPG)
+![Example of an error flash message](readme-imgs/error_flash.JPG)
 
 
-##### API Exceptions
+#### API Exceptions
 
-##### Lottie Player Animations
+#### Lottie Player Animations
 
 
 ### User Interaction
 
-##### Blockchain Search
+#### Blockchain Search
 
-##### Priority Transactions
+#### Priority Transactions
 
-##### Notes
+#### Notes
 
 
 
