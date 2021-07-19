@@ -12,11 +12,11 @@
     <link rel="stylesheet" href="../static/style.css"/>
 </head>
 <body>
-    {% if session %}
+    {% if session['user'] %}
     <nav class="teal lighten-2">
         <div class="container">
-            <a href="#" class="brand-logo">#HASHBOARD</a>
-            <ul class="right hide-on-small-and-down">
+            <a href="#" class="brand-logo left">#HASHBOARD</a>
+            <ul class="right">
                 <!-- Reset confirmation trigger -->
                 <li><a class="waves-effect waves-light modal-trigger btn-small" data-target="signout-confirmation">Log Out</a></li>
 
@@ -67,9 +67,9 @@
     {% else %}
     <nav class="teal lighten-2">
         <div class="container">
-            <a href="#" class="brand-logo">#HASHBOARD</a>
+            <a href="#" class="brand-logo left">#HASHBOARD</a>
 
-            <ul class="right hide-on-med-and-down">
+            <ul class="right">
                 <li><a class="waves-effect waves-light btn-small" href="/login">Log In</a></li>
                 <li><a class="waves-effect waves-light btn-small" href="/signup">Sign Up</a></li>
             </ul>
@@ -108,12 +108,12 @@
         {% if messages %}
             {% for category, msg in messages %}
                 {% if category == 'error' %}
-                <div class="alert-danger red lighten-2">
+                <div class="alert-danger red lighten-2 center">
                     <span class="alert-text">{{ msg }}</span>
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                 </div>
                 {% else %}
-                <div class="alert-success green lighten-2">
+                <div class="alert-success green lighten-2 center">
                     <span class="alert-text">{{ msg }}</span>
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                 </div>
