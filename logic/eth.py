@@ -19,9 +19,21 @@ def get_transactions(address):
     list_nft = []
 
     try:
-        eth_res = requests.get(f'https://api.etherscan.io/api?module=account&action=txlist&address={address}&startblock=0&endblock=99999999&sort=asc&apikey=PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
-        erc_res = requests.get(f'https://api.etherscan.io/api?module=account&action=tokentx&address={address}&startblock=0&endblock=999999999&sort=asc&apikey=PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
-        nft_res = requests.get(f'https://api.etherscan.io/api?module=account&action=tokennfttx&address={address}&startblock=0&endblock=999999999&sort=asc&apikey=PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
+        eth_res = requests.get(
+            f'https://api.etherscan.io/api?module=account'
+            f'&action=txlist&address={address}&startblock'
+            f'=0&endblock=99999999&sort=asc&apikey='
+            f'PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
+        erc_res = requests.get(
+            f'https://api.etherscan.io/api?module=account'
+            f'&action=tokentx&address={address}&startblock'
+            f'=0&endblock=999999999&sort=asc&apikey='
+            f'PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
+        nft_res = requests.get(
+            f'https://api.etherscan.io/api?module=account'
+            f'&action=tokennfttx&address={address}&startblock'
+            f'=0&endblock=999999999&sort=asc&apikey='
+            f'PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
 
         eth_result_text = eth_res.text
         eth_json = json.loads(eth_result_text)
@@ -63,25 +75,25 @@ def get_transactions(address):
                 if transaction['tokenName']:
                     data['token_name'] = transaction['tokenName']
             except KeyError:
-                print("Property not found")
+                pass
 
             try:
                 if transaction['tokenSymbol']:
                     data['token_symbol'] = transaction['tokenSymbol']
             except KeyError:
-                print("Property not found")
+                pass
 
             try:
                 if transaction['contractAddress']:
                     data['contract_address'] = transaction['contractAddress']
             except KeyError:
-                print("Property not found")
+                pass
 
             try:
                 if transaction['tokenID']:
                     data['token_id'] = transaction['tokenID']
             except KeyError:
-                print("Property not found")
+                pass
 
             transaction_list.append(data)
             # add transactions to db using Account method
