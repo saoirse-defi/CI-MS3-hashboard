@@ -105,4 +105,4 @@ def get_transactions(address):
         return transaction_list
 
     except Exception as e:
-        raise Exception(f"There has been an exception: {e}")
+        raise Exception(f"API Exception: {e}")
