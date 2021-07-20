@@ -463,6 +463,11 @@ Initially when designing the mobile menu, I wanted to use some additional featur
 
 ## Bugs Discovered
 
+#### Materialize Carousel, Cannot read property 'clientWidth' of undefined
+
+I have just noticed a bug on the mobile view a few minutes before submission. When the materialize carousel in the mobile view is empty, we get an error: "Cannot read property 'clientWidth' of undefined"
+After re-reading the Materialize documentation, I cannot see where I am going wrong and I do not have enough time to troubleshoot.
+
 #### Index.html user Exception
 
 This bug would happen generally the first time that the user would log onto the site. As there would be no current session for the user which would throw an exception.
