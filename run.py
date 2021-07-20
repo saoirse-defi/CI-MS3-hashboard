@@ -46,6 +46,7 @@ favourites_table_headings = ['Date created',
 # Exception handling function
 @app.errorhandler(Exception)
 def handle_exception(e):
+    ''' Displays exception to the user'''
     return render_template("error.html", e=e), 500
 
 
