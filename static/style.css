@@ -92,6 +92,10 @@ body{
     display: none;
 }
 
+#all-transaction-header-container{
+    display: none;
+}
+
 @media only screen and (max-width: 1000px){
     #all-trans-header{
         display: block;
@@ -103,7 +107,6 @@ body{
 
     #favourites-container-mobile{
         display: block;
-        height: 90vh;
         border: 5px solid black;
     }
 
@@ -113,12 +116,12 @@ body{
     
     #search-container-mobile{
         display: block;
-        height: 90vh;
         border: 5px solid black;
     }
 
     #all-transaction-header-container{
         padding-bottom: 20px;
+        display: block;
     }
 }
 
@@ -135,7 +138,16 @@ body{
         font-size: small;
     }
 
-    .transaction-container{
-        padding-top: 50px;
+    #favourites-container-mobile{
+        height: 375px;
     }
+
+    #search-container-mobile{
+        height: 250px;
+    }
+
+    .transaction-container{
+        padding-top: 25px;
+    }
+
 }
