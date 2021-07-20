@@ -137,15 +137,12 @@
                 </div>
                 <div class="row"><p>Note: {{data['note']}}</p></div>
                 <div class="row">
-                    {% if data['isFav'] %}
                     <a href="{{ url_for('delete_favourite', transaction_id=data._id) }}">
                         <i class="material-icons">delete_outline</i>
                     </a>
-                    {% else %}
                     <a href="{{ url_for('favourite', transaction_id=data._id) }}">
                         <i class="material-icons">favorite</i>
                     </a>
-                    {% endif %}
                 </div>
             </div>
         </div>
