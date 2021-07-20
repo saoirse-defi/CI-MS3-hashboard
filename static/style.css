@@ -30,7 +30,9 @@ body{
     justify-content: center;
 }
 
-
+#mobile-header{
+    color: black;
+}
 
 .fav-address-header-row{
     margin-bottom: 0;
