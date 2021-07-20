@@ -103,7 +103,8 @@ body{
 
     #favourites-container-mobile{
         display: block;
-        height: 100vh;
+        height: 90vh;
+        border: 5px solid black;
     }
 
     #search-container-desktop{
@@ -112,7 +113,12 @@ body{
     
     #search-container-mobile{
         display: block;
-        height: 100vh;
+        height: 90vh;
+        border: 5px solid black;
+    }
+
+    #all-transaction-header-container{
+        padding-bottom: 20px;
     }
 }
 
@@ -122,17 +128,14 @@ body{
     }
 
     .value-header{
-        font-size: xx-large;
+        font-size: x-large;
     }
+
     .time-gas h5{
-        font-size: xx-small;
+        font-size: small;
     }
 
-    #fav-address-header-row{
-        font-size: xx-small;
-    }
-
-    #fav-address-row{
-        font-size: xx-small;
+    .transaction-container{
+        padding-top: 50px;
     }
 }
