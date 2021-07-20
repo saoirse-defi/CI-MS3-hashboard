@@ -21,13 +21,20 @@ This cryptocurrency dashboard project will be reading transactions from the Ethe
 Etherscan is the leading blockchain API which allows you to view transactions, smart contracts, user accounts & on-chain metrics. After using Etherscan for the past 4 years, I have seen that very few improvements have been made to the UX. 
 I believe this is the key to onboarding new users and taking smart contract platforms to the next level.
 
-#### Planned Features
+### Future Features
+
+This section will outline potential feature which I would like to add to the application in future.
+
+#### Premium Subscription
+
+#### Limit API requests
+
+#### Metamask Integration
 
 
 ## Considerations
 
 ## UX
-
 
 ### Project Goals
 
@@ -60,19 +67,19 @@ The target audience for this application reflects people within the age group of
 
 This section will outline goals set out by application creator both in relation to how they would like to develop as a software engineer & their financial goals as regards to the website.
 
-##### Developer Goals
+#### Developer Goals
 
 * Due to this project being my first Python web application, my main goal was to learn as much as possible about Python web development.
 * In the future, I would like to work as smart contract developer. This project, even though it doesn't use any smart contract, is a great project to have in my portfolio.
 * To provide an application which is a useful tool to the crypto community.
 * The application should also keep the user coming back regularly due to the necessity of the product.
 
-##### Business Goals
+#### Business Goals
 
 * Use the application's traffic to sell advertising.
 * (Future Feature) Create a premium tier account for heavy users.
 
-##### Tier Structure (Future Feature)
+##### Tier Structure
 
 Limit the user to a set number of blockchain searches & favourited transactions. This will incentivise active users to upgrade to the premium tier.
 
@@ -91,19 +98,6 @@ Premium tier users will have unlimited access to search and adding favourite tra
     * Heavy user traffic in order to get our brand in front of as many eyeballs as possible.
     * Fast load times to ensure impatient users don't leave the site.
 
-
-### User Stories Testing
-
-
-1. This application satisfies the needs of the user by:
-    * Having a clean UI, based on the princibles of material design.
-    * Ensuring that all text on the website is leigible at a quick glance.
-    * Being designed in an efficent manner, compressing data wherever possible.
-
-2. Advertiser needs are satisfied by this project as:
-    * The site's content is advertiser-friendly and non-controvertial.
-    * The web application is designed to maintain users attention by providing value.
-    * The application is efficiently designed.
 
 ### Design Choices
 
@@ -228,70 +222,125 @@ This way all possible Python subclasses of exception are covered. The user can t
 
 ![Example of Exception landing page](readme-imgs/exception.JPG)
 
+
+#### Other Low Level Exceptions
+
+Other low level exceptions such as client-side errors (4xx) or server-side errors (5xx) will also be handled, describing to the user which error occurred. The user will also have an option to either return to their homepage or the login page depending on their credentials. 
+
+
 #### Lottie Player Animations
 
 Lottie provides lightweight animation hosting which provides significantly smaller footprint than conventional animations. 
+
 
 ### User Interaction
 
 #### Blockchain Search
 
-The blockchain search tools is the key component to the entire Hashboard application. Here, the users can add transactions related to any address within the public Ethereum ecosystem. 
-During the Ethereum API decision-making process, there was 1 clear winner [Etherscan](https://etherscan.io/apis).
+The blockchain search tools is the key component to the entire Hashboard application. Here, the users can add transactions related to any address within the public Ethereum ecosystem. During the Ethereum API decision-making process, there was 1 clear winner [Etherscan](https://etherscan.io/apis).
 Etherscan is the leading blockchain explorer and has been around since Ethereum's inception.
+
 
 #### Priority Transactions
 
 Once transactions have been added from a specific Ethereum address we can then start to provide additional value which Etherscan itself doesn't provide. Users have the ability to prioritise specific transactions and additionally they can save important information which is related to that transaction.
 
+
 #### Notes
 
 Once the user has favourited a priority transaction, the user is given a text area where they can input information such as a description of the transaction or detailing the name belonging to the Ethereum public address. This feature could be used in order to do forensic accounting on the blockchain.
 
+
 ## Implementation
 
 This section will outline the technologies & processes used in the design & implementation of this application.
+
 
 #### Materialize Framework
 
 For this project, the frontend framework I decided to use was Materialize. In my previous 2 milestone projects, I chose Bootstrap for the frontend, but I can now safely say that I much prefer the look of Materialize.
 As it is based on the principles of material design, all elements just seem that little bit sharper and current.
 
+
 #### MongoDB
 
-For the backend on this application, MongoDB was chosen to implement a noSQL database.
+For the backend on this application, MongoDB was chosen to implement the noSQL database as outlined in the assessment handbook.
+
+
+##### MongoDB Atlas
+
+MongoDB atlas is a cloud-based database service with a clean frontend client which allows you to see your collections evolve in real time.
+
+##### MongoDB Schema Diagram
+
+![DBSchema](readme-imgs/dbschema.JPG)
+
 
 #### Etherscan API
 
-#### Python
+The Etherscan Ethereum Developer APIs are provided as a community service and without warranty. Which means, that developers should be mindful in relation to how many calls their application is making. 
+It supports both GET/POST requests and there is a rate limit of 5 calls per sec/IP.
 
-#### Jinja
 
 #### Flask
 
+Flask is a web application framework written in Python based on the Werkzeug toolkit & the Jinja2 templating language. During my development of this application is when I noticed the usefulness of flask, getting to experiment with the different flask libraries.
 
 
 ### Modules
 
 #### API Requests
 
-#### Asyncronous Requests
+This application couldn't be possible without the Etherscan API request function, it is the basis of the entire website. The get_transactions() function within eth.py is in charge of the entire process, making three different API calls. One for standard Ethereum transactions, one for ERC-20 transactions & finally one for NFT transactions based on the ERC-721 standard.
 
-#### Mongo DB Backend
+These responses are then converted in json data, added to the database and combined into one consolidated list of transactions. This list can then be displayed to the user.
 
-#### Mongo DB Jobs
 
 ## Performance
 
+#### Image Resizing & Compression
+
+Due to the nature of the application, no image compression was needed as all design elements are from the Materialize framework. No images were used in the making of this application.
+
+
+#### Lottie Player Animations
+
+By using the Lottie animation player, we can bring beautiful animations into our application without having to worry about file size and hence performance. I have used a single hosted Lottie animation on the error.html page.
+
+
+#### API Performance
+
+
+
+###### Autoprefixing
+
+NB NB NB NB
+
 ## Testing
+
+### User Stories Testing
+
+1. This application satisfies the needs of the user by:
+    * Having a clean UI, based on the princibles of material design.
+    * Ensuring that all text on the website is leigible at a quick glance.
+    * Being designed in an efficent manner, compressing data wherever possible.
+
+2. Advertiser needs are satisfied by this project as:
+    * The site's content is advertiser-friendly and non-controvertial.
+    * The web application is designed to maintain users attention by providing value.
+    * The application is efficiently designed.
 
 ## Bugs Discovered
 
 #### Index.html user Exception
 
-## Deployment
+## Dependancies
 
-### Heroku
+#### Requirements.txt
+
+#### Web3
+
+## Deployment
 
 ### Github Pages Deployment Procedure
 
@@ -338,6 +387,36 @@ git clone https://www.Github.com/USERNAME/REPOSITORY
 Further reading and troubleshooting on cloning a repository can be found here [Github](https://docs.Github.com/en/free-pro-team@latest/Github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 
 
+### Heroku Deployment Procedure
+
+#### How to run your project on Heroku
+
+Follow these steps:
+1. Create a virtual environment with pipenv and install Flask and Gunicorn
+2. Create a “Procfile” and write the following code "touch Procfile" in the command line
+3. Create “runtime.txt” and write the following code "touch runtime.txt" in the command line
+4. Create a folder named “app” and enter the folder
+5. Create a python file, “main.py” and enter the sample code below
+
+from flask import Flask
+app = Flask(__name__)
+@app.route("/")
+def home_view():
+        return "<h1>Welcome to Geeks for Geeks</h1>
+
+6. Get back to the previous directory “eflask”.Create a file“wsgi.py” and insert the following code
+
+from app.main import app
+if __name__ == "__main__":
+        app.run()
+
+7. Run the vitual environment write "pipenv shell" in the command line.
+8. Initialize an empty repo, add the files in the repo and commit all the changes
+9. Login to heroku CLI using "heroku login"
+10.  Create a unique name for your Web app, write "heroku create hashboard"
+11. Push your code from local to the heroku remote using "git push heroku master"
+
+
 ## Credit
 
 [Materialize Framework Documentation](https://materializecss.com/)
@@ -347,6 +426,10 @@ Further reading and troubleshooting on cloning a repository can be found here [G
 [Etherscan API](https://etherscan.io/apis)
 
 [Flask Documentation](https://flask.palletsprojects.com/en/1.1.x/)
+
+[Jinja Documentation](https://jinja.palletsprojects.com/en/3.0.x/)
+
+[Werkzeug Documentation](https://werkzeug.palletsprojects.com/en/2.0.x/)
 
 [Ethereum Documentation](https://ethereum.org/en/)
 
@@ -403,11 +486,6 @@ Further reading and troubleshooting on cloning a repository can be found here [G
 
 ###### Edit page, Mobile/Tablet
 
-![Wireframe](readme-imgs/Edit.html(Mobile/Tablet).png)
+![Wireframe](readme-imgs/Edit.html(Mobile_Tablet).png)
 
 
-## Dependancies
-
-#### Requirements.txt
-
-#### Web3
