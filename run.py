@@ -1,11 +1,9 @@
 # Imports
 import os
-if os.path.exists("env.py"):
-    import env
-# from os import path
 from operator import itemgetter
-from flask import (Flask, render_template, request, abort,
-                   redirect, session, url_for, send_from_directory, flash)
+from flask import (Flask, render_template, request,
+                   redirect, session, url_for,
+                   send_from_directory, flash)
 from flask_pymongo import PyMongo
 import logic.models
 import logic.eth
@@ -106,13 +104,14 @@ def hashboard():
             if data == _data:
                 transactions_list.remove(_data)
 
-    return render_template("hashboard.html",
-                           transactions_list=transactions_list,
-                           favourites_list=favourites_list,
-                           transaction_table_headings=transaction_table_headings,
-                           favourites_table_headings=favourites_table_headings,
-                           shorten=shorten,
-                           shorten2=shorten2)
+    return render_template(
+        "hashboard.html",
+        transactions_list=transactions_list,
+        favourites_list=favourites_list,
+        transaction_table_headings=transaction_table_headings,
+        favourites_table_headings=favourites_table_headings,
+        shorten=shorten,
+        shorten2=shorten2)
 
 
 # Add transaction to favourites
@@ -128,7 +127,8 @@ def favourite(transaction_id):
                 mongo.db.Transaction.update(
                     {"_id": transaction_id}, {
                         "$set": {"note": note, "isFav": True}})
-                flash(f"{transaction['hash']} has been added to your priority list", category="success")
+                flash(f"{transaction['hash']} has been added"
+                      f"to your priority list", category="success")
                 return redirect(url_for('hashboard'))
         except Exception as e:
             raise Exception(f"There has been an exception: {e}")
@@ -148,7 +148,8 @@ def delete_favourite(transaction_id):
             mongo.db.Transaction.update(
                 {"_id": transaction_id},
                 {"$set": {"note": "", "isFav": False}})
-            flash("Transaction removed from priority list.", category="success")
+            flash("Transaction removed from priority list.",
+                  category="success")
             return redirect(url_for('hashboard'))
     except Exception as e:
         raise Exception(f"There has been an exception: {e}")
@@ -179,12 +180,13 @@ def search():
             flash("Incorrect address format", category="error")
             return render_template('search.html')
 
-    return render_template("search.html",
-                           shorten=shorten,
-                           shorten2=shorten2,
-                           search_eth=search_eth,
-                           transaction_list=transaction_list,
-                           transaction_table_headings=transaction_table_headings)
+    return render_template(
+        "search.html",
+        shorten=shorten,
+        shorten2=shorten2,
+        search_eth=search_eth,
+        transaction_list=transaction_list,
+        transaction_table_headings=transaction_table_headings)
 
 
 @app.route('/home', methods=['GET', 'POST'])
@@ -207,7 +209,8 @@ def home():
 def signup():
     if request.method == 'POST':
         if len(request.form.get('password')) > 7:
-            if(request.form.get('password') == request.form.get('password-confirm')):
+            if(request.form.get('password')
+               == request.form.get('password-confirm')):
                 return logic.models.Account().signup()
             else:
                 flash("Passwords do not match.", category="error")
