@@ -1,13 +1,12 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
 body{
     font-family: 'Varela Round', sans-serif;
-}
-
-.close-button{
-    
-}
-
-.brand-logo{
-    
 }
 
 .value-header{
@@ -27,11 +26,17 @@ body{
 
 .progress{
     display: none;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 #mobile-header{
     color: black;
+}
+
+#all-trans-header{
+    display: none;
 }
 
 .fav-address-header-row{
@@ -55,7 +60,8 @@ body{
     max-width: 100%;
     max-height: 100%;
     border-radius: 15px;
-    box-shadow: 0 20px 50px rgba(0, 128, 128, 0.7);
+    -webkit-box-shadow: 0 20px 50px rgba(0, 128, 128, 0.7);
+            box-shadow: 0 20px 50px rgba(0, 128, 128, 0.7);
 }
 
 .modal-content{
@@ -87,13 +93,17 @@ body{
 }
 
 @media only screen and (max-width: 1000px){
+    #all-trans-header{
+        display: block;
+    }
+
     #favourites-container-desktop{
         display: none;
     }
 
     #favourites-container-mobile{
         display: block;
-        height: 400px;
+        height: 100vh;
     }
 
     #search-container-desktop{
@@ -102,7 +112,7 @@ body{
     
     #search-container-mobile{
         display: block;
-        height: 400px;
+        height: 100vh;
     }
 }
 
