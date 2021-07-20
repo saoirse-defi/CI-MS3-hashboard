@@ -1,10 +1,10 @@
 {% extends 'base.html' %} {% block title %}Home{% endblock %}
 
 {% block content %}
+    <h5 class="center">Favourites</h5>
     <!--Start of desktop favourites-->
     <div class="container-fluid" id="favourites-container-desktop">
         <table class="responsive-table highlight centered" id="favourites-table">
-            <caption><h5>Favourites</h5></caption>
             <thead>
                 <tr class="bg-dark text-white">
                     {% for header in favourites_table_headings %}
@@ -137,11 +137,11 @@
                 </div>
                 <div class="row"><p>Note: {{data['note']}}</p></div>
                 <div class="row">
+                    <a href="{{ url_for('favourite', transaction_id=data._id) }}">
+                        <i class="material-icons">edit</i>
+                    </a>
                     <a href="{{ url_for('delete_favourite', transaction_id=data._id) }}">
                         <i class="material-icons">delete_outline</i>
-                    </a>
-                    <a href="{{ url_for('favourite', transaction_id=data._id) }}">
-                        <i class="material-icons">favorite</i>
                     </a>
                 </div>
             </div>
@@ -150,7 +150,7 @@
     </div>
     <!--End of mobile favourites-->
 
-    
+    <h5 class="center" id="all-trans-header">All Transactions</h5>
 
     <!--Start of mobile search table-->
 
@@ -171,6 +171,8 @@
                     <div class="col s4"><a href="https://etherscan.io/address/{{data['to']}}" target="_blank"><h5>{{ shorten(data['to']|safe) }}</h5></a></div>
                 </div>
                 <div class="row">
+                    <a href="{{ url_for('search') }}" class="waves-effect waves-light btn-small">Search</a>
+                    <a class="waves-effect waves-light modal-trigger btn-small" data-target="reset-confirmation">Reset</a>
                     <a href="{{ url_for('favourite', transaction_id=data._id) }}"><i class="material-icons">favorite_border</i></a>
                 </div>
             </div>
@@ -178,11 +180,5 @@
         {% endfor %}
     </div>
     <!--End of mobile search table-->
-
-<div class="container center">
-    <h2>Session Variables: {{ session['logged_in'] }}</h2>
-    <h4>{{ session['user']['name']}}'s Profile</h4>
-    <p>{{ session['user'] }}</p>
-</div>
 
 {% endblock %}
