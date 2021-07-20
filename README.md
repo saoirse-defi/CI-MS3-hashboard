@@ -1,4 +1,5 @@
 ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+
 # Code Institute, Milestone 3: HASHBOARD
 
 ## Introduction
@@ -10,29 +11,53 @@ One of the main benefits of cryptocurrencies is the public availability of the b
 
 Even though cryptocurrencies have been around for more than a decade, adoption rates are still relatively low with plenty of room to grow. I believe this slow adoption is due to the perceived complexity of the technology and the addition responsibility placed on the user to secure their funds.
 
-My goal for my Code Institute Milestone Project 3: Data Centric is to simplify the Ethereum experience for  users by allowing them to view their blockchain transaction data in a more intuitive way.
+My goal for my Code Institute Milestone Project 3: Data Centric is to simplify the Ethereum experience for users by allowing them to view their blockchain transaction data in a more intuitive way.
+
+### Notes for Assessment Team
+
+Hashboard is a web application that allows users to search any public Ethereum address and view that account's transactions. These transactions can then be prioritised, giving the user the ability to add a text note. I have provided five sample Ethereum addresses below to aid the assessment team in the examination of this milestone project. **Please note that any Ethereum public address can be used with this application.**
+
+##### Sample Ethereum Addresses for Examination purposes
+
+0x150F2F6860904dc4227d6f70d8b07a4853E3835a
+0x4863d57806d7872De6DaD21e5C6F95D6E00a8Ac6
+0xC762514665e8B6CA63DD762BB44012E4347a352E
+0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
+0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8
+
 
 #### The Ethereum Network
 
-Ethereum is the second largest cryptocurrency by market cap and currently has the largest developer community. It was the world's first programmable blockchain inspiring thousands of developers to deploy their own smart contracts.
+Ethereum is the second largest cryptocurrency by market cap and currently has the largest developer community. It was the world's first programmable blockchain, which has inspired thousands of developers to deploy their own smart contracts. As it is based on distributed ledger technology (DLT), all transaction data & balances are publicly available.
+
 
 #### Current Blockchain Interfaces
 
-This cryptocurrency dashboard project will be reading transactions from the Ethereum blockchain. Ethereum is the market leader in smart contract technology with the largest community & developer base.
-Etherscan is the leading blockchain API which allows you to view transactions, smart contracts, user accounts & on-chain metrics. After using Etherscan for the past 4 years, I have seen that very few improvements have been made to the UX. 
-I believe this is the key to onboarding new users and taking smart contract platforms to the next level.
+This cryptocurrency dashboard project will be reading transactions from the Ethereum blockchain and storing them within our backend. Etherscan is the leading blockchain API which allows you to view transactions, smart contracts, user accounts & on-chain metrics. After using Etherscan for the past 4 years, I have seen that very few improvements have been made to the UX. New features get added without a redesign of the site causing the complexity to stack. 
+I believe that design a new, cleaner way to display this transactional data is the key to onboarding new users and taking smart contract platforms to the next level of adoption.
+
 
 ### Future Features
 
-This section will outline potential feature which I would like to add to the application in future.
+This section will outline potential features which I would like to implement in future.
+
+
+#### Loading bar while waiting for response
+
+Currently, there is approximately a 5-second wait between the time the user completes the search form within search.html. Unfortunately there is no feedback to the user while they wait and this may cause problems with more impatient users.
+
+With the current design of the application, a loading bar could not be added in simply. This is a feature I would have loved to implement if given more time to work on the project.
+
 
 #### Premium Subscription
 
 The proposed feature would be implemented by limiting the number of API calls/DB writes that the user is able to preform to a free trial. The customer would have to subscribe to the premium tier for a monthly fee in order to increase the number of API calls/DB writes.
 
+
 #### Metamask Integration
 
 This proposal would enable the application to detect the public address on a Metamask wallet contained in the browser. Hashboard would automatically add the transactions from this address to the database.
+
 
 ## Considerations
 
@@ -40,17 +65,7 @@ This proposal would enable the application to detect the public address on a Met
 
 The main use case for this software is to be a tool for forensic accounting on the blockchain. Many tools such as this are being developed by government agencies currently. It is my belief that normal people should be able to have access to similar tools.
 
-### Notes for Assessment Team
 
-Hashboard is a web application that allows users to search any public Ethereum address and view that account's transactions. These transactions can then be prioritised, giving the user the ability to add a text note. I have provided five sample Ethereum addresses below to aid the assessment team in the examination of this milestone project. Please note that any Ethereum public address can be used with this application.
-
-##### Ethereum Addresses for Examination purposes
-
-0x150F2F6860904dc4227d6f70d8b07a4853E3835a
-0x4863d57806d7872De6DaD21e5C6F95D6E00a8Ac6
-0xC762514665e8B6CA63DD762BB44012E4347a352E
-0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
-0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8
 
 ## UX
 
@@ -259,7 +274,51 @@ Other low level exceptions such as client-side errors (4xx) or server-side error
 
 #### Lottie Player Animations
 
-Lottie provides lightweight animation hosting which provides significantly smaller footprint than conventional animations. 
+Lottie provides lightweight animation hosting which provides significantly smaller footprint than conventional animations.
+
+
+## Wireframes
+
+###### Log In Page, Desktop
+
+![Wireframe](readme-imgs/Login.html.png)
+
+###### Log In Page, Mobile/Tablet
+
+![Wireframe](readme-imgs/Login.html(Mobile_Tablet).png)
+
+###### Sign Up Page, Desktop
+
+![Wireframe](readme-imgs/Signup.html(Desktop).png)
+
+###### Sign Up Page, Mobile/Tablet
+
+![Wireframe](readme-imgs/Signup.html(Mobile_Tablet).png)
+
+###### Hashboard page, Desktop
+
+![Wireframe](readme-imgs/Home.html(desktop).png)
+
+###### Hashboard page, Mobile/Tablet
+
+![Wireframe](readme-imgs/Home.html(mobile_tablet).png)
+
+###### Search Page, Desktop
+
+![Wireframe](readme-imgs/Search.html(desktop).png)
+
+###### Search Page, Mobile/Tablet
+
+![Wireframe](readme-imgs/Search.html(mobile_tablet).png)
+
+###### Edit Page, Desktop
+
+![Wireframe](readme-imgs/Edit.html(Desktop).png)
+
+###### Edit page, Mobile/Tablet
+
+![Wireframe](readme-imgs/Edit.html(Mobile_Tablet).png)
+
 
 
 ### User Interaction
@@ -283,7 +342,6 @@ Once the user has decided to prioritise a transaction, the user is given a text 
 ## Implementation
 
 This section will outline the technologies & processes used in the design & implementation of this application.
-
 
 ### Materialize Framework
 
@@ -337,7 +395,7 @@ It supports both GET/POST requests and there is a rate limit of 5 calls per sec/
 
 #### Flask
 
-Flask is a web application framework written in Python based on the Werkzeug toolkit & the Jinja2 templating language. During my development of this application is when I noticed the usefulness of flask, getting to experiment with the different flask libraries.
+Flask is a web application framework written in Python based on the Werkzeug toolkit & the Jinja2 templating language. During my development of this application is when I noticed the usefulness of flask, getting to experiment with the different flask libraries. Jinja templating also opened a lot of doors for me as a web developer when managing repeated pre-defined data.
 
 
 ### Modules
@@ -365,12 +423,20 @@ By using the Lottie animation player, we can bring beautiful animations into our
 
 The CSS style rules have been [Autoprefixed](https://autoprefixer.github.io/) to maintain uniformity of style rules across all browsers.
 
+
 ## Testing
 
 ### User Testing
 
 As the application began to take shape with all major components in place, the user testing could commence. This was done by reviewing each component line by line to ensure that the code works as intended. If an edit was to be made, the developer made sure to the changes were reflected correctly on the frontend.
 
+### Abort
+
+Within flask, the abort library allows developers to manually throw Errors in order to test the application for many kinds of errors/exceptions. I was really satisfied using this tool, it saved me a lot of hassle while testing for Exceptions.
+
+### Mobile Testing
+
+Once the application was successfully deployed to Heroku, I used my mobile in order to view how styling looked on an actual device, not just within the browser's developer suite. After editing the styling to prefect the user experience, I tried another device different in both manufacturer and screen size to ensure that the styling remained consistent.
 
 ### User Stories Testing
 
@@ -516,13 +582,30 @@ if __name__ == "__main__":
 11. Push your code from local to the heroku remote using "git push heroku master"
 
 
+#### How to create a MongoDB database
+
+1. Create a MongoDB Atlas account [here](https://www.mongodb.com/cloud)
+2. Log into your MongoDB Atlas account 
+3. Create a free, shared cluster by selecting your preferred provider, stick to the free tier
+4. Name your cluster and click create to deploy your cluster
+5. Add your connection IP address to the IP access list
+6. Create a new database user for your cluster
+7. Install PyMongo within your flask application, check version to see if installed correctly
+8. Provide a connection method & a configured connection string to MongoDB Atlas
+9. Import MongoClient from PyMongo within flask
+10. Insert a command within flask that specifies a client is for connecting to your cluster
+11. Create a new database within your cluster
+12. Create a new collection for your database
+13. Create a new document to add to your collection
+
+
 ## Credit
 
 [Materialize Framework Documentation](https://materializecss.com/)
 
 [HTML Element fade-out](https://stackoverflow.com/questions/1911290/make-div-text-disappear-after-5-seconds-using-jquery#1911308)
 
-[Etherscan API](https://etherscan.io/apis)
+[Etherscan API Documentation](https://etherscan.io/apis)
 
 [Flask Documentation](https://flask.palletsprojects.com/en/1.1.x/)
 
@@ -545,46 +628,5 @@ if __name__ == "__main__":
 [Displaying Information to the user efficiently](https://www.youtube.com/watch?v=Ox9MW9Z8srE&list=PLOPo1bGrV4htxbQCS3CPZ59O1kpPdE7PK)
 
 
-## Wireframes
-
-###### Log In Page, Desktop
-
-![Wireframe](readme-imgs/Login.html.png)
-
-###### Log In Page, Mobile/Tablet
-
-![Wireframe](readme-imgs/Login.html(Mobile_Tablet).png)
-
-###### Sign Up Page, Desktop
-
-![Wireframe](readme-imgs/Signup.html(Desktop).png)
-
-###### Sign Up Page, Mobile/Tablet
-
-![Wireframe](readme-imgs/Signup.html(Mobile_Tablet).png)
-
-###### Hashboard page, Desktop
-
-![Wireframe](readme-imgs/Home.html(desktop).png)
-
-###### Hashboard page, Mobile/Tablet
-
-![Wireframe](readme-imgs/Home.html(mobile_tablet).png)
-
-###### Search Page, Desktop
-
-![Wireframe](readme-imgs/Search.html(desktop).png)
-
-###### Search Page, Mobile/Tablet
-
-![Wireframe](readme-imgs/Search.html(mobile_tablet).png)
-
-###### Edit Page, Desktop
-
-![Wireframe](readme-imgs/Edit.html(Desktop).png)
-
-###### Edit page, Mobile/Tablet
-
-![Wireframe](readme-imgs/Edit.html(Mobile_Tablet).png)
 
 
