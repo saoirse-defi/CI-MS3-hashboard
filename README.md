@@ -124,6 +124,12 @@ Premium tier users will have unlimited access to search and adding favourite tra
 
 ### Design Choices
 
+#### Favicon
+
+I really enjoy this favicon which was sourced from [Favicon.cc](https://www.favicon.cc/?action=icon&file_id=636006)
+
+![Favicon](static/favicon.ico)
+
 #### Responsive Front-End Framework
 
 For this project, I decided to use the Materialize framework which is build on the principles of material design.
