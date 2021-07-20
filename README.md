@@ -28,16 +28,17 @@ This section will outline potential feature which I would like to add to the app
 
 #### Premium Subscription
 
-#### Limit API requests
+The proposed feature would be implemented by limiting the number of API calls/DB writes that the user is able to preform to a free trial. The customer would have to subscribe to the premium tier for a monthly fee in order to increase the number of API calls/DB writes.
 
 #### Metamask Integration
 
+This proposal would enable the application to detect the public address on a Metamask wallet contained in the browser. Hashboard would automatically add the transactions from this address to the database.
 
 ## Considerations
 
 ### Use Cases
 
-
+The main use case for this software is to be a tool for forensic accounting on the blockchain. Many tools such as this are being developed by government agencies currently. It is my belief that normal people should be able to have access to similar tools.
 
 ### Notes for Assessment Team
 
@@ -64,13 +65,13 @@ With this feature, users can track Ethereum whales & the movement of funds withi
 
 The target audience for this application reflects people within the age group of your average cryptocurrency user (16-35).
 
-##### The user's goals are:
+##### As a user aged 18-35, I want:
 
 * To be provided with blockchain data in a format that is easy to navigate and understand.
 * To use public blockchain data in order to track funds moving through the ecosystem.
-* Prioritise specific transactions.
-* Add small pieces of text to priority transactions.
-* Update text related to priority transactions.
+* The ability to prioritise specific transactions.
+* To be able to add small pieces of text to priority transactions.
+* To update text related to priority transactions.
 
 ##### Hashboard satisfies these needs by:
 * Creating a clean data layout with any unnecessary information removed.
@@ -78,7 +79,12 @@ The target audience for this application reflects people within the age group of
 * Giving the user the ability to favourite priority transactions.
 * The user is then able to add important text information related to that transaction.
 * This information can be edited if it becomes outdated.
-* Once a user is finished needing to view this transactions, their favourites list can be reset.
+* Once a user is finished needing to view these transactions, their favourites list can be reset.
+
+
+##### As a business using this software, I want:
+* The ability to store large volumes of transactional data without the risk of this data being removed from the system.
+* Unlimited access to API request & database CRUD operations.
 
 ### Developer & Business Goals
 
@@ -98,7 +104,7 @@ This section will outline goals set out by application creator both in relation 
 
 ##### Tier Structure
 
-Limit the user to a set number of blockchain searches & favourited transactions. This will incentivise active users to upgrade to the premium tier.
+Limit the user to a set number of blockchain searches & favourite transactions. This will incentivise active users to upgrade to the premium tier.
 
 Premium tier users will have unlimited access to search and adding favourite transactions.
 
@@ -111,7 +117,7 @@ Premium tier users will have unlimited access to search and adding favourite tra
     * Little to no load times when the website first starts or has to complete a process.
 
 2. As somebody looking to advertise on this website I would like:
-    * Content that is family friendly and not provocative so our brand doesn't become tarnished.
+    * Content that is family friendly and not provocative, so our brand doesn't become tarnished.
     * Heavy user traffic in order to get our brand in front of as many eyeballs as possible.
     * Fast load times to ensure impatient users don't leave the site.
 
@@ -121,7 +127,7 @@ Premium tier users will have unlimited access to search and adding favourite tra
 #### Responsive Front-End Framework
 
 For this project, I decided to use the Materialize framework which is build on the principles of material design.
-After completing the project using this new framework, I can safely say that I prefer it more then Bootstrap which I have used on my previous 2 milestone projects.
+After completing the project using this new framework, I can safely say that I prefer it more than Bootstrap which I have used on my previous 2 milestone projects.
 It appears to provide more feedback to the user when they are navigating throughout the web application while remaining responsive on most devices.
 
 #### Icons
@@ -132,19 +138,19 @@ All icons for this application have been sourced from [Google Fonts](https://fon
 
 ![Favourite Icon](readme-imgs/favourite_screenshot.JPG)
 
-After searching a public Ethereum address, it's transactions will then be added to your hashboard. The next step is for the user to prioritise certain transactions which they deem important. The heart icon has been used for nearly a decade now in order to represent important items within a list.
+After searching a public Ethereum address, its transactions will then be added to your hashboard. The next step is for the user to prioritise certain transactions which they deem important. The heart icon has been used for nearly a decade now in order to represent important items within a list.
 
 ##### Edit Icon
 
 ![Edit Icon](readme-imgs/edit_screenshot.JPG)
 
-Once the user has added their priority transactions to their favourite's list, a text note may have been added. The edit icon is what allows the user to change the note stored in relation to their transaction. I have chosen the pen icon from Material Icons as it has been used by previous developers when interacting with text-based components. 
+Once the user has added their priority transactions to their favourite list, a text note may have been added. The edit icon is what allows the user to change the note stored in relation to their transaction. I have chosen the pen icon from Material Icons as it has been used by previous developers when interacting with text-based components. 
 
 ##### Delete Icon
 
 ![Delete Icon](readme-imgs/delete_screenshot.JPG)
 
-Finally, once the user has no more need to prioritise a specific transaction, there needs to be a way in order for the user to be able to clean up their favourite's list. There could only be one realistic choice for this icon as it has been used so predominantly in software design. I decided to use the rubbish bin icon due to it's intuitive nature.
+Finally, once the user has no more need to prioritise a specific transaction, there needs to be a way in order for the user to be able to clean up their favourite list. There could only be one realistic choice for this icon as it has been used so predominantly in software design. I decided to use the rubbish bin icon due to its intuitive nature.
 
 
 #### Fonts
@@ -155,7 +161,7 @@ There has only been one font chosen for this project due to the nature of the ap
 
 ![Varela Font Example](readme-imgs/font_varela.JPG)
 
-The font chosen was taken from [Google Fonts](https://fonts.google.com/). I chose this font as it was extremely legibile & simple while still remaining fun and playful.
+The font chosen was taken from [Google Fonts](https://fonts.google.com/). I chose this font as it was extremely legible & simple while still remaining fun and playful.
 
 #### Colours
 
@@ -199,7 +205,7 @@ For the desktop view, a data table was used to represent the Ethereum transactio
 
 #### Gallery Slider(Mobile/Tablet View)
 
-From the beginning of the design of the application, I knew that a separate view would be needed to display transaction information to mobile/tablet users. The data table wouldn't be able to sufficiently show all data fields to the user in a satisfying manner.
+From the beginning of the design of the application, I knew that a separate view would be needed to display transaction information to mobile/tablet users. A data table in this context wouldn't be able to sufficiently show all data fields to the user in a satisfying manner.
 
 In order to counteract this, a gallery style view was created for mobile/tablet users. Each transaction is represented by a slide within a larger gallery. Users swipe from left to right in order to access different transactions. I believe this is a design which many mobile users are familiar with due to the rise of social media applications such as Instagram.
 
@@ -265,7 +271,7 @@ Once transactions have been added from a specific Ethereum address we can then s
 
 #### Notes
 
-Once the user has favourited a priority transaction, the user is given a text area where they can input information such as a description of the transaction or detailing the name belonging to the Ethereum public address. This feature could be used in order to do forensic accounting on the blockchain.
+Once the user has decided to prioritise a transaction, the user is given a text area where they can input information such as a description of the transaction or detailing the name belonging to the Ethereum public address. This feature could be used in order to do forensic accounting on the blockchain.
 
 
 ## Implementation
@@ -273,25 +279,49 @@ Once the user has favourited a priority transaction, the user is given a text ar
 This section will outline the technologies & processes used in the design & implementation of this application.
 
 
-#### Materialize Framework
+### Materialize Framework
 
 For this project, the frontend framework I decided to use was Materialize. In my previous 2 milestone projects, I chose Bootstrap for the frontend, but I can now safely say that I much prefer the look of Materialize.
 As it is based on the principles of material design, all elements just seem that little bit sharper and current.
 
 
-#### MongoDB
+### MongoDB
 
 For the backend on this application, MongoDB was chosen to implement the noSQL database as outlined in the assessment handbook.
 
 
-##### MongoDB Atlas
+#### MongoDB Atlas
 
 MongoDB atlas is a cloud-based database service with a clean frontend client which allows you to see your collections evolve in real time.
 
-##### MongoDB Schema Diagram
+#### MongoDB Schema Diagram
 
 ![DBSchema](readme-imgs/dbschema.JPG)
 
+
+#### CRUD Operations
+
+One of the main goals of this milestone project was to integrate a database within our application and use it to it's full potential. CRUD in computer programming is an acronym which stands for create, read, update & delete. This covers the 4 main operations of a database. Within this section I will go over how I implemented each of these operations.
+
+##### Create Operation
+
+This operation is preformed for 2 separate processes. After a user submits the signup form, a record is created & added to the User collection.
+
+A creation operation also occurs for each transaction once the user searches an Ethereum public address within the Transaction collection.
+
+##### Read Operation
+
+On the hashboard.html page, all transactions being displayed to the user are read from the Transaction collection using the user's id as a foreign key. Read operations also happen when submitting a login form.
+
+##### Update Operation
+
+Once a user has transactions marked as priority, an edit icon is visible. Here, the information in relation to the transaction can be changed via an update operation on the database.
+This is the only update operation present within this application.
+
+##### Delete Operation
+
+Once again within the priority transaction list, the user has the ability to remove transaction which causes a delete operation to be executed on the backend.
+Another delete operation happens if the user wishes to clear non-priority transactions from their hashboard.
 
 #### Etherscan API
 
@@ -325,10 +355,6 @@ Due to the nature of the application, no image compression was needed as all des
 By using the Lottie animation player, we can bring beautiful animations into our application without having to worry about file size and hence performance. I have used a single hosted Lottie animation on the error.html page.
 
 
-#### API Performance
-
-
-
 ###### Autoprefixing
 
 The CSS style rules have been [Autoprefixed](https://autoprefixer.github.io/) to maintain uniformity of style rules across all browsers.
@@ -339,17 +365,22 @@ The CSS style rules have been [Autoprefixed](https://autoprefixer.github.io/) to
 
 As the application began to take shape with all major components in place, the user testing could commence. This was done by reviewing each component line by line to ensure that the code works as intended. If an edit was to be made, the developer made sure to the changes were reflected correctly on the frontend.
 
+
 ### User Stories Testing
 
 1. This application satisfies the needs of the user by:
-    * Having a clean UI, based on the princibles of material design.
-    * Ensuring that all text on the website is leigible at a quick glance.
-    * Being designed in an efficent manner, compressing data wherever possible.
+    * Having a clean UI, based on the principles of material design.
+    * Ensuring that all text on the website is legible at a quick glance.
+    * Being designed efficiently, compressing data wherever possible.
 
 2. Advertiser needs are satisfied by this project as:
-    * The site's content is advertiser-friendly and non-controvertial.
+    * The site's content is advertiser-friendly and noncontroversial.
     * The web application is designed to maintain users attention by providing value.
     * The application is efficiently designed.
+
+3. The needs of a business user are satisfied by this application because:
+    * Currently there is no set upper limit to the number of API requests that can be made.
+
 
 ### Application Testing
 
@@ -357,23 +388,49 @@ As the application began to take shape with all major components in place, the u
 
 Initially when designing the mobile menu, I wanted to use some additional features outlined in the Materialize documentation. The ability to access the mobile menu by swiping the left side of the screen. During testing, it became evident that most modern smartphones use this gesture in order to go back to the last page in the browser.
 
+
 ## Bugs Discovered
 
 #### Index.html user Exception
 
+This bug would happen generally the first time that the user would log onto the site. As there would be no current session for the user which would throw an exception.
+
+In order to prevent this, I changed the index route so that it would point to login.html. This way, as the user lands on the site for the first time, they can create their user session and have access to all of their content.
+
+
 #### Heroku Application Error
+
+When deploying your application to Heroku, they're are several hurdles which will hinder your site from popping up when you hit that 'open app' button on the Heroku dashboard.
+It is essential to make sure that your requirements.txt file is up to date with all imported libraries being used within your application.
+
 
 #### Database Not Connecting
 
+Setting up the MongoDB backend was not without its troubles. It took several days in order to get it working correctly but with the help of the MongoDB documentation, I was able to configure the environment variables correctly.
+
+
 #### Lower Case Ethereum Address Bug
 
+During the initial development of the Etherscan API request function it was unclear why we were getting bad responses. It became clear that the letters used within an Ethereum public address are not case-sensitive. A simple change was made to the function, converting an address submitted to the form to automatically convert the address to lowercase.
 
 
-## Dependancies
+## Dependencies
+
+This section will cover all software dependencies needed to run this application.
+
 
 #### Requirements.txt
 
+The requirements.txt file contains the library names & version numbers in case in future other developers or myself would like to re-deploy this project from its original state.
+
+
 #### Web3
+
+This library is essential to this application & I believe that it deserves its own section. Web3 will change everything we know about web development within the next decade by pushing decentralisation to the average internet user.
+
+Within this application, I have used Web3 only for one specific function, fromWei().
+This function allows for the conversion of Wei to Eth.
+
 
 ## Deployment
 
@@ -391,6 +448,7 @@ To deploy this page from Github pages from its Github repository, the following 
 6. On selecting Master Branch, the page is automatically refreshed, the website is now deployed.
    
 At the moment of submitting this milestone project, the default branch is version1.2 which is the latest version.
+
 
 #### How to run this project locally:
 
