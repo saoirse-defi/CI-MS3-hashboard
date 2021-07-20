@@ -115,9 +115,9 @@
     <!--End of desktop favourites-->
 
     <!--Start of mobile favourites-->
-    <div class="carousel carousel-slider center" id="favourites-container-mobile" data-indicators="true" style="height: 400px;">
+    <div class="carousel carousel-slider center" id="favourites-container-mobile" data-indicators="true">
         {% for data in favourites_list %}
-        <div class="container carousel-item" href="#">
+        <div class="container carousel-item" href="#" style="min-height: 375px;">
             <div class="container transaction-container">
                 <div class="row time-gas">
                     <h5>{{data['time']}}</h5>
@@ -150,9 +150,9 @@
 
     <!--Start of mobile search table-->
 
-    <div class="carousel carousel-slider center" id="search-container-mobile" data-indicators="true" style="height: 400px;">
+    <div class="carousel carousel-slider center" id="search-container-mobile" data-indicators="true">
         {% for data in transactions_list %}
-        <div class="carousel-item" href="#">
+        <div class="carousel-item" href="#" style="min-height: 250px;">
             <div class="container transaction-container">
                 <div class="row time-gas"><h5>{{data['time']}}</h5></div>
                 <div class="row value"><h1 class="value-header">{{data['value']}} {{data['token_symbol']}}</h1></div>
