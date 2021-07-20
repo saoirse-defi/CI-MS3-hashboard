@@ -4,16 +4,17 @@
 ## Introduction
 
 In response to the financial crisis of 2008, Satoshi Nakamoto released the Bitcoin whitepaper outlining the first decentralised public ledger technology to hit the world stage.
-The network has stood strong to this day and inspired 1000s of projects build off of Satoshi's vision of a decentralised world. We now have a robust ecosystem of smart contract, NFT and decentralised financed platforms.
-Pandora's box has been opened and there is no turning back.
+The network has stood strong to this day and inspired 1000s of projects build on Satoshi's vision of a decentralised world. We now have a robust ecosystem of smart contract, NFT and decentralised financed platforms. Pandora's box has been opened and there is no turning back.
 
-One of the main benefits of cryptocurrencies is the public availability of the blockchain data. Previously corporations would protect vast silos of data in order to monetize it & increase their stranglehold on the market.
-Public blockchains granted software developers to the ability to compete with much larger corporations by providing value to the user & not by monetizing siloed data.
+One of the main benefits of cryptocurrencies is the public availability of the blockchain data. Up until now, corporations have protected vast silos of data in order to monetize it & increase their stranglehold on the market. Public blockchains granted developers the ability to compete with larger corporations by providing value to the user & not by monetizing siloed data.
 
-Even though cryptocurrencies have been around for more than a decade, adoption rates are still relatively low. I believe this is due to the perceived complexity of the technology.
-My goal for my Code Institute Milestone Project 3: Data Centric is to simplify the experience for the user by allowing them to view their blockchain data in a more intuitive graphical interface.
+Even though cryptocurrencies have been around for more than a decade, adoption rates are still relatively low with plenty of room to grow. I believe this slow adoption is due to the perceived complexity of the technology and the addition responsibility placed on the user to secure their funds.
+
+My goal for my Code Institute Milestone Project 3: Data Centric is to simplify the Ethereum experience for  users by allowing them to view their blockchain transaction data in a more intuitive way.
 
 #### The Ethereum Network
+
+Ethereum is the second largest cryptocurrency by market cap and currently has the largest developer community. It was the world's first programmable blockchain inspiring thousands of developers to deploy their own smart contracts.
 
 #### Current Blockchain Interfaces
 
@@ -33,6 +34,22 @@ This section will outline potential feature which I would like to add to the app
 
 
 ## Considerations
+
+### Use Cases
+
+
+
+### Notes for Assessment Team
+
+Hashboard is a web application that allows users to search any public Ethereum address and view that account's transactions. These transactions can then be prioritised, giving the user the ability to add a text note. I have provided five sample Ethereum addresses below to aid the assessment team in the examination of this milestone project. Please note that any Ethereum public address can be used with this application.
+
+##### Ethereum Addresses for Examination purposes
+
+0x150F2F6860904dc4227d6f70d8b07a4853E3835a
+0x4863d57806d7872De6DaD21e5C6F95D6E00a8Ac6
+0xC762514665e8B6CA63DD762BB44012E4347a352E
+0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
+0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8
 
 ## UX
 
@@ -314,9 +331,13 @@ By using the Lottie animation player, we can bring beautiful animations into our
 
 ###### Autoprefixing
 
-NB NB NB NB
+The CSS style rules have been [Autoprefixed](https://autoprefixer.github.io/) to maintain uniformity of style rules across all browsers.
 
 ## Testing
+
+### User Testing
+
+As the application began to take shape with all major components in place, the user testing could commence. This was done by reviewing each component line by line to ensure that the code works as intended. If an edit was to be made, the developer made sure to the changes were reflected correctly on the frontend.
 
 ### User Stories Testing
 
@@ -330,9 +351,23 @@ NB NB NB NB
     * The web application is designed to maintain users attention by providing value.
     * The application is efficiently designed.
 
+### Application Testing
+
+#### Mobile Sidebar Issue
+
+Initially when designing the mobile menu, I wanted to use some additional features outlined in the Materialize documentation. The ability to access the mobile menu by swiping the left side of the screen. During testing, it became evident that most modern smartphones use this gesture in order to go back to the last page in the browser.
+
 ## Bugs Discovered
 
 #### Index.html user Exception
+
+#### Heroku Application Error
+
+#### Database Not Connecting
+
+#### Lower Case Ethereum Address Bug
+
+
 
 ## Dependancies
 
