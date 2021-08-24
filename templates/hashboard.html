@@ -36,10 +36,10 @@
                         </td>
                         <td>
                             <!-- Delete Confirmation Trigger Structure -->
-                            <a class="waves-effect waves-light modal-trigger" href="#delete-modal" data-id="{{ data._id }}"><i class="material-icons">delete_outline</i></a>
+                            <a class="waves-effect waves-light modal-trigger" href="#delete-modal-{{data._id}}" data-id="{{ data._id }}"><i class="material-icons">delete_outline</i></a>
 
                             <!-- Delete Confirmation Modal Structure -->
-                            <div id="delete-modal" class="modal" >
+                            <div id="delete-modal-{{data._id}}" class="modal" >
                                     <div class="modal-content">
                                         <h4>Are you sure you would like to delete this transaction?</h4>
                                         <p>This action cannot be reversed.</p>
