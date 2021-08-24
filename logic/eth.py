@@ -23,17 +23,17 @@ def get_transactions(address):
             f'https://api.etherscan.io/api?module=account'
             f'&action=txlist&address={address}&startblock'
             f'=0&endblock=99999999&sort=asc&apikey='
-            f'PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
+            f'PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA', timeout=10)
         erc_res = requests.get(
             f'https://api.etherscan.io/api?module=account'
             f'&action=tokentx&address={address}&startblock'
             f'=0&endblock=999999999&sort=asc&apikey='
-            f'PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
+            f'PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA', timeout=10)
         nft_res = requests.get(
             f'https://api.etherscan.io/api?module=account'
             f'&action=tokennfttx&address={address}&startblock'
             f'=0&endblock=999999999&sort=asc&apikey='
-            f'PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
+            f'PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA', timeout=10)
 
         eth_result_text = eth_res.text
         eth_json = json.loads(eth_result_text)
@@ -104,5 +104,5 @@ def get_transactions(address):
 
         return transaction_list
 
-    except Exception as e:
+    except requests.exceptions.ReadTimeout as e:
         raise Exception(f"API Exception: {e}")
