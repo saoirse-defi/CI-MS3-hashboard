@@ -51,55 +51,60 @@ def get_transactions(address):
 
         complete_transaction_list = list_eth + list_erc + list_nft
 
+        count = 0
+
         for transaction in complete_transaction_list:
-            data = {
-                'time': time.strftime(
-                    "%d-%m-%Y", time.localtime(
-                        int(transaction['timeStamp']))),
-                'hash': transaction['hash'],
-                'from': transaction['from'],
-                'to': transaction['to'],
-                'value': str(round(Web3.fromWei(
-                                float(transaction['value']), 'ether'), 5)),
-                'gas_price': str(int(Web3.fromWei(
-                                int(transaction['gasPrice']), 'ether')
-                                * int('1000000000'))),
-                'gas_used': str(round(Web3.fromWei(
-                                int(transaction['gasPrice'])
-                                * int(transaction['gasUsed']), 'ether'), 6)),
-                'token_name': 'Ethereum',
-                'token_symbol': 'ETH',
-                'contract_address': '',
-                'token_id': ''
-            }
+            while count < 1000:
+                data = {
+                    'time': time.strftime(
+                        "%d-%m-%Y", time.localtime(
+                            int(transaction['timeStamp']))),
+                    'hash': transaction['hash'],
+                    'from': transaction['from'],
+                    'to': transaction['to'],
+                    'value': str(round(Web3.fromWei(
+                                    float(transaction['value']), 'ether'), 5)),
+                    'gas_price': str(int(Web3.fromWei(
+                                    int(transaction['gasPrice']), 'ether')
+                                    * int('1000000000'))),
+                    'gas_used': str(round(Web3.fromWei(
+                                    int(transaction['gasPrice'])
+                                    * int(transaction['gasUsed']), 'ether'), 6)),
+                    'token_name': 'Ethereum',
+                    'token_symbol': 'ETH',
+                    'contract_address': '',
+                    'token_id': ''
+                }
 
-            try:
-                if transaction['tokenName']:
-                    data['token_name'] = transaction['tokenName']
-            except KeyError:
-                pass
+                try:
+                    if transaction['tokenName']:
+                        data['token_name'] = transaction['tokenName']
+                except KeyError:
+                    pass
 
-            try:
-                if transaction['tokenSymbol']:
-                    data['token_symbol'] = transaction['tokenSymbol']
-            except KeyError:
-                pass
+                try:
+                    if transaction['tokenSymbol']:
+                        data['token_symbol'] = transaction['tokenSymbol']
+                except KeyError:
+                    pass
 
-            try:
-                if transaction['contractAddress']:
-                    data['contract_address'] = transaction['contractAddress']
-            except KeyError:
-                pass
+                try:
+                    if transaction['contractAddress']:
+                        data['contract_address'] = transaction['contractAddress']
+                except KeyError:
+                    pass
 
-            try:
-                if transaction['tokenID']:
-                    data['token_id'] = transaction['tokenID']
-            except KeyError:
-                pass
+                try:
+                    if transaction['tokenID']:
+                        data['token_id'] = transaction['tokenID']
+                except KeyError:
+                    pass
 
-            transaction_list.append(data)
-            # add transactions to db using Account method
-            logic.models.Account().add_transactions(data)
+                transaction_list.append(data)
+                # add transactions to db using Account method
+                logic.models.Account().add_transactions(data)
+
+                count += 1
 
         # sort combined list by time/date
         transaction_list.sort(reverse=True, key=itemgetter('time'))
