@@ -95,6 +95,14 @@ def login():
     return render_template("login.html")
 
 
+@app.route("/test_error")
+def test_error():    
+    test = None    
+    if test is None:        
+        abort(503)    
+    return redirect('/')
+
+
 @app.route("/hashboard", methods=['GET', 'POST'])
 def hashboard():
     # list of cursor query
