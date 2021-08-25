@@ -19,6 +19,7 @@ def get_transactions(address):
     list_eth = []
     list_erc = []
     list_nft = []
+    count = 0
 
     try:
         eth_res = requests.get(
@@ -51,11 +52,9 @@ def get_transactions(address):
 
         complete_transaction_list = list_eth + list_erc + list_nft
 
-        count = 0
-
         for transaction in complete_transaction_list:
+            count += 1
             while count < 10:
-                count += 1
                 data = {
                     'time': time.strftime(
                         "%d-%m-%Y", time.localtime(
