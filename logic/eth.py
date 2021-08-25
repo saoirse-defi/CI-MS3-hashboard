@@ -54,7 +54,8 @@ def get_transactions(address):
         count = 0
 
         for transaction in complete_transaction_list:
-            while count < 1000:
+            while count < 10:
+                count += 1
                 data = {
                     'time': time.strftime(
                         "%d-%m-%Y", time.localtime(
@@ -103,8 +104,6 @@ def get_transactions(address):
                 transaction_list.append(data)
                 # add transactions to db using Account method
                 logic.models.Account().add_transactions(data)
-
-                count += 1
 
         # sort combined list by time/date
         transaction_list.sort(reverse=True, key=itemgetter('time'))
