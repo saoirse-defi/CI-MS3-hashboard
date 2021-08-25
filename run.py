@@ -3,7 +3,7 @@ import os
 from operator import itemgetter
 from flask import (Flask, render_template, request,
                    redirect, session, url_for,
-                   send_from_directory, flash)
+                   send_from_directory, flash, abort)
 from flask_pymongo import PyMongo
 import logic.models
 import logic.eth
@@ -42,10 +42,22 @@ favourites_table_headings = ['Date created',
 
 
 # Exception handling function
-@app.errorhandler(Exception)
+@app.errorhandler(404)
+def handle_exception(e):
+    ''' Displays exception to the user'''
+    return render_template("error.html", e=e), 404
+
+
+@app.errorhandler(500)
 def handle_exception(e):
     ''' Displays exception to the user'''
     return render_template("error.html", e=e), 500
+
+
+@app.errorhandler(403)
+def handle_exception(e):
+    ''' Displays exception to the user'''
+    return render_template("error.html", e=e), 403
 
 
 # Formatting functions
@@ -79,6 +91,7 @@ def login():
 
 @app.route("/hashboard", methods=['GET', 'POST'])
 def hashboard():
+    abort(500)
     # list of cursor query
     try:
         transactions_list = list(
