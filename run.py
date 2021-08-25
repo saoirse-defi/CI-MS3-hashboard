@@ -48,16 +48,22 @@ def handle_exception(e):
     return render_template("error.html", e=e), 404
 
 
+@app.errorhandler(403)
+def handle_exception(e):
+    ''' Displays exception to the user'''
+    return render_template("error.html", e=e), 403
+
+
 @app.errorhandler(500)
 def handle_exception(e):
     ''' Displays exception to the user'''
     return render_template("error.html", e=e), 500
 
 
-@app.errorhandler(403)
+@app.errorhandler(503)
 def handle_exception(e):
     ''' Displays exception to the user'''
-    return render_template("error.html", e=e), 403
+    return render_template("error.html", e=e), 503
 
 
 # Formatting functions
