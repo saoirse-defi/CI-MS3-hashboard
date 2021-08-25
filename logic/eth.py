@@ -4,6 +4,7 @@ import time
 import logic.models
 from operator import itemgetter
 import requests
+from requests.exceptions import Timeout
 
 
 def get_transactions(address):
@@ -104,5 +105,5 @@ def get_transactions(address):
 
         return transaction_list
 
-    except requests.exceptions.ReadTimeout as e:
-        raise Exception(f"API Exception: {e}")
+    except Timeout as ex:
+        raise Exception(f"API Exception: {ex}")
