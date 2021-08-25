@@ -91,7 +91,6 @@ def login():
 
 @app.route("/hashboard", methods=['GET', 'POST'])
 def hashboard():
-    abort(500)
     # list of cursor query
     try:
         transactions_list = list(
