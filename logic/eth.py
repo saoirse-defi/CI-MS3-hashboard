@@ -4,6 +4,7 @@ import time
 import logic.models
 from operator import itemgetter
 import requests
+from flask import render_template
 from requests.exceptions import Timeout
 
 
@@ -105,5 +106,5 @@ def get_transactions(address):
 
         return transaction_list
 
-    except Timeout as ex:
-        raise Exception(f"API Exception: {ex}")
+    except Timeout as e:
+        return render_template("error.html", e=e)
