@@ -191,9 +191,12 @@ def search():
     if request.method == 'POST':
         search_eth = str(request.form.get('search-eth')).lower()
         if len(search_eth) == 42:
-            transaction_list = logic.eth.get_transactions(search_eth)
-            flash(f"{search_eth}: Transactions added", category="success")
-            return redirect(url_for('hashboard'))
+            try:
+                transaction_list = logic.eth.get_transactions(search_eth)
+                flash(f"{search_eth}: Transactions added", category="success")
+                return redirect(url_for('hashboard'))
+            except Exception as e:
+                raise Exception(f"There has been an exception: {e}")
         else:
             flash("Incorrect address format", category="error")
             return render_template('search.html')
