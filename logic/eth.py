@@ -53,7 +53,7 @@ def get_transactions(address):
         complete_transaction_list = list_eth + list_erc + list_nft
 
         for transaction in complete_transaction_list:
-            while count < 10:
+            if count < 10:
                 data = {
                     'time': time.strftime(
                         "%d-%m-%Y", time.localtime(
@@ -104,6 +104,9 @@ def get_transactions(address):
                 logic.models.Account().add_transactions(data)
 
                 count += 1
+            
+            else:
+                break
 
         # sort combined list by time/date
         transaction_list.sort(reverse=True, key=itemgetter('time'))
