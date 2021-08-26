@@ -96,16 +96,17 @@ def login():
 
 
 @app.route("/test_error")
-def test_error():    
-    test = None    
-    if test is None:        
-        abort(503)    
+def test_error():
+    test = None
+    if test is None:
+        abort(503)
     return redirect('/')
 
 
 @app.route("/hashboard", methods=['GET', 'POST'])
 def hashboard():
     # list of cursor query
+    abort(503)
     try:
         transactions_list = list(
             mongo.db.Transaction.find(
@@ -153,7 +154,7 @@ def favourite(transaction_id):
                 mongo.db.Transaction.update(
                     {"_id": transaction_id}, {
                         "$set": {"note": note, "isFav": True}})
-                flash(f"{transaction['hash']} has been added"
+                flash(f"{transaction['hash']} has been added "
                       f"to your priority list", category="success")
                 return redirect(url_for('hashboard'))
         except Exception as e:
