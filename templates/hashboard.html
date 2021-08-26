@@ -44,7 +44,7 @@
                                         <h4>Are you sure you would like to delete this transaction?</h4>
                                         <p>This action cannot be reversed.</p>
                                     </div>
-                                    <div class="modal-footer" style="background-color: #868686;">
+                                    <div class="modal-footer">
                                         <a href="{{ url_for('delete_favourite', transaction_id=data._id) }}" class="modal-close waves-effect waves-green btn-small">Delete</a>
                                         <a href="#" class="modal-close waves-effect waves-green btn-small">Cancel</a>
                                     </div>
@@ -70,7 +70,7 @@
                             <p>Don't worry, your favourites will remain visible.</p>
                             <p>This action cannot be reversed.</p>
                         </div>
-                        <div class="modal-footer" style="background-color: #868686;">
+                        <div class="modal-footer">
                             <a href="{{ url_for('clear')}}" class="modal-close waves-effect waves-green btn-small">Reset</a>
                             <a href="#" class="modal-close waves-effect waves-green btn-small">Cancel</a>
                         </div>
