@@ -106,7 +106,6 @@ def test_error():
 @app.route("/hashboard", methods=['GET', 'POST'])
 def hashboard():
     # list of cursor query
-    abort(503)
     try:
         transactions_list = list(
             mongo.db.Transaction.find(
