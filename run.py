@@ -66,6 +66,17 @@ def handle_exception_503(e):
     return render_template("error.html", e=e), 503
 
 
+# Error testing function
+
+
+@app.route("/test_error")
+def test_error():
+    test = None
+    if test is None:
+        abort(503)
+    return redirect('/')
+
+
 # Formatting functions
 def shorten(string):
     ''' Converts Ethereum address into truncated string. '''
@@ -93,14 +104,6 @@ def login():
             flash("Email address not found!", category="error")
 
     return render_template("login.html")
-
-
-@app.route("/test_error")
-def test_error():
-    test = None
-    if test is None:
-        abort(503)
-    return redirect('/')
 
 
 @app.route("/hashboard", methods=['GET', 'POST'])
