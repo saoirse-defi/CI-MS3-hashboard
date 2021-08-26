@@ -28,7 +28,7 @@
                         <h4>Are you sure you would like to log out?</h4>
                         <p class="center">Saved transactions will remain until you log back in.</p>
                     </div>
-                    <div class="modal-footer" style="background-color: #868686;">
+                    <div class="modal-footer">
                         <a href="{{ url_for('signout')}}" class="modal-close waves-effect waves-green btn-small">Log Out</a>
                         <a href="#" class="modal-close waves-effect waves-green btn-small">Cancel</a>
                     </div>
@@ -43,7 +43,7 @@
                         <h4>Are you sure you would like to log out?</h4>
                         <p class="center">Saved transactions will remain until you log back in.</p>
                     </div>
-                    <div class="modal-footer" style="background-color: #868686;">
+                    <div class="modal-footer">
                         <a href="{{ url_for('signout')}}" class="modal-close waves-effect waves-green btn-small">Log Out</a>
                         <a href="#" class="modal-close waves-effect waves-green btn-small">Cancel</a>
                     </div>
@@ -75,15 +75,9 @@
         {% if messages %}
             {% for category, msg in messages %}
                 {% if category == 'error' %}
-                <div class="alert-danger red lighten-2 center">
-                    <span class="alert-text">{{ msg }}</span>
-                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                </div>
+                <script>M.toast({html: "{{ msg }}", classes: 'red', displayLength:10000});</script>
                 {% else %}
-                <div class="alert-success green lighten-2 center">
-                    <span class="alert-text">{{ msg }}</span>
-                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                </div>
+                <script>M.toast({html: "{{message}}", classes: 'green', displayLength:2000});</script>
                 {% endif %}
             {% endfor %}
         {% endif %}
