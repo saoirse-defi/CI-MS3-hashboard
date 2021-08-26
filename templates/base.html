@@ -75,9 +75,15 @@
         {% if messages %}
             {% for category, msg in messages %}
                 {% if category == 'error' %}
-                <script>M.toast({html: "{{ msg }}", classes: 'red', displayLength:10000});</script>
+                <div class="alert-danger red lighten-2 center">
+                    <span class="alert-text">{{ msg }}</span>
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                </div>
                 {% else %}
-                <script>M.toast({html: "{{ msg }}", classes: 'green', displayLength:2000});</script>
+                <div class="alert-success green lighten-2 center">
+                    <span class="alert-text">{{ msg }}</span>
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                </div>
                 {% endif %}
             {% endfor %}
         {% endif %}
