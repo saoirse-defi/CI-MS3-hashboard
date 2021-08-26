@@ -77,7 +77,7 @@
                 {% if category == 'error' %}
                 <script>M.toast({html: "{{ msg }}", classes: 'red', displayLength:10000});</script>
                 {% else %}
-                <script>M.toast({html: "{{message}}", classes: 'green', displayLength:2000});</script>
+                <script>M.toast({html: "{{ msg }}", classes: 'green', displayLength:2000});</script>
                 {% endif %}
             {% endfor %}
         {% endif %}
