@@ -53,7 +53,7 @@ def get_transactions(address):
         complete_transaction_list = list_eth + list_erc + list_nft
 
         for transaction in complete_transaction_list:
-            if count < 10:
+            if count < 1000:
                 data = {
                     'time': time.strftime(
                         "%d-%m-%Y", time.localtime(
