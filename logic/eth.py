@@ -4,8 +4,6 @@ import time
 import logic.models
 from operator import itemgetter
 import requests
-from flask import render_template
-from requests.exceptions import Timeout
 
 
 def get_transactions(address):
@@ -26,17 +24,17 @@ def get_transactions(address):
             f'https://api.etherscan.io/api?module=account'
             f'&action=txlist&address={address}&startblock'
             f'=0&endblock=99999999&sort=asc&apikey='
-            f'PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA', timeout=10)
+            f'PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
         erc_res = requests.get(
             f'https://api.etherscan.io/api?module=account'
             f'&action=tokentx&address={address}&startblock'
             f'=0&endblock=999999999&sort=asc&apikey='
-            f'PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA', timeout=10)
+            f'PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
         nft_res = requests.get(
             f'https://api.etherscan.io/api?module=account'
             f'&action=tokennfttx&address={address}&startblock'
             f'=0&endblock=999999999&sort=asc&apikey='
-            f'PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA', timeout=10)
+            f'PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
 
         eth_result_text = eth_res.text
         eth_json = json.loads(eth_result_text)
@@ -53,7 +51,7 @@ def get_transactions(address):
         complete_transaction_list = list_eth + list_erc + list_nft
 
         for transaction in complete_transaction_list:
-            #if count < 1000:
+            if count < 1000:
                 data = {
                     'time': time.strftime(
                         "%d-%m-%Y", time.localtime(
@@ -68,7 +66,8 @@ def get_transactions(address):
                                     * int('1000000000'))),
                     'gas_used': str(round(Web3.fromWei(
                                     int(transaction['gasPrice'])
-                                    * int(transaction['gasUsed']), 'ether'), 6)),
+                                    * int(transaction['gasUsed']),
+                                    'ether'), 6)),
                     'token_name': 'Ethereum',
                     'token_symbol': 'ETH',
                     'contract_address': '',
@@ -88,8 +87,8 @@ def get_transactions(address):
                     pass
 
                 try:
-                    if transaction['contractAddress']:
-                        data['contract_address'] = transaction['contractAddress']
+                    if transaction['c_address']:
+                        data['contract_address'] = transaction['c_address']
                 except KeyError:
                     pass
 
@@ -103,15 +102,14 @@ def get_transactions(address):
                 # add transactions to db using Account method
                 logic.models.Account().add_transactions(data)
 
-                #count += 1
-            
-            #else:
-                #break
+                count += 1
+            else:
+                break
 
         # sort combined list by time/date
         transaction_list.sort(reverse=True, key=itemgetter('time'))
 
         return transaction_list
 
-    except Timeout as e:
-        return render_template("error.html", e=e)
+    except Exception as e:
+        raise Exception(e)
