@@ -8,11 +8,13 @@
         <div class="form-group">
             <div class="form-control">
                 <input type="text" id="search-eth" name="search-eth"/>
-                <button class="waves-effect waves-light btn-small" type="submit">Search</button>
+                <button id="search-submit" class="waves-effect waves-light btn-small" type="submit">Search</button>
                 <a class="waves-effect waves-light btn-small" href="{{ url_for('hashboard') }}">Back</a>
             </div>
         </div>
     </form>
 </div>
+
+<div class="loading"></div>
 
 {% endblock %}

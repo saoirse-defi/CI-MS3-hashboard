@@ -22,3 +22,11 @@ setTimeout(function() {
   setTimeout(function() {
     $(".alert-danger").fadeOut().empty();
   }, 5000);
+
+
+var search_button = document.getElementById('search-submit');
+var loading = document.getElementsByClassName('loading');
+
+search_button.addEventListener('click', () => {
+  loading.style.display = 'block';
+});
