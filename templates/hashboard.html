@@ -145,7 +145,7 @@
         <div class="container carousel-item" href="#" style="min-height: 375px;">
             <div class="container transaction-container">
                 <div class="empty-header">
-                    <h4>No favorite transactions to display</h4>
+                    <span>No favorite transactions to display</span>
                 </div>
             </div>
         </div>
@@ -161,20 +161,28 @@
     <!--Start of mobile search table-->
 
     <div class="carousel carousel-slider center" id="search-container-mobile" data-indicators="true">
-        {% for data in transactions_list %}
-        <div class="carousel-item" href="#" style="min-height: 250px;">
-            <div class="container transaction-container">
-                <div class="row time-gas"><h5>{{data['time']}}</h5></div>
-                <div class="row value"><h1 class="value-header">{{data['value']}} {{data['token_symbol']}}</h1></div>
-                <div class="row" id="search-address-header-row">
-                    <div class="col s12"><h5>Hash: </h5><a href="https://etherscan.io/tx/{{data['hash']}}" target="_blank"><h5>{{ shorten2(data['hash']|safe) }}</h5></a></div>
-                </div>
-                <div class="row">
-                    <a href="{{ url_for('favourite', transaction_id=data._id) }}"><i class="material-icons">favorite_border</i></a>
+        {% if transactions_list %}
+            {% for data in transactions_list %}
+            <div class="carousel-item" href="#" style="min-height: 250px;">
+                <div class="container transaction-container">
+                    <div class="row time-gas"><h5>{{data['time']}}</h5></div>
+                    <div class="row value"><h1 class="value-header">{{data['value']}} {{data['token_symbol']}}</h1></div>
+                    <div class="row" id="search-address-header-row">
+                        <div class="col s12"><h5>Hash: </h5><a href="https://etherscan.io/tx/{{data['hash']}}" target="_blank"><h5>{{ shorten2(data['hash']|safe) }}</h5></a></div>
+                    </div>
+                    <div class="row">
+                        <a href="{{ url_for('favourite', transaction_id=data._id) }}"><i class="material-icons">favorite_border</i></a>
+                    </div>
                 </div>
             </div>
+            {% endfor %}
+        {% else %}
+        <div class="carousel-item" href="#" style="min-height: 250px;">
+            <div class="empty header">
+                <span>Search to add transactions</span>
+            </div>
         </div>
-        {% endfor %}
+        {% endif %}
     </div>
     <!--End of mobile search table-->
 
