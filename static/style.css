@@ -143,10 +143,12 @@ body{
     }
 
     #favourites-container-mobile{
+        position: relative;
         height: 375px;
     }
 
     #search-container-mobile{
+        position: relative;
         height: 250px;
     }
 
