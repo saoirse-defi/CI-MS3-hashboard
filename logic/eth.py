@@ -112,7 +112,6 @@ def get_transactions(address):
 
         # sort combined list by time/date
         # transaction_list.sort(reverse=True, key=itemgetter('time'))
-        transaction_list.sort(reverse=True, key=sortTime)
 
         return transaction_list
 

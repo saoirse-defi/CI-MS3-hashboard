@@ -120,7 +120,7 @@ def hashboard():
             mongo.db.Transaction.find(
                 {"user_id": session['user']['_id']}))
         # sort combined list by time/date
-        transactions_list.sort(reverse=True, key=itemgetter('time'))
+        transaction_list.sort(reverse=True, key=logic.eth.sortTime)
     except Exception as e:
         raise Exception(e)
 
