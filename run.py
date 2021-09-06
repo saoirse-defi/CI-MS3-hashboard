@@ -54,6 +54,12 @@ def handle_exception_403(e):
     return render_template("error.html", e=e), 403
 
 
+@app.errorhandler(405)
+def handle_exception_405(e):
+    ''' Displays exception to the user'''
+    return render_template("error.html", e=e), 405
+
+
 @app.errorhandler(500)
 def handle_exception_500(e):
     ''' Displays exception to the user'''
