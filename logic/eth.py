@@ -6,6 +6,10 @@ from operator import itemgetter
 import requests
 
 
+def sortTime(e):
+    return e['time']
+
+
 def get_transactions(address):
     ''' Queries Etherscan API with ethereum address.
         Returns transaction list. '''
@@ -107,7 +111,8 @@ def get_transactions(address):
                 break
 
         # sort combined list by time/date
-        #transaction_list.sort(reverse=True, key=itemgetter('time'))
+        # transaction_list.sort(reverse=True, key=itemgetter('time'))
+        transaction_list.sort(reverse=True, key=sortTime)
 
         return transaction_list
 
