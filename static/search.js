@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     loading.style.display = 'none';
 
-  });
+    search_button.addEventListener('click', () => {
+      loading.style.display = 'block';
+    });
 
-search_button.addEventListener('click', () => {
-    loading.style.display = 'block';
   });
