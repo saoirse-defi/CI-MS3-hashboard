@@ -110,9 +110,6 @@ def get_transactions(address):
             else:
                 break
 
-        # sort combined list by time/date
-        # transaction_list.sort(reverse=True, key=itemgetter('time'))
-
         return transaction_list
 
     except Exception as e:
