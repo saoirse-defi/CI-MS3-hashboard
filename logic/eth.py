@@ -58,7 +58,7 @@ def get_transactions(address):
             if count < 750:
                 data = {
                     'time': time.strftime(
-                        "%d-%m-%Y", time.localtime(
+                        "%Y-%m-%d", time.localtime(
                             int(transaction['timeStamp']))),
                     'hash': transaction['hash'],
                     'from': transaction['from'],
