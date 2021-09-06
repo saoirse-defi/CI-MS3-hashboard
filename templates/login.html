@@ -2,16 +2,24 @@
 
 {% block content %}
 
-<form method="POST" id="login-form">
-    <h3 align="center">Log In.</h3>
-    <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email address" required/>
+{% if session['user'] %}
+    <form method="POST" id="login-form">
+        <h3 align="center">Log In.</h3>
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email address" required/>
+        </div>
+        <div class="form-control">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required/>
+        </div>
+        <button type="submit" class="waves-effect waves-light btn-small" id="btn-login">Log In</button>
+    </form>
+{% else %}
+    <div class="container responsive">
+        <h4>You are currently logged in.</h4>
+        <a class="btn" href="/hashboard">Return to hashboard</a>
     </div>
-    <div class="form-control">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required/>
-    </div>
-    <button type="submit" class="waves-effect waves-light btn-small" id="btn-login">Log In</button>
-</form>
+{% endif %}
+    
 {% endblock %}
