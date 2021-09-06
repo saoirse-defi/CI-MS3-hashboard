@@ -96,10 +96,6 @@ body{
     display: none;
 }
 
-#add-address-container{
-    z-index: 1;
-}
-
 #all-transaction-header-container{
     display: none;
 }
