@@ -17,11 +17,11 @@ $('.carousel-slider').carousel({
 
 setTimeout(function() {
     $(".alert-success").fadeOut().empty();
-  }, 5000);
+  }, 3000);
 
   setTimeout(function() {
     $(".alert-danger").fadeOut().empty();
-  }, 5000);
+  }, 3000);
 
 
 var search_button = document.getElementById('search-submit');
