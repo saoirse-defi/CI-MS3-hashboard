@@ -3,7 +3,7 @@
 {% block content %}
 
 {% if session['user'] %}
-<h6>You are currently logged in.</h6>
+<h6>You are currently logged in as {{session['user']}}</h6>
 <a class="btn-small" href="/hashboard">Return to hashboard</a>
 {% else %}
 <form method="POST" id="login-form">
