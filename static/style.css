@@ -100,12 +100,12 @@ body{
     display: none;
 }
 
-.loading{
+#loading{
     justify-content: center;
     display: none;
 }
 
-.loading::after{
+#loading::after{
     content: "";
     width: 50px;
     height: 50px;

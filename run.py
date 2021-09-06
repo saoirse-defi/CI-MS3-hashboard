@@ -206,8 +206,6 @@ def search():
     transaction_list = []
 
     if request.method == 'POST':
-        flash("Attemping to add transactions, please wait!",
-              category="info")
         search_eth = str(request.form.get('search-eth')).lower()
         if len(search_eth) == 42:
             try:
