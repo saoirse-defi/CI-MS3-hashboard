@@ -4,5 +4,5 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   search_button.addEventListener('click', () => {
-    loading.style.zIndex = 99999;
+    loading.style.display = 'flex';
   });
