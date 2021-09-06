@@ -103,6 +103,7 @@ body{
 .loading{
     display: flex;
     justify-content: center;
+    z-index: -1;
 }
 
 .loading::after{
@@ -113,7 +114,6 @@ body{
     border-top-color: #009579;
     border-radius: 50%;
     animation: loading 1s linear infinite;
-    z-index: -1;
 }
 
 @keyframes loading{
