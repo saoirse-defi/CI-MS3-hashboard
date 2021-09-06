@@ -2,13 +2,13 @@
 
 {% block content %}
 
-<div class="container-fluid" id="add-address-container">
+<div class="container-fluid">
     <form method="POST" id="add-address-form">
         <h5>Search an ethereum public address:</h5>
         <div class="form-group">
             <div class="form-control">
                 <input type="text" id="search-eth" name="search-eth"/>
-                <button id="search-submit" class="waves-effect waves-light btn-small" type="submit">Search</button>
+                <button id="search-submit" class="waves-effect waves-light btn-small" type="submit" onclick="displaySpinner()">Search</button>
                 <a class="waves-effect waves-light btn-small" href="{{ url_for('hashboard') }}">Back</a>
             </div>
         </div>
@@ -16,5 +16,7 @@
 </div>
 
 <div class="loading"></div>
+
+<script src="../static/search.js"></script>
 
 {% endblock %}
