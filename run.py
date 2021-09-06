@@ -3,7 +3,7 @@ import os
 from operator import itemgetter
 from flask import (Flask, render_template, request,
                    redirect, session, url_for,
-                   send_from_directory, flash, abort)
+                   send_from_directory, flash)
 from flask_pymongo import PyMongo
 import logic.models
 import logic.eth
@@ -70,17 +70,6 @@ def handle_exception_500(e):
 def handle_exception_503(e):
     ''' Displays exception to the user'''
     return render_template("error.html", e=e), 503
-
-
-# Error testing function
-
-
-@app.route("/test_error")
-def test_error():
-    test = None
-    if test is None:
-        abort(503)
-    return redirect('/')
 
 
 # Formatting functions
@@ -210,7 +199,7 @@ def search():
         if len(search_eth) == 42:
             try:
                 transaction_list = logic.eth.get_transactions(search_eth)
-                flash(f"Transactions added for {search_eth}", 
+                flash(f"Transactions added for {search_eth}",
                       category="success")
                 return redirect(url_for('hashboard'))
             except Exception as e:
