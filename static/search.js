@@ -1,8 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var search_button = document.getElementById('search-submit');
-    var loading = document.getElementsByClassName('loading');
+    const search_button = document.getElementById('search-submit');
+    const loading = document.getElementById('loading');
+
+    search_button.addEventListener('click', () => {
+      loading.style.display = 'flex';
+    });
+    
   });
 
-  search_button.addEventListener('click', () => {
-    loading.style.display = 'flex';
-  });
+  
