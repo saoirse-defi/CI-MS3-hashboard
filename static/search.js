@@ -3,6 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var loading = document.getElementsByClassName('loading');
   });
 
-  search_button.addEventListener('click', () => {
+const displaySpinner = () => {
     loading.style.display = 'flex';
-  });
+};
