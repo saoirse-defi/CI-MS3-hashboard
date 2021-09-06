@@ -23,17 +23,17 @@ def get_transactions(address):
         eth_res = requests.get(
             f'https://api.etherscan.io/api?module=account'
             f'&action=txlist&address={address}&startblock'
-            f'=0&endblock=99999999&sort=asc&apikey='
+            f'=0&endblock=99999999&sort=desc&apikey='
             f'PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
         erc_res = requests.get(
             f'https://api.etherscan.io/api?module=account'
             f'&action=tokentx&address={address}&startblock'
-            f'=0&endblock=999999999&sort=asc&apikey='
+            f'=0&endblock=999999999&sort=desc&apikey='
             f'PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
         nft_res = requests.get(
             f'https://api.etherscan.io/api?module=account'
             f'&action=tokennfttx&address={address}&startblock'
-            f'=0&endblock=999999999&sort=asc&apikey='
+            f'=0&endblock=999999999&sort=desc&apikey='
             f'PQWGH496A8A1H3YV5TKWNVCPHJZ3S7ITHA')
 
         eth_result_text = eth_res.text
