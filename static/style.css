@@ -96,6 +96,10 @@ body{
     display: none;
 }
 
+#add-address-form{
+    z-index: 1;
+}
+
 #all-transaction-header-container{
     display: none;
 }
