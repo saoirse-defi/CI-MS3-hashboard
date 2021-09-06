@@ -120,7 +120,7 @@ def hashboard():
             mongo.db.Transaction.find(
                 {"user_id": session['user']['_id']}))
         # sort combined list by time/date
-        transaction_list.sort(reverse=True, key=logic.eth.sortTime)
+        transactions_list.sort(reverse=True, key=logic.eth.sortTime)
     except Exception as e:
         raise Exception(e)
 
@@ -210,7 +210,8 @@ def search():
         if len(search_eth) == 42:
             try:
                 transaction_list = logic.eth.get_transactions(search_eth)
-                flash(f"Transactions added for {search_eth}", category="success")
+                flash(f"Transactions added for {search_eth}", 
+                      category="success")
                 return redirect(url_for('hashboard'))
             except Exception as e:
                 raise Exception(f"There has been an exception: {e}")

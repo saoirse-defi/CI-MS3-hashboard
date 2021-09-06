@@ -2,7 +2,7 @@ import json
 from web3 import Web3
 import time
 import logic.models
-from operator import itemgetter
+# from operator import itemgetter
 import requests
 
 
