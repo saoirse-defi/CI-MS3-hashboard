@@ -184,11 +184,14 @@ def search():
         if len(search_eth) == 42:
             try:
                 transaction_list = logic.eth.get_transactions(search_eth)
+
+            if transaction_list is not None:
+                return redirect(url_for('hashboard'))
                 flash(f"Transactions added for {search_eth}",
                       category="success")
-            except Exception as e:
-                raise Exception(f"There has been an exception: {e}")
-            return redirect(url_for('hashboard'))
+            else:
+                flash("Incorrect address format", category="error")
+                return render_template('search.html')
         else:
             flash("Incorrect address format", category="error")
             return render_template('search.html')
