@@ -86,21 +86,6 @@ def shorten2(string):
 # Routes
 @app.route("/")
 @app.route("/index")
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    existing_user = mongo.db.User.find_one({
-            "email": request.form.get('email')
-    })
-
-    if request.method == 'POST':
-        if existing_user:
-            return logic.models.Account().login()
-        else:
-            flash("Email address not found!", category="error")
-
-    return render_template("login.html")
-
-
 @app.route("/hashboard", methods=['GET', 'POST'])
 def hashboard():
     # list of cursor query
@@ -201,9 +186,9 @@ def search():
                 transaction_list = logic.eth.get_transactions(search_eth)
                 flash(f"Transactions added for {search_eth}",
                       category="success")
-                return redirect(url_for('hashboard'))
             except Exception as e:
                 raise Exception(f"There has been an exception: {e}")
+            return redirect(url_for('hashboard'))
         else:
             flash("Incorrect address format", category="error")
             return render_template('search.html')
@@ -231,6 +216,21 @@ def home():
                            fav_list=fav_list,
                            shorten2=shorten2,
                            shorten=shorten)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    existing_user = mongo.db.User.find_one({
+            "email": request.form.get('email')
+    })
+
+    if request.method == 'POST':
+        if existing_user:
+            return logic.models.Account().login()
+        else:
+            flash("Email address not found!", category="error")
+
+    return render_template("login.html")
 
 
 @app.route('/signup', methods=['GET', 'POST'])
