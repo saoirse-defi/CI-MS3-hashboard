@@ -185,7 +185,7 @@ def search():
             try:
                 transaction_list = logic.eth.get_transactions(search_eth)
             except Exception as e:
-                raise Exception(f"There has been an exception: {e}")
+                print(e)
             if transaction_list is not None:
                 return redirect(url_for('hashboard'))
                 flash(f"Transactions added for {search_eth}",
