@@ -98,7 +98,6 @@ def login_required(f):
 @app.route("/")
 @app.route("/index")
 @app.route("/hashboard", methods=['GET', 'POST'])
-@login_required
 def hashboard():
     # list of cursor query
     try:
