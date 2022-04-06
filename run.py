@@ -97,6 +97,21 @@ def login_required(f):
 # Routes
 @app.route("/")
 @app.route("/index")
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    existing_user = mongo.db.User.find_one({
+            "email": request.form.get('email')
+    })
+
+    if request.method == 'POST':
+        if existing_user:
+            return logic.models.Account().login()
+        else:
+            flash("Email address not found!", category="error")
+
+    return render_template("login.html")
+
+
 @app.route("/hashboard", methods=['GET', 'POST'])
 def hashboard():
     # list of cursor query
@@ -231,21 +246,6 @@ def home():
                            fav_list=fav_list,
                            shorten2=shorten2,
                            shorten=shorten)
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    existing_user = mongo.db.User.find_one({
-            "email": request.form.get('email')
-    })
-
-    if request.method == 'POST':
-        if existing_user:
-            return logic.models.Account().login()
-        else:
-            flash("Email address not found!", category="error")
-
-    return render_template("login.html")
 
 
 @app.route('/signup', methods=['GET', 'POST'])
