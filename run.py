@@ -3,7 +3,8 @@ import os
 from operator import itemgetter
 from flask import (Flask, render_template, request,
                    redirect, session, url_for,
-                   send_from_directory, flash)
+                   send_from_directory, flash, g)
+from functools import wraps
 from flask_pymongo import PyMongo
 import logic.models
 import logic.eth
@@ -83,10 +84,21 @@ def shorten2(string):
     return "0x..." + string[62:]
 
 
+# Decorators
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if g.user is None:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
 # Routes
 @app.route("/")
 @app.route("/index")
 @app.route("/hashboard", methods=['GET', 'POST'])
+@login_required
 def hashboard():
     # list of cursor query
     try:
