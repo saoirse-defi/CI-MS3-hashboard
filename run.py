@@ -97,19 +97,19 @@ def login_required(f):
 # Routes
 @app.route("/")
 @app.route("/index")
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    existing_user = mongo.db.User.find_one({
-            "email": request.form.get('email')
-    })
-
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
     if request.method == 'POST':
-        if existing_user:
-            return logic.models.Account().login()
+        if len(request.form.get('password')) > 7:
+            if(request.form.get('password')
+               == request.form.get('password-confirm')):
+                return logic.models.Account().signup()
+            else:
+                flash("Passwords do not match.", category="error")
         else:
-            flash("Email address not found!", category="error")
+            flash("Password needs to be 8 digits or more", category="error")
 
-    return render_template("login.html")
+    return render_template("signup.html")
 
 
 @app.route("/hashboard", methods=['GET', 'POST'])
@@ -247,20 +247,19 @@ def home():
                            shorten2=shorten2,
                            shorten=shorten)
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    existing_user = mongo.db.User.find_one({
+            "email": request.form.get('email')
+    })
 
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
     if request.method == 'POST':
-        if len(request.form.get('password')) > 7:
-            if(request.form.get('password')
-               == request.form.get('password-confirm')):
-                return logic.models.Account().signup()
-            else:
-                flash("Passwords do not match.", category="error")
+        if existing_user:
+            return logic.models.Account().login()
         else:
-            flash("Password needs to be 8 digits or more", category="error")
+            flash("Email address not found!", category="error")
 
-    return render_template("signup.html")
+    return render_template("login.html")
 
 
 @app.route('/signout')
