@@ -1,0 +1,21 @@
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    environment:
+      MONGO_URI: mongodb://db:27017/hashtable-db1
+  db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: hashtable-db1 # Sets the default DB
+      MONGO_INITDB_ROOT_USERNAME: webbd-admin # Sets root user
+      MONGO_INITDB_ROOT_PASSWORD: mypassword # Sets root password
+volumes:
+  mongodb_data:
